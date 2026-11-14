@@ -1,152 +1,262 @@
-// Moon machines. Writers edit this file, not app.js.
-// PROTOTYPE: facts are drafts. sourceChecked stays "" until a teammate opens the link.
+// Moon machines. Writers edit this file, not app.js. Rules: see DATA_GUIDE.md.
+// Facts come word for word from our "Website Text" doc (checked against NASA pages on 2026-11-14).
+// talkingLine is a story line we wrote. It is not a fact and must not appear in a quiz.
 const MOON = {
   id: "moon",
   planet: "Moon",
+  title: "5 machines on the Moon",
   hook: "They stayed behind. Here's why.",
   machines: [
     {
-      name: "Ranger 7",
-      year: 1964,
-      image: "images/moon/ranger-7.jpg",
-      imageType: "NASA photo",
-      talkingLine: "I was built to crash. I sent pictures the whole way down.",
-      whatItWas: "A probe sent straight at the Moon to take close-up pictures before it hit.",
-      whatItCarried: "Six TV cameras.",
-      whatHappened: "It hit the Moon on purpose on July 31, 1964, after sending back 4,308 photos. They were the first close-up pictures of the Moon taken by a US spacecraft.",
-      whereItIsNow: "In pieces at its impact site, a flat plain later named Mare Cognitum, the 'Known Sea'.",
-      source: "https://science.nasa.gov/mission/ranger-7/",
-      sourceChecked: "",
-      quiz: [
-        {
-          question: "How many photos did Ranger 7 send back?",
-          options: ["About 40", "4,308", "1 million"],
-          answer: 1,
-          whenRight: "Correct! Ranger 7 sent 4,308 photos before it hit.",
-          whenWrong: "Not quite. It sent 4,308 photos before it hit."
-        },
-        {
-          question: "What happened to Ranger 7 at the end?",
-          options: ["It hit the Moon on purpose", "It flew back to Earth", "It's still orbiting the Moon"],
-          answer: 0,
-          whenRight: "Correct! Crashing was the plan all along.",
-          whenWrong: "Not quite. It was built to crash into the Moon."
-        }
-      ]
-    },
-    {
+      id: "m1",
       name: "Surveyor 3",
+      launched: "17 April 1967",
       year: 1967,
-      image: "images/moon/surveyor-3.jpg",
-      imageType: "NASA photo",
-      talkingLine: "Two years later, visitors came. They took my camera.",
-      whatItWas: "A robot lander sent to test whether the Moon's ground could hold up a spacecraft.",
-      whatItCarried: "A TV camera and a small scoop on an arm for digging into the soil.",
-      whatHappened: "It landed in April 1967, dug trenches and sent back pictures. It went quiet in May 1967. In November 1969, the Apollo 12 crew landed nearby, walked over, and brought pieces of it, including its camera, back to Earth.",
-      whereItIsNow: "Still standing in the Ocean of Storms, close to the Apollo 12 landing site.",
-      source: "https://science.nasa.gov/mission/surveyor-3/",
-      sourceChecked: "",
+      talkingLine: "I bounced three times when I landed. Two years later, astronauts came and took my camera home.",
+      image: {
+        src: "images/moon/surveyor-3.jpg",
+        width: 1280, height: 1280,
+        alt: "A small robot lander with three legs sits on grey Moon dust, with the Apollo 12 lunar module in the background.",
+        type: "NASA photo",
+        credit: "NASA",
+        from: "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/as12-48-7134_1280.jpg"
+      },
+      whatItWas: "Surveyor 3 was a robot lander. It was the second Surveyor to make a soft landing, which means landing gently instead of crashing.",
+      carried: [
+        "A TV camera",
+        "A surface sampler: a small scoop on an arm that could dig trenches up to 18 cm deep"
+      ],
+      whatHappened: "On 20 April 1967 its engines kept firing as it landed, so it touched down three times. It sent back 6,326 pictures, and its digging showed the soil was strong enough to hold an Apollo lunar module. Its last contact was on 4 May 1967.",
+      whereItIsNow: "It still sits in Oceanus Procellarum. In 1969, Apollo 12 landed about 180 m away, and the astronauts took parts of it, including its camera, back to Earth.",
+      sources: [
+        { label: "Surveyor 3, NASA Science", url: "https://science.nasa.gov/mission/surveyor-3/" },
+        { label: "Surveyor 3, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1967-035A" }
+      ],
+      sourceChecked: "2026-11-14",
       quiz: [
         {
-          question: "Who visited Surveyor 3 after it went quiet?",
-          options: ["Nobody", "A Russian rover", "The Apollo 12 astronauts"],
+          question: "Why did Surveyor 3 touch down three times?",
+          options: ["Its legs broke", "Its engines kept firing as it landed", "Astronauts moved it", "It landed on a hill"],
+          answer: 1,
+          whenRight: "Correct! Its engines kept firing, so it bounced and touched down three times.",
+          whenWrong: "Not quite. Its engines kept firing as it landed, so it touched down three times."
+        },
+        {
+          question: "What did Surveyor 3's digging show about the Moon's soil?",
+          options: ["It was full of water", "It was too soft to land on", "It was strong enough to hold an Apollo lunar module", "It was made of metal"],
           answer: 2,
-          whenRight: "Correct! The Apollo 12 crew walked over in 1969.",
-          whenWrong: "Not quite. The Apollo 12 astronauts walked over to it in 1969."
+          whenRight: "Correct! The soil could hold up an Apollo lunar module.",
+          whenWrong: "Not quite. Its digging showed the soil was strong enough to hold an Apollo lunar module."
         },
         {
-          question: "What did Surveyor 3 use to dig into the soil?",
-          options: ["A drill", "A scoop on an arm", "Its wheels"],
-          answer: 1,
-          whenRight: "Correct! It had a small scoop on an arm.",
-          whenWrong: "Not quite. It dug with a small scoop on an arm."
+          question: "What did the Apollo 12 astronauts take back to Earth?",
+          options: ["Parts of Surveyor 3, including its camera", "The whole lander", "Its scoop only", "Nothing"],
+          answer: 0,
+          whenRight: "Correct! They took parts of it home, including its camera.",
+          whenWrong: "Not quite. They took parts of Surveyor 3 back, including its camera."
         }
       ]
     },
     {
-      name: "Apollo 11 mirror",
+      id: "m2",
+      name: "Apollo 11 \"Eagle\" descent stage",
+      launched: "16 July 1969",
       year: 1969,
-      image: "images/moon/apollo-11-retroreflector.jpg",
-      imageType: "NASA photo",
-      talkingLine: "They flew home. I'm still working.",
-      whatItWas: "A panel of 100 small mirrors that Apollo 11 astronauts set up on the Moon. Its full name is the Laser Ranging Retroreflector.",
-      whatItCarried: "No power and no moving parts. Just mirrors that bounce light straight back where it came from.",
-      whatHappened: "Nothing stopped it. Observatories on Earth still fire lasers at it and time how long the light takes to come back. That tells us the Moon is drifting away from Earth by about 3.8 cm a year.",
-      whereItIsNow: "At Tranquility Base, where Apollo 11 landed.",
-      source: "https://science.nasa.gov/mission/apollo-11/",
-      sourceChecked: "",
+      talkingLine: "They flew home from my back. I stayed.",
+      image: {
+        src: "images/moon/apollo-11-eagle.jpg",
+        width: 1600, height: 1609,
+        alt: "The Apollo 11 lunar module stands on four legs on the grey surface of the Moon.",
+        type: "NASA photo",
+        credit: "NASA",
+        from: "https://nssdc.gsfc.nasa.gov/planetary/image/ap11_lm_as11_40_5927.jpg"
+      },
+      whatItWas: "The lunar module Eagle was the first crewed vehicle to land on the Moon. Its bottom half, the descent stage, held the landing rocket and four landing legs.",
+      carried: [
+        "Neil Armstrong and Buzz Aldrin, the first people to walk on the Moon",
+        "EASEP, a small science kit with a seismometer to feel moonquakes and a dust detector",
+        "A laser reflector, called a laser ranging retroreflector, that needed no power"
+      ],
+      whatHappened: "Eagle landed on 20 July 1969. When the astronauts left the next day, the descent stage worked as their launch pad and was left behind. The EASEP stopped taking commands on 27 August 1969.",
+      whereItIsNow: "The descent stage is still at the landing site in the Sea of Tranquility (Mare Tranquilitatis).",
+      sources: [
+        { label: "Apollo 11 Lunar Module / EASEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-059C" }
+      ],
+      sourceChecked: "2026-11-14",
       quiz: [
         {
-          question: "Is the Apollo 11 mirror still being used?",
-          options: ["Yes, scientists still bounce lasers off it", "No, it broke in 1970", "It was brought back to Earth"],
-          answer: 0,
-          whenRight: "Correct! It still works because it has no parts to break.",
-          whenWrong: "Not quite. Scientists still bounce lasers off it today."
+          question: "What job did the descent stage do when the astronauts left?",
+          options: ["It flew them home", "It worked as their launch pad", "It drove them around", "It took photos"],
+          answer: 1,
+          whenRight: "Correct! It worked as their launch pad and was left behind.",
+          whenWrong: "Not quite. The descent stage worked as their launch pad, then stayed on the Moon."
         },
         {
-          question: "What has the mirror helped us learn?",
-          options: ["The Moon has water", "The Moon is drifting away from Earth", "The Moon is hollow"],
-          answer: 1,
-          whenRight: "Correct! About 3.8 cm farther every year.",
-          whenWrong: "Not quite. It showed the Moon drifts away about 3.8 cm a year."
+          question: "What does a seismometer do?",
+          options: ["Measures wind", "Takes photos", "Feels moonquakes", "Makes power"],
+          answer: 2,
+          whenRight: "Correct! The EASEP seismometer was there to feel moonquakes.",
+          whenWrong: "Not quite. A seismometer feels moonquakes."
+        },
+        {
+          question: "Where is the Eagle descent stage now?",
+          options: ["In a museum on Earth", "Ocean of Storms", "Cabeus crater", "Sea of Tranquility"],
+          answer: 3,
+          whenRight: "Correct! It's still at the landing site in the Sea of Tranquility.",
+          whenWrong: "Not quite. It's still in the Sea of Tranquility (Mare Tranquilitatis)."
         }
       ]
     },
     {
-      name: "Apollo 15 rover",
+      id: "m3",
+      name: "Apollo 12 ALSEP science station",
+      launched: "14 November 1969",
+      year: 1969,
+      talkingLine: "The crew switched me on and flew away. I kept sending data for almost eight years.",
+      image: {
+        src: "images/moon/apollo-12-alsep-stand-in.jpg",
+        width: 950, height: 955,
+        alt: "The Apollo 12 lunar module on the grey surface of the Moon.",
+        type: "Stand-in photo",
+        note: "Shows the Apollo 12 lander, not the ALSEP itself.",
+        credit: "NASA",
+        from: "https://nssdc.gsfc.nasa.gov/planetary/image/apollo12_lunar_module.jpg"
+      },
+      whatItWas: "ALSEP (Apollo Lunar Surface Experiments Package) was a set of science instruments that the Apollo 12 astronauts set up and left on the Moon. A central station gave them power and sent their data to Earth.",
+      carried: [
+        "A power generator (RTG) that turned heat from plutonium-238 into electricity",
+        "A passive seismometer, to measure moonquakes",
+        "Five more instruments, such as a magnetometer to measure the Moon's magnetic field"
+      ],
+      whatHappened: "It was switched on 19 November 1969. When the crew left, their lander's top half was crashed into the Moon on purpose, about 60 km away, and caused the first recorded artificial moonquake. The station was shut down on 30 September 1977.",
+      whereItIsNow: "It is still at the Apollo 12 site in Oceanus Procellarum, the same area where Surveyor 3 landed.",
+      sources: [
+        { label: "Apollo 12 Lunar Module / ALSEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-099C" }
+      ],
+      sourceChecked: "2026-11-14",
+      quiz: [
+        {
+          question: "What gave the ALSEP its power?",
+          options: ["Solar panels", "A generator (RTG) using heat from plutonium-238", "Batteries from Earth", "The lander's rocket"],
+          answer: 1,
+          whenRight: "Correct! Its RTG turned heat from plutonium-238 into electricity.",
+          whenWrong: "Not quite. An RTG turned heat from plutonium-238 into electricity."
+        },
+        {
+          question: "What caused the first recorded artificial moonquake?",
+          options: ["The lander's top half crashing into the Moon on purpose", "An astronaut jumping", "A meteor", "The rover driving fast"],
+          answer: 0,
+          whenRight: "Correct! The crew's lander top half was crashed into the Moon about 60 km away.",
+          whenWrong: "Not quite. The lander's top half was crashed into the Moon on purpose, about 60 km away."
+        },
+        {
+          question: "When was the Apollo 12 station shut down?",
+          options: ["1969", "1971", "1977", "2009"],
+          answer: 2,
+          whenRight: "Correct! It was shut down on 30 September 1977.",
+          whenWrong: "Not quite. It was shut down on 30 September 1977."
+        }
+      ]
+    },
+    {
+      id: "m4",
+      name: "Apollo 15 Lunar Roving Vehicle",
+      launched: "26 July 1971",
       year: 1971,
-      image: "images/moon/apollo-15-rover.jpg",
-      imageType: "NASA photo",
-      talkingLine: "I was the first car on the Moon. They parked me and never came back.",
-      whatItWas: "The Lunar Roving Vehicle, the first car driven on the Moon. Astronauts Dave Scott and Jim Irwin drove it.",
-      whatItCarried: "Two astronauts, their tools, rock samples, a TV camera and an antenna to talk to Earth. It ran on batteries.",
-      whatHappened: "It did its job. The crew drove it about 28 km across the Moon over three trips, then left it behind because bringing it home would have been far too heavy.",
-      whereItIsNow: "Parked at the Hadley-Apennine landing site.",
-      source: "https://science.nasa.gov/mission/apollo-15/",
-      sourceChecked: "",
+      talkingLine: "Three drives, 27.8 km, then they parked me for good.",
+      image: {
+        src: "images/moon/apollo-15-rover.jpg",
+        width: 1600, height: 1673,
+        alt: "The Apollo 15 moon buggy, with four wire-mesh wheels and a dish antenna, parked on the Moon's dusty ground.",
+        type: "NASA photo",
+        credit: "NASA",
+        from: "https://nssdc.gsfc.nasa.gov/planetary/image/as15_88_11901.jpg"
+      },
+      whatItWas: "The Lunar Roving Vehicle was an electric car built to drive in the Moon's low gravity and vacuum, so astronauts could explore farther. Apollo 15 was the first time a vehicle like this was used.",
+      carried: [
+        "Two astronauts, David Scott and Jim Irwin, in two fold-out seats",
+        "An electric motor in each of its four wheels",
+        "A large mesh dish antenna on the front"
+      ],
+      whatHappened: "The rover folded up to ride inside the lunar module. From 31 July to 2 August 1971, the astronauts drove it on three trips, one a day, for a total of 27.8 km.",
+      whereItIsNow: "It is parked for good on the Moon, at the Apollo 15 site in the Mare Imbrium region, at the foot of the Apennine mountains.",
+      sources: [
+        { label: "The Apollo Lunar Roving Vehicle, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html" },
+        { label: "Apollo 15 Lunar Module / ALSEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C" }
+      ],
+      sourceChecked: "2026-11-14",
       quiz: [
         {
-          question: "Why was the rover left on the Moon?",
-          options: ["It broke down", "It was too heavy to bring home", "It got stuck in a crater"],
+          question: "How far did the Apollo 15 astronauts drive the rover in total?",
+          options: ["2.8 km", "27.8 km", "180 km", "450 km"],
           answer: 1,
-          whenRight: "Correct! Taking it home would have been far too heavy.",
-          whenWrong: "Not quite. It worked fine. It was just too heavy to bring home."
+          whenRight: "Correct! 27.8 km over three trips.",
+          whenWrong: "Not quite. They drove it 27.8 km over three trips."
         },
         {
-          question: "What powered the Apollo 15 rover?",
-          options: ["Batteries", "Solar panels", "Gasoline"],
+          question: "How did the rover get to the Moon?",
+          options: ["It drove off a rocket", "It was built on the Moon", "It folded up to ride inside the lunar module", "It landed by parachute"],
+          answer: 2,
+          whenRight: "Correct! It folded up and rode inside the lunar module.",
+          whenWrong: "Not quite. It folded up to ride inside the lunar module."
+        },
+        {
+          question: "What made the rover's wheels turn?",
+          options: ["An electric motor in each wheel", "One gas engine", "Astronauts pedalling", "Solar sails"],
           answer: 0,
-          whenRight: "Correct! It ran on batteries.",
-          whenWrong: "Not quite. It ran on batteries."
+          whenRight: "Correct! Each of its four wheels had its own electric motor.",
+          whenWrong: "Not quite. Each of its four wheels had an electric motor."
         }
       ]
     },
     {
+      id: "m5",
       name: "LCROSS",
+      launched: "18 June 2009",
       year: 2009,
-      image: "images/moon/lcross.jpg",
-      imageType: "Drawing",
-      talkingLine: "I chased my own rocket into a crater to find water.",
-      whatItWas: "A spacecraft that crashed its used rocket stage into a dark crater, then flew through the cloud of dust to see what was inside.",
-      whatItCarried: "Cameras and instruments that read what the dust cloud was made of.",
-      whatHappened: "On October 9, 2009, the rocket stage hit Cabeus crater near the Moon's south pole. LCROSS measured the cloud and found water ice, then hit the Moon itself a few minutes later.",
-      whereItIsNow: "In Cabeus crater, near the Moon's south pole.",
-      source: "https://science.nasa.gov/mission/lcross/",
-      sourceChecked: "",
+      talkingLine: "I watched my rocket hit a dark crater. Four minutes later, I followed it in.",
+      image: {
+        src: "images/moon/lcross.jpg",
+        width: 1438, height: 1098,
+        alt: "The LCROSS spacecraft, a ring-shaped satellite covered in panels and instruments.",
+        type: "NASA photo",
+        credit: "NASA",
+        from: "https://nssdc.gsfc.nasa.gov/planetary/image/lcross.jpg"
+      },
+      whatItWas: "LCROSS (Lunar Crater Observation and Sensing Satellite) was built to search for water ice on the Moon. Its plan was to crash a 2,000 kg used rocket stage, called a Centaur, into the Moon and watch the crash from behind.",
+      carried: [
+        "A \"shepherding spacecraft\" that steered the Centaur",
+        "Two visible cameras and three infrared cameras",
+        "Three spectrometers, which study light to find out what materials are made of"
+      ],
+      whatHappened: "On 9 October 2009, the Centaur hit Cabeus crater near the Moon's south pole. The shepherding spacecraft flew through the cloud of debris for about four minutes, collecting data, then crashed too. NASA later said the impact data showed water.",
+      whereItIsNow: "Both pieces are in Cabeus crater, near the Moon's south pole.",
+      sources: [
+        { label: "LCROSS, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2009-031B" },
+        { label: "LCROSS Impact Data Indicates Water on Moon (13 Nov 2009), NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/text/lcross_pr_20091113.txt" }
+      ],
+      sourceChecked: "2026-11-14",
       quiz: [
         {
-          question: "What did LCROSS find in the dust cloud?",
-          options: ["Gold", "Water ice", "Old Apollo parts"],
+          question: "What was LCROSS searching for?",
+          options: ["Gold", "Water ice", "Old Apollo parts", "Moon rocks to bring home"],
           answer: 1,
-          whenRight: "Correct! It found water ice.",
-          whenWrong: "Not quite. It found water ice."
+          whenRight: "Correct! It was built to search for water ice.",
+          whenWrong: "Not quite. LCROSS was built to search for water ice."
         },
         {
-          question: "Where did LCROSS crash?",
-          options: ["Cabeus crater near the south pole", "The Apollo 11 site", "The far side's center"],
+          question: "What is a spectrometer?",
+          options: ["A tool that studies light to find out what materials are made of", "A type of rocket", "A Moon map", "A drill"],
           answer: 0,
-          whenRight: "Correct! Cabeus crater, near the south pole.",
-          whenWrong: "Not quite. It crashed into Cabeus crater, near the south pole."
+          whenRight: "Correct! Spectrometers study light to find out what things are made of.",
+          whenWrong: "Not quite. A spectrometer studies light to find out what materials are made of."
+        },
+        {
+          question: "Where did the Centaur rocket stage crash?",
+          options: ["The Sea of Tranquility", "The Apennine mountains", "Cabeus crater near the south pole", "The far side's equator"],
+          answer: 2,
+          whenRight: "Correct! It hit Cabeus crater, near the Moon's south pole.",
+          whenWrong: "Not quite. It hit Cabeus crater, near the Moon's south pole."
         }
       ]
     }

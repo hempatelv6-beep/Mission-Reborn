@@ -1,48 +1,31 @@
-# CLAUDE.md: Abandoned but Not Forgotten
+# CLAUDE.md: Mission Reborn
 
-## Project context
-This is a NASA Space Apps Challenge entry: an interactive **2D** website about the machines humans left on the Moon and Mars, covering their purpose, equipment, discoveries, fate and location. The project lead is a **beginner at coding**, so explain what you are doing in plain language and briefly define technical terms.
+NASA Space Apps 2026, challenge "Abandoned but not Forgotten". A 2D scroll website about 10 machines left on the Moon and Mars. Audience: ages 11-14. Team: ages 15-16, beginners at code, so explain changes in plain words.
 
-The master plan is in `docs/MASTER-PLAN.md`. The research lives in `research/` and is kept separate from code.
+## Stack lock (don't change without the lead)
+- `index.html`, `styles.css`, `app.js`. Data in `data/moon.js`, `data/mars.js`, `data/final.js`.
+- GSAP + ScrollTrigger from jsDelivr. `localStorage` for progress. `speechSynthesis` for read-aloud.
+- No React, no npm, no build step. Hosted on GitHub Pages.
+- 2D only. No 3D globes or models.
 
-## Before changing anything
-- Inspect the existing files, docs and code first. Reuse what already exists.
-- Never silently overwrite existing decisions or documents. If you disagree, say so and give evidence.
-- Ask the lead before major changes to direction or technology.
-- **Don't start building until research and planning are approved.**
+## Facts
+- Every fact comes from a NASA page (NASA Science, NSSDCA, NASA/JPL). No page, no fact.
+- Anything not checked goes in `TODO_VERIFY.md`, not on the site.
+- Quiz answers must already be in that machine's text.
+- Use the `nasa-machine-card` skill for any data change.
 
-## Tech stack
-React + Vite, Tailwind CSS, and local JSON data (`moonMachines.json`, `marsMachines.json`). Images are downloaded into the project. No backend, no database, and no live API calls at demo time.
+## Building
+- Use the `mission-reborn-builder` skill for any site change.
+- Relative paths only (`images/moon/lcross.jpg`, never `/images/...`). Lowercase-with-dashes file names.
+- Every animation has a Calm mode / reduced-motion path.
+- Words live in `data/*.js`, never in `app.js`.
 
-## Coding conventions
-- One feature per change. Keep components small and named clearly (`PlanetMap`, `MachineMarker`, `MachineInfoPanel`, …).
-- All content comes from the JSON data files. Never hard-code facts in components.
-- Place map markers using `left = (lon+180)/360`, `top = (90-lat)/180` (as percentages) on equirectangular map images.
-- Keep the code readable for beginners and add short comments where the logic isn't obvious.
+## Anti-slop
+- Plain, specific copy. Run `humanizer` on anything users read.
+- Keep the existing look (night sky, rust Mars, blue read-line). No generic gradients, emoji icons or template card grids.
+- Small functions with one job each. Reuse before adding.
 
-## 2D-only requirement
-No 3D globes, WebGL scenes or 3D models unless the lead approves.
-
-## Research verification rules
-- Use official sources first: NSSDCA, NASA Science, NASA/JPL, the NASA Image Library, PDS, LROC and USGS.
-- Every fact gets a source link. Anything not confirmed is marked **unverified**.
-- **Never invent coordinates, dates or statistics.** Record who published each coordinate.
-- Use the precise status word: inactive / lost contact / destroyed / still operating. Don't call everything "abandoned".
-- Record the credit and usage terms for every image. Not every image on a NASA page is unrestricted.
-- Each research file ends with a **Review status** box: Claude drafted / ChatGPT reviewed / Lead approved.
-
-## GitHub workflow
-Build one feature → test it → `git status` → `git add` → `git commit -m "clear message"` → push **only when the lead says so**.
-- Make small, meaningful commits. Never commit secrets, `.env`, `node_modules/` or `dist/`.
-- To undo, prefer `git revert`. Avoid `reset --hard`. Never overwrite a teammate's work without checking.
-
-## AI collaboration rules
-ChatGPT is the research and review partner. Claude Code is the main research and development partner. The project lead makes the final decisions.
-1. Don't conflict with, or needlessly duplicate, ChatGPT's documented work.
-2. Don't silently overwrite existing decisions or documentation.
-3. Keep important findings organised so ChatGPT can review them.
-4. If ChatGPT and Claude disagree, explain the difference and give evidence.
-5. Keep research, technical decisions and progress documented.
-6. Ask the lead before major changes to direction or technology.
-7. The website stays 2D unless the lead approves otherwise.
-8. Never begin building before research and planning are approved.
+## Workflow
+- One task at a time: change, preview, click through, check the console, report, stop.
+- Inspect files before changing them. Don't silently overwrite team decisions; flag disagreements.
+- Run the `github-ship-check` skill before any commit. **Commit and push only when the lead says so.**
