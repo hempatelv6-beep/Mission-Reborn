@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission Reborn</title>
+  <meta name="description" content="Ten machines NASA left on the Moon and Mars, and what happened to each one.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar" hidden>
+    <button class="brand" id="homeBtn" type="button">Mission Reborn</button>
+    <nav class="switch" aria-label="Choose a world">
+      <button type="button" data-go="moon">Moon</button>
+      <button type="button" data-go="mars">Mars</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Start screen -->
+    <section class="view start" id="start" aria-labelledby="title">
+      <h1 class="title" id="title">
+        <span class="t1">Mission Reb<span class="letter" data-planet="moon">o</span>rn</span>
+        <span class="t2"><span class="letter" data-planet="mars">A</span>bandoned, not forgotten</span>
+      </h1>
+      <p class="ask">Ten machines are still out there. Which world do you want to visit first?</p>
+      <div class="choices">
+        <button class="choice" type="button" data-go="moon">
+          <span class="disc moon" aria-hidden="true"></span>
+          <span class="choice-text">
+            <strong>5 machines on the Moon</strong>
+            <span>1964 to 2009</span>
+          </span>
+          <span class="done-mark" data-done="moon" hidden>Visited ✓</span>
+        </button>
+        <button class="choice" type="button" data-go="mars">
+          <span class="disc mars" aria-hidden="true"></span>
+          <span class="choice-text">
+            <strong>5 machines on Mars</strong>
+            <span>1976 to 2018</span>
+          </span>
+          <span class="done-mark" data-done="mars" hidden>Visited ✓</span>
+        </button>
+      </div>
+      <div class="final-cta" id="finalStart" hidden>
+        <p>Final Mission: 10 machines, 2 worlds. Are you ready?</p>
+        <button class="btn primary" type="button" data-final>Start Final Mission</button>
+      </div>
+    </section>
+
+    <!-- Planet page (filled from data/moon.js or data/mars.js) -->
+    <section class="view planet" id="planet" hidden>
+      <div class="planet-head">
+        <span class="disc big" id="headDisc" aria-hidden="true"></span>
+        <h2 id="planetTitle"></h2>
+        <p class="hook" id="hook"></p>
+      </div>
+
+      <div class="track" id="track">
+        <div class="rail" aria-hidden="false">
+          <div class="rail-line"><div class="rail-fill" id="railFill"></div></div>
+          <ol class="rail-dots" id="railDots" aria-label="Jump to a machine"></ol>
+          <div class="rail-planet" id="railPlanet" aria-hidden="true">
+            <span class="disc small" id="railDisc"></span>
+            <span class="rail-count" id="railCount">1 of 5</span>
+          </div>
+        </div>
+        <div class="machines" id="machines"></div>
+      </div>
+
+      <div class="planet-end" id="planetEnd">
+        <p id="endText"></p>
+        <div class="end-actions">
+          <button class="btn primary" type="button" id="planetQuizBtn"></button>
+          <button class="btn" type="button" id="againBtn">Read it again ↺</button>
+          <button class="btn" type="button" id="otherBtn"></button>
+        </div>
+        <div class="final-cta" id="finalEnd" hidden>
+          <p>Final Mission: 10 machines, 2 worlds. Are you ready?</p>
+          <button class="btn primary" type="button" data-final>Start Final Mission</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- One quiz box, reused for all 13 quizzes -->
+  <dialog class="quiz" id="quiz" aria-labelledby="quizTitle">
+    <div class="quiz-inner">
+      <div class="quiz-top">
+        <h3 id="quizTitle"></h3>
+        <button class="close" type="button" id="quizClose" aria-label="Close quiz">✕</button>
+      </div>
+      <div id="quizBody" aria-live="polite"></div>
+    </div>
+  </dialog>
+
+  <script src="data/moon.js"></script>
+  <script src="data/mars.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

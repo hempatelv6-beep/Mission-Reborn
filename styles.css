@@ -1,0 +1,261 @@
+:root {
+  --sky: #101b30;
+  --sky-2: #18264a;
+  --ink: #e6e2d8;
+  --dim: #98a1b5;
+  --read: #5aa9ff;      /* the part of the line you've read */
+  --unread: #34405c;    /* the part you haven't */
+  --rust: #c4562f;
+  --ok: #7fd1a0;
+  --miss: #f0a35e;
+
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+
+  --rail: 88px;
+  --measure: 62ch;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--sky);
+  color: var(--ink);
+  font: 1.0625rem/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Fixed, quiet starfield */
+.stars {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, #fff8 50%, transparent 51%),
+    radial-gradient(1px 1px at 68% 9%, #fff6 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 84% 42%, #fff7 50%, transparent 51%),
+    radial-gradient(1px 1px at 31% 63%, #fff5 50%, transparent 51%),
+    radial-gradient(1px 1px at 52% 88%, #fff6 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 6% 81%, #fff5 50%, transparent 51%),
+    radial-gradient(1px 1px at 93% 76%, #fff6 50%, transparent 51%),
+    radial-gradient(1px 1px at 44% 31%, #fff4 50%, transparent 51%);
+  background-size: 420px 420px;
+}
+
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--read); outline-offset: 3px; border-radius: 4px; }
+a { color: var(--read); }
+
+/* ---------- Planet discs (drawn placeholders until real NASA photos are in images/) ---------- */
+.disc {
+  display: inline-block; flex: none;
+  width: 56px; aspect-ratio: 1; border-radius: 50%;
+  box-shadow: inset -10px -8px 18px #0007;
+}
+.disc.moon {
+  background:
+    radial-gradient(circle at 30% 35%, #8f8b84 0 9%, transparent 10%),
+    radial-gradient(circle at 62% 58%, #9a968e 0 13%, transparent 14%),
+    radial-gradient(circle at 45% 78%, #8c8880 0 6%, transparent 7%),
+    radial-gradient(circle at 72% 28%, #a29e96 0 7%, transparent 8%),
+    radial-gradient(circle at 35% 30%, #e4e1da, #b7b3aa 60%, #8d8981);
+}
+.disc.mars {
+  background:
+    radial-gradient(ellipse 40% 12% at 50% 6%, #f1e6dc 0 60%, transparent 62%),
+    radial-gradient(ellipse 30% 18% at 38% 52%, #8e3a1f 0 50%, transparent 52%),
+    radial-gradient(ellipse 22% 10% at 66% 70%, #93401f 0 50%, transparent 52%),
+    radial-gradient(circle at 35% 30%, #e88a5c, var(--rust) 55%, #7e2f17);
+}
+.disc.big { width: clamp(120px, 22vw, 168px); }
+.disc.small { width: 40px; box-shadow: inset -5px -4px 9px #0007, 0 0 0 4px var(--sky); }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(var(--sky) 60%, transparent);
+}
+.brand {
+  background: none; border: 0; padding: 4px 0;
+  font: 700 1rem var(--display); letter-spacing: 0.01em;
+}
+.switch { display: flex; border: 1px solid var(--unread); border-radius: 999px; padding: 3px; }
+.switch button {
+  background: none; border: 0; border-radius: 999px; padding: 6px 14px;
+  font-size: 0.9375rem; color: var(--dim);
+}
+.switch button[aria-current="true"] { background: var(--sky-2); color: var(--ink); }
+
+/* ---------- Start screen ---------- */
+.start {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 72px 16px 48px;
+  max-width: 1120px; margin: 0 auto;
+}
+.title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+.title .t1 { display: block; font-size: clamp(3.4rem, 13vw, 10.5rem); }
+.title .t2 {
+  display: block; margin-top: 0.4em;
+  font-size: clamp(1.6rem, 5vw, 3.6rem); font-weight: 400; letter-spacing: -0.02em;
+  color: var(--dim);
+}
+/* The two letters that become worlds */
+.letter { display: inline-block; }
+.t1 .letter { color: #cfcbc2; }
+.t2 .letter { color: var(--rust); font-weight: 800; }
+
+.ask { margin: 2.2rem 0 1.2rem; max-width: 34ch; font-size: 1.25rem; }
+
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 760px; }
+.choice {
+  position: relative;
+  display: flex; align-items: center; gap: 18px;
+  padding: 20px; text-align: left;
+  background: var(--sky-2); border: 1px solid var(--unread); border-radius: 14px;
+  transition: border-color 0.15s;
+}
+.choice:hover { border-color: var(--read); }
+.choice-text { display: flex; flex-direction: column; }
+.choice-text strong { font: 700 1.25rem/1.2 var(--display); }
+.choice-text span { color: var(--dim); font-size: 0.9375rem; }
+.done-mark { position: absolute; top: 10px; right: 12px; font-size: 0.8125rem; color: var(--ok); }
+
+.final-cta { margin-top: 28px; }
+.final-cta p { margin: 0 0 10px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  padding: 11px 18px; border-radius: 10px;
+  background: transparent; border: 1px solid var(--unread);
+}
+.btn:hover { border-color: var(--read); }
+.btn.primary { background: var(--read); border-color: var(--read); color: #08162b; font-weight: 700; }
+.btn.small { padding: 7px 12px; font-size: 0.9375rem; }
+
+/* ---------- Planet page ---------- */
+.planet { padding: 84px 16px 0; max-width: 1040px; margin: 0 auto; }
+.planet-head { text-align: center; padding: 8px 0 56px; }
+.planet-head h2 {
+  margin: 20px 0 6px;
+  font: 800 clamp(2.2rem, 7vw, 4.5rem)/1 var(--display); letter-spacing: -0.03em;
+}
+.hook { margin: 0; color: var(--dim); font-size: 1.1875rem; }
+
+/* Timeline: a rail on the left, machines on the right */
+.track { position: relative; display: grid; grid-template-columns: var(--rail) 1fr; }
+.rail { position: relative; }
+.rail-line {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; transform: translateX(-50%);
+  background: var(--unread); border-radius: 4px; overflow: hidden;
+}
+.rail-fill { width: 100%; height: 0; background: var(--read); }
+.rail-dots { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+.rail-dots li { position: absolute; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: center; }
+.rail-dots button {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: none; border: 0; padding: 4px;
+  font-size: 0.8125rem; color: var(--dim);
+}
+.rail-dots button::before {
+  content: ""; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--sky); border: 3px solid var(--unread);
+}
+.rail-dots button.passed { color: var(--ink); }
+.rail-dots button.passed::before { border-color: var(--read); background: var(--read); }
+
+.rail-planet {
+  position: absolute; left: 50%; top: 0; z-index: 2;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  pointer-events: none;
+}
+.rail-count {
+  margin-top: 6px; padding: 2px 8px; border-radius: 999px;
+  background: var(--sky-2); font-size: 0.8125rem; white-space: nowrap;
+}
+
+/* Machine sections, same order every time */
+.machines { min-width: 0; padding-left: clamp(8px, 3vw, 40px); }
+.machine { padding: 0 0 120px; max-width: var(--measure); }
+.machine-year { margin: 0; color: var(--read); font-weight: 700; }
+.machine h3 { margin: 2px 0 10px; font: 800 clamp(1.8rem, 4.5vw, 2.75rem)/1.05 var(--display); letter-spacing: -0.02em; }
+.talking { margin: 0 0 22px; font-style: italic; color: var(--dim); font-size: 1.125rem; }
+
+.photo { margin: 0 0 24px; }
+.photo-box {
+  aspect-ratio: 16 / 10; border-radius: 12px;
+  display: grid; place-items: center; padding: 16px; text-align: center;
+  background: repeating-linear-gradient(135deg, var(--sky-2) 0 14px, #1c2b52 14px 28px);
+  border: 1px dashed var(--unread); color: var(--dim); font-size: 0.875rem;
+}
+.photo figcaption { margin-top: 6px; font-size: 0.8125rem; color: var(--dim); }
+
+.facts { margin: 0; }
+.facts dt { margin-top: 18px; font: 700 1rem var(--display); color: var(--ink); }
+.facts dd { margin: 4px 0 0; }
+
+.machine-foot { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+.source { font-size: 0.9375rem; }
+.unchecked { font-size: 0.8125rem; color: var(--miss); }
+
+/* End of planet */
+.planet-end { padding: 40px 0 120px calc(var(--rail) + clamp(8px, 3vw, 40px)); }
+.planet-end > p { margin: 0 0 16px; font-size: 1.25rem; max-width: 40ch; }
+.end-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Quiz box ---------- */
+.quiz {
+  width: min(560px, calc(100vw - 32px));
+  padding: 0; border: 1px solid var(--unread); border-radius: 16px;
+  background: var(--sky-2); color: var(--ink);
+}
+.quiz::backdrop { background: #050a14cc; }
+.quiz-inner { padding: 22px; }
+.quiz-top { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+.quiz h3 { margin: 0; font: 800 1.375rem/1.2 var(--display); }
+.close { background: none; border: 0; font-size: 1.1rem; color: var(--dim); padding: 2px 6px; }
+.q-step { margin: 4px 0 14px; color: var(--dim); font-size: 0.875rem; }
+.q-text { margin: 0 0 14px; font-size: 1.1875rem; font-weight: 700; }
+.options { display: grid; gap: 8px; }
+.options button {
+  text-align: left; padding: 12px 14px; border-radius: 10px;
+  background: var(--sky); border: 1px solid var(--unread);
+}
+.options button:hover:not(:disabled) { border-color: var(--read); }
+.options button:disabled { cursor: default; }
+.options button.right { border-color: var(--ok); }
+.options button.wrong { border-color: var(--miss); }
+.feedback { margin: 14px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--sky); }
+.feedback.right { color: var(--ok); }
+.feedback.wrong { color: var(--miss); }
+.quiz-actions { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+.score { font: 800 2.5rem/1 var(--display); margin: 8px 0; }
+.badge {
+  margin: 14px 0 4px; padding: 16px; border-radius: 14px; text-align: center;
+  border: 2px solid var(--read);
+}
+.badge strong { display: block; font: 800 1.25rem var(--display); }
+
+/* Planet flying from the letter (made by app.js) */
+.flyer { position: fixed; z-index: 50; pointer-events: none; }
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  :root { --rail: 56px; }
+  .choices { grid-template-columns: 1fr; }
+  .machine { padding-bottom: 88px; }
+  .rail-dots button span { font-size: 0.6875rem; }
+  .disc.small { width: 30px; }
+}
