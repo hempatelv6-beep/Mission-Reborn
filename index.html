@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%23c4562f%22/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,700;1,6..12,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -65,6 +65,7 @@
     <div class="stars far"></div>
     <div class="stars"></div>
     <div class="stars twinkle"></div>
+    <div class="stars sparkle"></div>
     <span class="float bob astro" style="width:58px;height:66px;right:4%;top:20%;--t:24s;--dx:-22px;--dy:46px;--r0:-12deg;--r1:16deg"><svg><use href="#astronaut"/></svg></span>
     <span class="float bob astro hide-phone" style="width:40px;height:46px;left:44%;bottom:6%;--t:29s;--dx:30px;--dy:-34px;--r0:160deg;--r1:196deg"><svg><use href="#astronaut"/></svg></span>
     <span class="float bob hide-phone" style="width:70px;height:35px;right:16%;top:6%;opacity:.75;--t:34s;--dx:-40px;--dy:20px;--r0:-18deg;--r1:-4deg"><svg><use href="#satellite"/></svg></span>
@@ -75,14 +76,15 @@
   </div>
 
   <header class="topbar" id="topbar">
-    <button class="brand world-only" id="homeBtn" type="button">Mission Reborn</button>
+    <button class="brand world-only" id="homeBtn" type="button" aria-label="Mission Reborn home"><span class="brand-long">Mission Reborn</span><span class="brand-short">Home</span></button>
     <div class="topbar-right">
       <nav class="switch world-only" aria-label="Choose a world">
         <button type="button" data-go="moon">Moon</button>
         <button type="button" data-go="mars">Mars</button>
       </nav>
       <button class="help-btn" type="button" data-help aria-label="How to use this site" title="How to use">?</button>
-      <button class="calm-toggle" type="button" data-calm aria-pressed="false" title="Turns off the big animations">Calm<span class="calm-long"> mode</span></button>
+      <button class="calm-toggle" type="button" data-sound aria-pressed="true" aria-label="Sound" title="Victory sounds"><span class="tlabel">Sound</span></button>
+      <button class="calm-toggle" type="button" data-calm aria-pressed="false" aria-label="Calm mode" title="Turns off the big animations"><span class="tlabel">Calm<span class="calm-long"> mode</span></span></button>
     </div>
   </header>
 
@@ -90,24 +92,36 @@
     <!-- Start screen -->
     <section class="view start" id="start" aria-labelledby="title">
       <div class="hero">
+        <nav class="pill-nav" aria-label="Home page sections">
+          <a href="#factsTitle">Fun facts</a>
+          <a href="#resTitle">Resources</a>
+        </nav>
         <p class="explorer-banner" id="startBadge" hidden>
           <span class="badge-ring" aria-hidden="true"><span class="disc moon"></span><span class="disc mars"></span></span>
           <span><strong>Mission Reborn Explorer</strong> You finished the Final Mission.</span>
         </p>
         <h1 class="title" id="title">Mission Reborn</h1>
         <p class="subtitle">Abandoned But Not Forgotten</p>
-        <p class="ask">Ten machines are still out there. Which world do you want to visit first?</p>
+        <p class="ask">Ten machines are still out there. Pick a world to explore.</p>
         <div class="choices">
-          <button class="choice" type="button" data-go="moon">
+          <button class="choice" type="button" data-go="moon" aria-label="Explore 5 machines on the Moon">
             <span class="disc moon" aria-hidden="true"></span>
-            <strong>5 machines on the <span class="nowrap">M<span class="letter" data-planet="moon">o</span>on</span></strong>
-            <span class="choice-sub">Launched 1967 to 2009</span>
+            <span class="choice-body">
+              <span class="choice-name" aria-hidden="true">M<span class="letter" data-planet="moon">o</span>on</span>
+              <span class="choice-sub">5 machines · launched 1967 to 2009</span>
+              <span class="choice-progress" data-progress="moon"></span>
+              <span class="pill">Explore</span>
+            </span>
             <span class="done-mark" data-done="moon" hidden>Visited ✓</span>
           </button>
-          <button class="choice" type="button" data-go="mars">
+          <button class="choice" type="button" data-go="mars" aria-label="Explore 5 machines on Mars">
             <span class="disc mars" aria-hidden="true"></span>
-            <strong>5 machines on <span class="nowrap">M<span class="letter" data-planet="mars">a</span>rs</span></strong>
-            <span class="choice-sub">Launched 1975 to 2020</span>
+            <span class="choice-body">
+              <span class="choice-name" aria-hidden="true">M<span class="letter" data-planet="mars">a</span>rs</span>
+              <span class="choice-sub">5 machines · launched 1975 to 2020</span>
+              <span class="choice-progress" data-progress="mars"></span>
+              <span class="pill">Explore</span>
+            </span>
             <span class="done-mark" data-done="mars" hidden>Visited ✓</span>
           </button>
         </div>
@@ -159,6 +173,7 @@
         <span class="disc big" id="headDisc" aria-hidden="true"></span>
         <h2 id="planetTitle" tabindex="-1"></h2>
         <p class="hook" id="hook"></p>
+        <p class="cp-total" id="cpTotal"></p>
       </div>
 
       <div class="track" id="track">
@@ -205,6 +220,21 @@
       </ol>
       <p class="help-note">Too much movement? Turn on Calm mode in the top corner.</p>
       <div class="quiz-actions"><button class="btn primary" type="button" data-help-close autofocus>Let's go</button></div>
+    </div>
+  </dialog>
+
+  <!-- Shown after each machine's quiz -->
+  <dialog class="quiz checkpoint" id="checkpoint" aria-labelledby="cpTitle">
+    <div class="quiz-inner">
+      <div class="cp-burst" id="cpBurst" aria-hidden="true"></div>
+      <p class="cp-kicker">Checkpoint reached</p>
+      <h3 id="cpTitle"></h3>
+      <p class="cp-score" id="cpScore"></p>
+      <p class="cp-count" id="cpCount"></p>
+      <div class="quiz-actions">
+        <button class="btn primary" type="button" id="cpNext">Next machine</button>
+        <button class="btn" type="button" id="cpStay">Stay here</button>
+      </div>
     </div>
   </dialog>
 

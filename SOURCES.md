@@ -35,3 +35,7 @@ The eight fun facts on the home page come from pages already listed above: the N
 ## Other material
 
 The site does not use Wikipedia, blogs, or fan sites as fact sources. The line “my battery is low and it's getting dark” is often attributed to Opportunity, but it was written by a fan and is not a NASA quote, so it is not used here.
+
+## Audio
+
+The three real recordings on the site, and the NASA pages they came from, are listed in [AUDIO_CREDITS.md](AUDIO_CREDITS.md).

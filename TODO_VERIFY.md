@@ -44,3 +44,9 @@ The current site follows the “Website Text” and the data files. Some older p
 - [ ] Open every NASA link from the live site.
 - [ ] Try the site on a real phone and ask someone outside the team to use it.
 - [ ] Watch both animations on a school laptop, including one with a slower connection.
+
+## Redesign checks
+
+- [ ] Find the original artist and licence of the two planet pictures (`images/planets/moon.png`, `images/planets/mars.png`). If we can't, replace them with our own drawings before submitting, because the repo is public.
+- [ ] Listen to the three recordings and check each caption against its NASA page (see AUDIO_CREDITS.md).
+- [ ] Confirm the speaker on the Apollo 11 clip before naming them anywhere. The NSSDCA page gives the quote but not the speaker, so the site doesn't name one.

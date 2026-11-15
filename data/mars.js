@@ -224,6 +224,14 @@ const MARS = {
         { term: "seismometer", meaning: "An instrument that measures marsquakes." },
         { term: "Elysium Planitia", meaning: "A flat, smooth plain near Mars' equator." }
       ],
+      // Real NASA recording. Details in AUDIO_CREDITS.md
+      audio: {
+        src: "audio/insight-wind.mp3",
+        caption: "Wind blowing past InSight on Mars, picked up by its air pressure sensor. NASA sped the recording up so we can hear it.",
+        credit: "NASA/JPL-Caltech/CNES/Cornell",
+        page: "https://science.nasa.gov/resource/sounds-from-insights-pressure-sensor-on-mars",
+        file: "https://assets.science.nasa.gov/content/dam/science/psd/mars/downloadable_items/4/42303_aps.mp4"
+      },
       sources: [
         { label: "InSight Lander, NASA Science", url: "https://science.nasa.gov/mission/insight/" }
       ],
@@ -277,6 +285,14 @@ const MARS = {
       words: [
         { term: "technology test", meaning: "Ingenuity's job: to try the first powered, controlled flight on another planet." }
       ],
+      // Real NASA recording. Details in AUDIO_CREDITS.md
+      audio: {
+        src: "audio/ingenuity-flight.mp3",
+        caption: "Ingenuity's fourth flight, recorded by the Perseverance rover's microphone 80 m away. Listen for a faint hum over the wind.",
+        credit: "NASA/JPL-Caltech/LANL/CNES/CNRS/ISAE-Supaéro",
+        page: "https://science.nasa.gov/resource/listen-to-nasas-ingenuity-mars-helicopter-in-flight-2/",
+        file: "https://assets.science.nasa.gov/content/dam/science/psd/mars/downloadable_items/4/46087_20210507_HelicopterFliesOnMars.mp3"
+      },
       sources: [
         { label: "Ingenuity Mars Helicopter, NASA Science", url: "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/" }
       ],

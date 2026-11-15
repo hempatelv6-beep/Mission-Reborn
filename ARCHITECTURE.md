@@ -26,7 +26,7 @@ index.html
 
 ## Planets and background
 
-`paintMap()` paints a flat Moon map and a flat Mars map once on a canvas, using real longitude and latitude for the dark regions. Each planet circle slides its map sideways inside it, so it spins; `turnPlanets()` runs this every frame and also rolls the timeline planet with the scroll. The floating astronauts, asteroids and stars are SVG and CSS animations in `index.html` and `styles.css`.
+The Moon and Mars are two pictures, `images/planets/moon.png` and `images/planets/mars.png`. `fillPlanets()` puts a `.planet-face` inside every planet circle, and `turnPlanets()` turns those faces slowly every frame. The timeline planet also rolls with the scroll: down turns it anticlockwise, up turns it clockwise. The floating astronauts, asteroids and stars are SVG and CSS animations in `index.html` and `styles.css`.
 
 ## Moving around
 
@@ -41,3 +41,10 @@ index.html
 `app.js` uses `localStorage` for `done-moon`, `done-mars`, `badge`, `calm`, and `help-seen`. These values stay in that browser and are not shared between devices. If browser storage is unavailable, the site continues without saving progress.
 
 Calm mode follows the computer's reduced-motion setting unless the visitor has already chosen a setting in the site. It also changes how the larger animations work.
+
+## Checkpoints, sounds and recordings
+
+- Finishing a machine's quiz calls `showCheckpoint()`: it saves `check-<machine id>` in `localStorage`, ticks that year on the timeline, shows the checkpoint card and plays a short chime from `playWin()`.
+- `playWin()` makes its notes with the Web Audio API, so there are no sound files. The Sound switch saves `sound` in `localStorage`.
+- A machine with an `audio` field in its data gets a "Hear the real recording" player. `toggleRecording()` plays one recording at a time. Files are in `audio/`, listed in [AUDIO_CREDITS.md](AUDIO_CREDITS.md).
+- `setupTimeline()` measures again after `document.fonts.ready`, so the timeline lines up once the web fonts have loaded.

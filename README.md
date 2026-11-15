@@ -77,4 +77,11 @@ Add the team members' names before submitting. Researchers should have someone e
 
 - Facts: NASA Science and the NASA Space Science Data Coordinated Archive. See [SOURCES.md](SOURCES.md).
 - Images: NASA, NASA/JPL, and NASA/JPL-Caltech. See [IMAGE_CREDITS.md](IMAGE_CREDITS.md). NASA does not endorse this project.
-- Animation: [GSAP](https://gsap.com/). Fonts: Fraunces and Nunito Sans, served by Google Fonts. The planets, astronauts and asteroids are drawn with code (see [IMAGE_CREDITS.md](IMAGE_CREDITS.md)).
+- Animation: [GSAP](https://gsap.com/). Fonts: Fredoka and Nunito, served by Google Fonts. Moon and Mars pictures supplied by the team; astronauts and asteroids drawn in code (see [IMAGE_CREDITS.md](IMAGE_CREDITS.md)).
+- Sounds: three real NASA recordings, listed in [AUDIO_CREDITS.md](AUDIO_CREDITS.md). The checkpoint chime is made in the browser.
+
+## New in this version
+
+- A brighter home page: big outlined title, "Fun facts" and "Resources" buttons, and two wide cards for the Moon and Mars.
+- A checkpoint after every machine: finish its quiz to get a short victory card and chime, and a tick on the timeline. Turn sounds off with the Sound switch.
+- Real NASA recordings for Apollo 11, InSight and Ingenuity. See [AUDIO_CREDITS.md](AUDIO_CREDITS.md).

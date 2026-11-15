@@ -30,147 +30,117 @@ function setCalm(on, save = true) {
 const savedCalm = store.get("calm");
 setCalm(savedCalm === null ? systemCalm.matches : savedCalm === "1", false);
 
-// ---------- Planets: paint a flat map once, then spin it inside each circle ----------
-// Positions use real longitude/latitude, so the Moon's dark seas and Mars' dark
-// regions sit roughly where they are on the real worlds. Stylised, not a photo.
-const MAP_W = 1024, MAP_H = 512;
-const lonX = (lon) => (lon + 180) / 360 * MAP_W;
-const latY = (lat) => (90 - lat) / 180 * MAP_H;
-const DEG = MAP_W / 360;
-
-function paintMap(world) {
-  const c = document.createElement("canvas");
-  c.width = MAP_W; c.height = MAP_H;
-  const g = c.getContext("2d");
-  let seed = world === "moon" ? 7 : 11;
-  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  // Draw at x and one map-width either side, so the map joins up when it wraps around
-  const wrap = (fn) => [-MAP_W, 0, MAP_W].forEach((dx) => { g.save(); g.translate(dx, 0); fn(); g.restore(); });
-  // A soft-edged patch. Shadow blur works in every browser (canvas filters don't).
-  const patch = (lon, lat, rx, ry, color, blur = 10, rot = 0) => wrap(() => {
-    g.shadowColor = color; g.shadowBlur = blur; g.shadowOffsetX = 4000;
-    g.fillStyle = "#000";
-    g.beginPath(); g.ellipse(lonX(lon) - 4000, latY(lat), rx * DEG, ry * DEG, rot, 0, Math.PI * 2); g.fill();
-    g.shadowColor = "transparent";
-  });
-  // A region built from many overlapping soft patches, so its edge is ragged like the real thing
-  const region = (lon, lat, rx, ry, color, blur, base) => {
-    // one big, very soft shape underneath, then ragged patches on top
-    patch(lon, lat, rx * 0.95, ry * 0.95, base, Math.min(rx, ry) * DEG * 0.9);
-    const n = Math.round((rx * ry) / 8) + 5;
-    for (let k = 0; k < n; k++) {
-      const a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * 0.8;
-      const size = Math.sqrt(rx * ry) * (0.3 + rnd() * 0.35);
-      patch(lon + Math.cos(a) * rx * d, lat + Math.sin(a) * ry * d, size * (0.8 + rnd() * 0.6), size * (0.6 + rnd() * 0.5), color, blur, rnd() * Math.PI);
-    }
-  };
-  const grain = (n, light, dark) => {
-    for (let k = 0; k < n; k++) {
-      g.fillStyle = rnd() < 0.5 ? light : dark;
-      g.fillRect(rnd() * MAP_W, rnd() * MAP_H, 1 + rnd() * 2, 1 + rnd() * 2);
-    }
-  };
-  const crater = (x, y, r, dark, light) => wrap(() => {
-    g.fillStyle = dark; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
-    g.strokeStyle = light; g.lineWidth = Math.max(1, r * 0.35);
-    g.beginPath(); g.arc(x, y, r, Math.PI * 0.55, Math.PI * 1.55); g.stroke();
-  });
-
-  if (world === "moon") {
-    g.fillStyle = "#aeaba4"; g.fillRect(0, 0, MAP_W, MAP_H);
-    for (let k = 0; k < 70; k++) patch(rnd() * 360 - 180, rnd() * 160 - 80, 6 + rnd() * 18, 5 + rnd() * 12, rnd() < 0.5 ? "#c4c1ba55" : "#8e8b8455", 24);
-    const sea = "#57565a38";
-    // Near side seas (maria)
-    [[-57, 20, 15, 20], [-45, 2, 13, 13], [-62, -6, 9, 11], [-38, 12, 10, 9], // Oceanus Procellarum
-     [-16, 33, 17, 13], [17, 28, 10, 9], [31, 8, 12, 10], [4, 13, 6, 5], // Imbrium, Serenitatis, Tranquillitatis, Vaporum
-     [59, 17, 7, 6], [51, -8, 8, 9], [35, -15, 5, 5], [-17, -21, 10, 8], [-39, -24, 6, 6], // Crisium, Fecunditatis, Nectaris, Nubium, Humorum
-     [0, 56, 32, 3.5], [147, 27, 5, 4], [-95, -20, 4, 4]] // Frigoris, Moscoviense (far side), Orientale
-      .forEach(([lon, lat, rx, ry]) => region(lon, lat, rx, ry, sea, 16, "#57565a90"));
-    for (let k = 0; k < 420; k++) {
-      const r = rnd() < 0.93 ? 1 + rnd() * 2.5 : 3 + rnd() * 6;
-      crater(rnd() * MAP_W, 20 + rnd() * (MAP_H - 40), r, "#00000016", "#ffffff22");
-    }
-    // Tycho and Copernicus: young, bright craters with rays
-    [[-11, -43, 150], [-20, 10, 80]].forEach(([lon, lat, len]) => wrap(() => {
-      const x = lonX(lon), y = latY(lat);
-      g.strokeStyle = "#ffffff0d"; g.lineWidth = 3;
-      for (let k = 0; k < 14; k++) {
-        const a = rnd() * Math.PI * 2, l = len * (0.25 + rnd() * 0.4);
-        g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke();
-      }
-      g.fillStyle = "#ebe8e1"; g.beginPath(); g.arc(x, y, 3, 0, Math.PI * 2); g.fill();
-    }));
-    grain(9000, "#ffffff10", "#00000012");
-  } else {
-    const sky = g.createLinearGradient(0, 0, 0, MAP_H);
-    sky.addColorStop(0, "#c98a64"); sky.addColorStop(0.18, "#c4693c"); sky.addColorStop(0.5, "#cb7244");
-    sky.addColorStop(0.82, "#bd6439"); sky.addColorStop(1, "#c79474");
-    g.fillStyle = sky; g.fillRect(0, 0, MAP_W, MAP_H);
-    for (let k = 0; k < 80; k++) patch(rnd() * 360 - 180, rnd() * 140 - 70, 8 + rnd() * 20, 4 + rnd() * 10, rnd() < 0.55 ? "#e3a06e40" : "#9a462240", 26);
-    patch(0, -26, 190, 13, "#8a3c2244", 40); // the broad darker belt across the south
-    const dark = "#6b2c1738";
-    [[70, 10, 8, 15], [66, -4, 6, 8], [-30, 45, 18, 8], [0, -5, 14, 4], [25, -8, 22, 4], // Syrtis Major, Acidalia, Meridiani, Sabaeus
-     [-40, -25, 24, 7], [-10, -28, 18, 6], [140, -25, 26, 7], [105, -18, 16, 6], [-150, -30, 20, 6], // southern dark band
-     [110, 45, 22, 7], [-90, -27, 6, 5]] // Utopia, Solis Lacus
-      .forEach(([lon, lat, rx, ry]) => region(lon, lat, rx, ry, dark, 20, "#6b2c1770"));
-    // Valles Marineris, the giant canyon: a soft dark scar
-    wrap(() => {
-      g.shadowColor = "#5a2414a0"; g.shadowBlur = 5; g.shadowOffsetX = 4000;
-      g.strokeStyle = "#000"; g.lineWidth = 4; g.lineCap = "round";
-      g.beginPath(); g.moveTo(lonX(-95) - 4000, latY(-7)); g.quadraticCurveTo(lonX(-70) - 4000, latY(-12), lonX(-45) - 4000, latY(-13)); g.stroke();
-      g.shadowColor = "transparent";
-    });
-    // Tharsis volcanoes, Olympus Mons the biggest
-    [[-134, 18, 9], [-104, 11, 4], [-113, 1, 4], [-121, -9, 4]].forEach(([lon, lat, r]) => {
-      crater(lonX(lon), latY(lat), r * 0.45 * DEG / 2.5, "#7d351c80", "#f0b48a66");
-      patch(lon, lat, r * 0.9, r * 0.8, "#e9a87455", 8);
-    });
-    patch(70, -42, 14, 9, "#f2c39c70", 16); // Hellas basin
-    patch(-43, -50, 6, 5, "#f2c39c55", 10); // Argyre
-    for (let k = 0; k < 140; k++) crater(rnd() * MAP_W, 30 + rnd() * (MAP_H - 60), 1 + rnd() * 4, "#00000018", "#ffffff18");
-    grain(9000, "#ffffff0d", "#00000014");
-  }
-  return c.toDataURL("image/jpeg", 0.88);
-}
-
-const planetMaps = document.getElementsByClassName("planet-map"); // live list
+// ---------- Planets: the Moon and Mars pictures, turning slowly ----------
+const planetFaces = document.getElementsByClassName("planet-face"); // live list
 function fillPlanets(root = document) {
   $$(".disc", root).forEach((d) => {
-    if (d.firstElementChild) return;
-    const phase = d.classList.contains("mars") ? 0.33 : 0.25; // starts on the side we know best
-    d.innerHTML = `<span class="planet-map" data-phase="${phase}"></span><span class="planet-caps"></span>`;
+    if (!d.firstElementChild) d.innerHTML = '<span class="planet-face"></span>';
   });
 }
-try {
-  document.documentElement.style.setProperty("--moon-map", `url(${paintMap("moon")})`);
-  document.documentElement.style.setProperty("--mars-map", `url(${paintMap("mars")})`);
-} catch { /* no canvas: the plain colour circles still show */ }
 fillPlanets();
 
-// Every planet turns slowly all the time. The one on the timeline also rolls with
-// the page: scroll down and it rolls left, scroll up and it rolls right.
+// Every planet turns slowly. The one on the timeline also rolls with the page:
+// scroll down and it rolls left (anticlockwise), scroll up and it rolls right.
 const spin = { idle: 0, rolled: 0, dir: 1, last: performance.now(), lastY: window.scrollY };
 window.addEventListener("scroll", () => {
   const dy = window.scrollY - spin.lastY;
   spin.lastY = window.scrollY;
   if (!dy) return;
-  spin.rolled += dy / 2600;
+  spin.rolled += dy / 4;      // degrees per pixel scrolled
   spin.dir = Math.sign(dy);
 }, { passive: true });
 
 function turnPlanets(now) {
   const dt = Math.min(0.1, (now - spin.last) / 1000);
   spin.last = now;
-  if (!calm()) spin.idle += (dt / 55) * spin.dir; // about one turn a minute
-  for (const map of planetMaps) {
-    let f = Number(map.dataset.phase) + spin.idle;
-    if (map.parentElement.id === "railDisc") f += spin.rolled;
-    f = ((f % 1) + 1) % 1;
-    map.style.transform = `translateX(${(-f * 50).toFixed(3)}%)`;
+  if (!calm()) spin.idle += dt * 6 * spin.dir; // 6 degrees a second
+  for (const face of planetFaces) {
+    let deg = -spin.idle;
+    if (face.parentElement.id === "railDisc") deg -= spin.rolled;
+    face.style.transform = `rotate(${(deg % 360).toFixed(2)}deg)`;
   }
   requestAnimationFrame(turnPlanets);
 }
 requestAnimationFrame(turnPlanets);
+
+// ---------- Checkpoints: one per machine, saved in this browser ----------
+const isChecked = (id) => store.get("check-" + id) === "1";
+const checkedCount = (world) => world.machines.filter((m) => isChecked(m.id)).length;
+
+// ---------- Sounds: made right here with the Web Audio API, no sound files ----------
+let soundOn = store.get("sound") !== "0";
+let audioCtx = null;
+function setSound(on) {
+  soundOn = on;
+  store.set("sound", on ? "1" : "0");
+  $$("[data-sound]").forEach((b) => b.setAttribute("aria-pressed", String(on)));
+}
+setSound(soundOn);
+// A short rising chime for a checkpoint, a longer fanfare for the Final Mission
+function playWin(big = false) {
+  if (!soundOn) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const notes = big ? [523, 659, 784, 1047, 784, 1047, 1319] : [659, 784, 988, 1319];
+    const step = big ? 0.14 : 0.1;
+    const t0 = audioCtx.currentTime + 0.02;
+    notes.forEach((f, k) => {
+      const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+      osc.type = "triangle"; osc.frequency.value = f;
+      const t = t0 + k * step, len = k === notes.length - 1 ? 0.6 : 0.22;
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.18, t + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t); osc.stop(t + len + 0.05);
+    });
+  } catch { /* no Web Audio: stay quiet */ }
+}
+
+// Little stars that burst out of a point (skipped in Calm mode)
+function burst(host, count = 24, spread = 160) {
+  host.innerHTML = "";
+  if (!hasGsap || calm()) return;
+  const colors = ["#5aa9ff", "#ec8a5a", "#ffe08a", "#7fd1a0", "#e6e2d8"];
+  for (let k = 0; k < count; k++) {
+    const p = document.createElement("span");
+    p.className = k % 3 ? "spark" : "spark star";
+    p.style.background = colors[k % colors.length];
+    host.appendChild(p);
+    const a = (k / count) * Math.PI * 2 + Math.random() * 0.3, d = spread * (0.5 + Math.random() * 0.6);
+    gsap.fromTo(p, { x: 0, y: 0, scale: 0, opacity: 1 }, {
+      x: Math.cos(a) * d, y: Math.sin(a) * d + 40, scale: 0.6 + Math.random(), rotation: Math.random() * 360,
+      opacity: 0, duration: 1.2 + Math.random() * 0.6, ease: "power3.out", delay: Math.random() * 0.15
+    });
+  }
+}
+
+let cpNextIndex = null;
+function showCheckpoint(i, score, total) {
+  const m = current.machines[i];
+  store.set("check-" + m.id, "1");
+  $("#cpTitle").textContent = `${m.name} ✓`;
+  $("#cpScore").textContent = `You got ${score} of ${total}.`;
+  $("#cpCount").textContent = `${checkedCount(current)} of 5 ${current.planet} checkpoints done.`;
+  const last = i === current.machines.length - 1;
+  cpNextIndex = last ? null : i + 1;
+  $("#cpNext").textContent = last ? "Go to the planet quiz" : "Next machine";
+  refreshCheckpoints();
+  $("#checkpoint").showModal();
+  playWin(false);
+  burst($("#cpBurst"));
+}
+
+function refreshCheckpoints() {
+  if (current && !$("#planet").hidden) {
+    $$("#railDots button").forEach((b, k) => b.classList.toggle("checked", isChecked(current.machines[k].id)));
+    $("#cpTotal").textContent = `${checkedCount(current)} of 5 checkpoints`;
+  }
+  $$("[data-progress]").forEach((el) => {
+    const n = checkedCount(WORLDS[el.dataset.progress]);
+    el.textContent = n ? `${n} of 5 checkpoints ✓` : "";
+  });
+}
 
 function refreshStartMarks() {
   $$("[data-done]").forEach((el) => { el.hidden = !isDone(el.dataset.done); });
@@ -178,6 +148,7 @@ function refreshStartMarks() {
   $("#finalStart").hidden = !both;
   $("#finalEnd").hidden = !both;
   $("#startBadge").hidden = store.get("badge") !== "1";
+  refreshCheckpoints();
 }
 
 function markDone(id) {
@@ -206,6 +177,7 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 // ---------- Views ----------
 function leaveWorld() {
   stopReading();
+  stopRecordings();
   closeTerm();
   triggers.forEach((t) => t.kill());
   triggers = [];
@@ -262,7 +234,11 @@ function openWorld(id) {
       showPlanet(id);
       // the real header planet takes over from the flying one
       gsap.fromTo("#headDisc", { opacity: 0 }, { opacity: 1, duration: 0.2, onComplete: () => flyer.remove() });
-      gsap.set([letter, ...others], { clearProps: "opacity,scale" });
+      // Reset with plain style changes. Asking GSAP to clear a transform on a hidden
+      // element makes it move the letter to the end of the word ("Moon" became "Mono").
+      letter.style.removeProperty("transform");
+      letter.style.removeProperty("opacity");
+      others.forEach((el) => el.style.removeProperty("opacity"));
       busy = false;
     }
   })
@@ -339,6 +315,12 @@ function machineHtml(m, i) {
           ? `<p class="checked">Our team checked these pages on ${esc(niceDate(m.sourceChecked))}.</p>`
           : `<p class="unchecked">Not fact-checked yet</p>`}
       </div>
+      ${m.audio ? `
+      <figure class="nasa-audio">
+        <button class="btn" type="button" data-audio="${i}" aria-pressed="false">▶ Hear the real recording</button>
+        <figcaption>${esc(m.audio.caption)} <span class="audio-credit">Audio: <a href="${esc(m.audio.page)}" target="_blank" rel="noopener">${esc(m.audio.credit)}</a></span></figcaption>
+        <audio preload="none" src="${esc(m.audio.src)}"></audio>
+      </figure>` : ""}
       <div class="machine-foot">
         <button class="btn primary" type="button" data-quiz="${i}">Check your knowledge</button>
         <button class="btn" type="button" data-read="${i}" aria-pressed="false">Read aloud</button>
@@ -373,6 +355,7 @@ function renderPlanet(world) {
   $("#railDots").innerHTML = world.machines.map((m, i) => `
     <li><button type="button" data-jump="${i}" aria-label="Jump to ${esc(m.name)}, launched ${m.year}"><span>${m.year}</span></button></li>`).join("");
 
+  $("#cpTotal").textContent = "";
   $("#endText").textContent = `You've met all 5 ${world.planet} machines. Let's see what you remember!`;
   $("#planetQuizBtn").textContent = `Take the ${world.planet} Quiz`;
   $("#otherBtn").textContent = `Now: ${other.title}`;
@@ -412,6 +395,8 @@ function setupTimeline() {
   }
 
   placeDots();
+  // Web fonts can arrive after this runs and move the text, so measure again then
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => hasGsap ? ScrollTrigger.refresh() : placeDots());
   // photos change height as they load, so dots get re-placed then
   $$("#machines img").forEach((img) => img.addEventListener("load", () => hasGsap ? ScrollTrigger.refresh() : placeDots(), { once: true }));
 
@@ -440,7 +425,7 @@ function setupTimeline() {
       });
       triggers.push(tween.scrollTrigger);
     } else {
-      gsap.set("#headDisc", { clearProps: "all" });
+      $("#headDisc").removeAttribute("style");
     }
     ScrollTrigger.refresh();
   } else {
@@ -478,7 +463,7 @@ function rewindToTop(then) {
 
   gsap.timeline({
     onComplete() {
-      gsap.set(disc, { clearProps: "transform" });
+      disc.style.removeProperty("transform");
       then();
     }
   })
@@ -510,7 +495,7 @@ function switchWorld(id) {
 }
 
 // ---------- One quiz box, reused for all 13 quizzes ----------
-function openQuiz(title, questions, { final = false } = {}) {
+function openQuiz(title, questions, { final = false, machine = null } = {}) {
   stopReading();
   const dialog = $("#quiz");
   const body = $("#quizBody");
@@ -550,6 +535,12 @@ function openQuiz(title, questions, { final = false } = {}) {
     const msg = all ? "You got every one. You were really paying attention."
       : score >= questions.length / 2 ? "Nice! Try again and see if you can get them all."
       : "These are tricky. Have another look at the machines, then try again.";
+    if (machine !== null) {
+      body.innerHTML = "";
+      dialog.close();
+      showCheckpoint(machine, score, questions.length);
+      return;
+    }
     if (final) {
       store.set("badge", "1");
       body.innerHTML = "";
@@ -575,26 +566,11 @@ function openQuiz(title, questions, { final = false } = {}) {
 
 // ---------- Victory: finishing the Final Mission ----------
 function celebrate(score, total) {
-  const v = $("#victory");
   $("#victoryScore").textContent = `You scored ${score} of ${total} and visited 10 machines on 2 worlds.`;
-  v.showModal();
+  $("#victory").showModal();
+  playWin(true);
+  burst($("#victoryBurst"), 46, 300);
   if (!hasGsap || calm()) return;
-  // a burst of little stars and sparks from the badge
-  const burst = $("#victoryBurst");
-  burst.innerHTML = "";
-  const colors = ["#5aa9ff", "#ec8a5a", "#e6e2d8", "#7fd1a0", "#f0c35e"];
-  for (let k = 0; k < 46; k++) {
-    const p = document.createElement("span");
-    p.className = k % 3 ? "spark" : "spark star";
-    p.style.background = colors[k % colors.length];
-    burst.appendChild(p);
-    const a = (k / 46) * Math.PI * 2 + Math.random() * 0.3;
-    const d = 140 + Math.random() * 260;
-    gsap.fromTo(p, { x: 0, y: 0, scale: 0, opacity: 1, rotation: 0 }, {
-      x: Math.cos(a) * d, y: Math.sin(a) * d + 60, scale: 0.6 + Math.random(), rotation: Math.random() * 360,
-      opacity: 0, duration: 1.4 + Math.random() * 0.8, ease: "power3.out", delay: 0.15 + Math.random() * 0.2
-    });
-  }
   gsap.timeline()
     .fromTo(".victory-planets", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.8, ease: "back.out(1.7)" })
     .fromTo(".victory h2", { y: 30, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.35)
@@ -660,6 +636,25 @@ function speechLines(m) {
 }
 
 let readingBtn = null;
+// Only one recording plays at a time
+function stopRecordings() {
+  $$(".nasa-audio audio").forEach((a) => { a.pause(); });
+  $$("[data-audio]").forEach((b) => { b.textContent = "▶ Hear the real recording"; b.setAttribute("aria-pressed", "false"); });
+}
+function toggleRecording(btn) {
+  const audio = btn.parentElement.querySelector("audio");
+  const playing = !audio.paused;
+  stopRecordings();
+  if (playing) return;
+  stopReading();
+  audio.currentTime = 0;
+  audio.play().then(() => {
+    btn.textContent = "■ Stop the recording";
+    btn.setAttribute("aria-pressed", "true");
+  }).catch(() => { btn.textContent = "Couldn't play this here"; });
+  audio.onended = () => stopRecordings();
+}
+
 function stopReading() {
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   if (readingBtn) {
@@ -724,7 +719,15 @@ document.addEventListener("click", (e) => {
   const t = e.target.closest("button, a");
   if (!t || busy) return;
 
-  if (t.hasAttribute("data-help")) openHelp();
+  if (t.hasAttribute("data-sound")) setSound(!soundOn);
+  else if (t.dataset.audio) toggleRecording(t);
+  else if (t.id === "cpStay") $("#checkpoint").close();
+  else if (t.id === "cpNext") {
+    $("#checkpoint").close();
+    const target = cpNextIndex === null ? $("#planetEnd") : $("#m-" + cpNextIndex);
+    target.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "start" });
+  }
+  else if (t.hasAttribute("data-help")) openHelp();
   else if (t.hasAttribute("data-help-close")) $("#help").close();
   else if (t.classList.contains("term")) openTerm(t);
   else if (t.hasAttribute("data-calm")) setCalm(!calm());
@@ -742,7 +745,7 @@ document.addEventListener("click", (e) => {
   }
   else if (t.dataset.quiz) {
     const m = current.machines[Number(t.dataset.quiz)];
-    openQuiz(`${m.name}: check your knowledge`, m.quiz);
+    openQuiz(`${m.name}: check your knowledge`, m.quiz, { machine: Number(t.dataset.quiz) });
   }
   else if (t.dataset.read) readAloud(t, current.machines[Number(t.dataset.read)]);
   else if (t.id === "planetQuizBtn") openQuiz(`The ${current.planet} Quiz`, current.machines.map((m) => m.quiz[0]));

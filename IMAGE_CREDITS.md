@@ -20,6 +20,6 @@ The label under each image says what it actually shows: **NASA photo** is a phot
 The final credit line for each image still needs to be checked against its NASA page. See [TODO_VERIFY.md](TODO_VERIFY.md). The table uses the credit shown in the project notes for now.
 
 ## Not photos
-- The spinning Moon and Mars are drawings made with code in `app.js`, not NASA images. Their dark seas, Valles Marineris, Olympus Mons, Hellas and the ice caps are placed by real longitude and latitude, but the shapes are simplified.
+- The spinning Moon and Mars are cartoon pictures, `images/planets/moon.png` and `images/planets/mars.png`. The team supplied them, and we cropped them into circles. **The original artist and licence are not recorded yet** (see [TODO_VERIFY.md](TODO_VERIFY.md)). They are drawings, not NASA images.
 - The floating astronauts, asteroids and satellite in the background are simple drawings in `index.html`. They don't show any real spacecraft.
 - `images/screenshots/` holds screenshots of our own site.

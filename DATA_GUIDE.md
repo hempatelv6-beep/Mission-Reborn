@@ -99,3 +99,19 @@ Save images in `images/moon/` or `images/mars/`; do not link directly to NASA's 
 - Wrap text in straight double quotes. Escape a double quote inside the text as `\"`.
 - `answer` is a number, not the answer text.
 - After editing, open the page. If it is blank, check the browser console for the first error.
+
+## Real NASA recordings
+
+A machine can have an `audio` field. The site then shows a "Hear the real recording" button under its facts.
+
+```js
+audio: {
+  src: "audio/ingenuity-flight.mp3",      // a file in audio/, lowercase with dashes
+  caption: "What you hear, in one or two short sentences.",
+  credit: "NASA/JPL-Caltech/...",           // copied from the NASA page
+  page: "https://science.nasa.gov/...",     // the NASA page that offers the file
+  file: "https://assets.science.nasa.gov/..." // the original file we downloaded
+},
+```
+
+Only use recordings from NASA pages in [SOURCES.md](SOURCES.md), keep the sound as NASA released it, and add a row to [AUDIO_CREDITS.md](AUDIO_CREDITS.md).

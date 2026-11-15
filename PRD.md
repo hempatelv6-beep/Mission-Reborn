@@ -44,3 +44,14 @@ The site does not have 3D models, a walk-around game, zoomable maps, multiple la
 - The home page fun facts each link to a NASA page that contains the quoted sentence stored with the fact.
 - Finishing the Final Mission shows the victory screen; closing it shows the home page with the Explorer badge at the top.
 - Check for browser console errors, working NASA links, and image credits before submitting.
+
+## Added in the redesign
+
+- Home page matching the team's mockup: outlined "Mission Reborn" title, "Fun facts" and "Resources" buttons, two wide Moon and Mars cards with Explore buttons. Fonts: Fredoka and Nunito.
+- Checkpoints: finishing a machine's quiz shows a victory card with a chime and ticks the timeline. Progress shows on the home cards. A Sound switch turns the chime off.
+- Real NASA recordings for Apollo 11, InSight and Ingenuity, credited in AUDIO_CREDITS.md.
+
+Checks:
+- Finishing any machine quiz shows the checkpoint card, plays the chime (unless Sound is off), and ticks that year on the timeline.
+- "Moon" and "Mars" still read correctly on the home cards after opening and closing each world several times.
+- Each recording plays, stops when another starts, and stops when you leave the planet.

@@ -112,6 +112,14 @@ const MOON = {
         { term: "EASEP", meaning: "A small science kit with a seismometer and a dust detector." },
         { term: "seismometer", meaning: "An instrument that feels moonquakes." }
       ],
+      // Real NASA recording. Details in AUDIO_CREDITS.md
+      audio: {
+        src: "audio/apollo-11-eagle-landed.mp3",
+        caption: "Apollo 11, just after landing: “Tranquility Base here. The Eagle has landed.”",
+        credit: "NASA, NSSDCA Sounds of the Space Age",
+        page: "https://nssdc.gsfc.nasa.gov/planetary/sound/index.html",
+        file: "https://nssdc.gsfc.nasa.gov/planetary/lunar/a11landing.aiff"
+      },
       sources: [
         { label: "Apollo 11 Lunar Module / EASEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-059C" }
       ],
