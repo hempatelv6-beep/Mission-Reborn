@@ -205,6 +205,15 @@
   <p class="toast" id="toast" role="status" hidden></p>
   <div class="term-pop" id="termPop" aria-live="polite" hidden></div>
 
+  <dialog class="image-viewer" id="imageViewer" aria-label="Image viewer">
+    <div class="image-viewer-bar">
+      <p id="imageViewerTitle"></p>
+      <button class="btn" type="button" id="imageViewerClose">Close</button>
+    </div>
+    <div class="image-viewer-scroll"><img id="imageViewerImage" alt=""></div>
+    <p class="image-viewer-credit" id="imageViewerCredit"></p>
+  </dialog>
+
   <!-- How to use: opens on the first visit, and from the ? button -->
   <dialog class="quiz help" id="help" aria-labelledby="helpTitle">
     <div class="quiz-inner">

@@ -329,6 +329,8 @@ a:hover { text-underline-offset: 5px; color: color-mix(in srgb, var(--read) 70%,
 .talking { margin: 0 0 22px; font-style: italic; color: var(--dim); font-size: 1.125rem; }
 
 .photo { margin: 0 0 24px; }
+.photo-zoom { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; text-align: left; }
+.photo-zoom:focus-visible { outline: 3px solid var(--read); outline-offset: 4px; border-radius: 12px; }
 /* Photos keep their own shape, capped so a tall one doesn't fill the whole screen */
 .photo-frame {
   --cap: min(70vh, 560px);
@@ -347,6 +349,16 @@ a:hover { text-underline-offset: 5px; color: color-mix(in srgb, var(--read) 70%,
   font-size: 0.8125rem; color: var(--dim);
 }
 .photo figcaption a { color: var(--dim); }
+.image-viewer {
+  width: min(96vw, 1320px); max-width: none; max-height: 94dvh; padding: 16px;
+  border: 1px solid var(--outline); border-radius: 16px; background: var(--sky); color: var(--ink);
+}
+.image-viewer::backdrop { background: #02040ddd; }
+.image-viewer-bar { position: sticky; top: -16px; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 0 10px; background: var(--sky); }
+.image-viewer-bar p { margin: 0; font: 700 1.2rem var(--display); }
+.image-viewer-scroll { max-height: calc(94dvh - 100px); overflow: auto; text-align: center; }
+.image-viewer-scroll img { display: block; width: 100%; height: auto; margin: 0 auto; }
+.image-viewer-credit { margin: 8px 0 0; color: var(--dim); font-size: 0.85rem; }
 .tag {
   padding: 1px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem;
   letter-spacing: 0.02em; text-transform: uppercase;
@@ -608,6 +620,9 @@ body.calm *, body.calm *::before, body.calm *::after { transition: none !importa
   .float.hide-phone { display: none; }
   .float.astro { opacity: 0.7; }
   .topbar { padding: 10px 12px; }
+  .image-viewer { width: 100vw; height: 100dvh; max-height: 100dvh; padding: 12px; border: 0; border-radius: 0; }
+  .image-viewer-bar { top: -12px; }
+  .image-viewer-scroll { max-height: calc(100dvh - 100px); }
       .brand { font-size: 0.9375rem; white-space: nowrap; }
   .switch button { padding: 5px 10px; }
   .calm-toggle { padding: 5px 9px 5px 7px; font-size: 0.8125rem; }

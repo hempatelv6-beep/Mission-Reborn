@@ -443,9 +443,11 @@ function photoHtml(m) {
   const tagClass = img.type === "NASA photo" ? "real" : "other";
   return `
       <figure class="photo">
+        <button class="photo-zoom" type="button" data-image="${i}" aria-label="View larger image of ${esc(m.name)}">
         <div class="photo-frame" style="--ar:${(img.width / img.height).toFixed(4)}">
           <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" decoding="async">
         </div>
+        </button>
         <figcaption>
           <span class="tag ${tagClass}">${esc(img.type)}</span>
           ${img.note ? `<span>${esc(img.note)}</span>` : ""}
@@ -662,18 +664,15 @@ function readAgain() {
   });
 }
 
-// Going to the other world: rise to the top first, then fade across to it
+// Going to the other world: rise to the top, then slide between the worlds.
 function switchWorld(id) {
   if (current && current.id === id) return;
   rewindToTop(() => {
     if (!hasGsap || calm()) { busy = false; showPlanet(id); return; }
-    gsap.to("#planet", {
-      opacity: 0, duration: 0.25, ease: "power1.in",
-      onComplete() {
-        showPlanet(id);
-        gsap.fromTo("#planet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out", onComplete() { busy = false; } });
-      }
-    });
+    gsap.to("#planet", { x: -innerWidth, duration: 0.38, ease: "power2.in", onComplete() {
+      showPlanet(id);
+      gsap.fromTo("#planet", { x: innerWidth }, { x: 0, duration: 0.48, ease: "power2.out", onComplete() { busy = false; } });
+    }});
   });
 }
 
@@ -971,6 +970,15 @@ document.addEventListener("click", (e) => {
   if (t.matches(".pill-nav a")) { e.preventDefault(); glideTo($(t.getAttribute("href"))); return; }
 
   if (t.hasAttribute("data-settings")) openSettings();
+  else if (t.id === "imageViewerClose") $("#imageViewer").close();
+  else if (t.dataset.image !== undefined) {
+    const m = current.machines[Number(t.dataset.image)];
+    $("#imageViewerTitle").textContent = m.name;
+    $("#imageViewerImage").src = m.image.src;
+    $("#imageViewerImage").alt = m.image.alt;
+    $("#imageViewerCredit").textContent = `${m.image.type} · Credit: ${m.image.credit}`;
+    $("#imageViewer").showModal();
+  }
   else if (t.hasAttribute("data-settings-close")) { stopReading(); $("#settings").close(); }
   else if (t.id === "voicePreview") previewVoice(t);
   else if (t.id === "setReset") {
