@@ -12,3 +12,8 @@ tmp/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Kept on our computers, not in the repo
+*.pdf
+.claude/
+CLAUDE.md
