@@ -12,7 +12,67 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="stars" aria-hidden="true"></div>
+  <!-- Drawings used by the background (astronaut, asteroids, satellite) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#2b3d63"/><stop offset="0.55" stop-color="#121b33"/><stop offset="1" stop-color="#d9a54a"/>
+      </linearGradient>
+      <radialGradient id="rockShade" cx="0.35" cy="0.3" r="0.8">
+        <stop offset="0" stop-color="#8d847a"/><stop offset="0.7" stop-color="#5f574f"/><stop offset="1" stop-color="#3d3732"/>
+      </radialGradient>
+      <symbol id="astronaut" viewBox="0 0 64 72">
+        <rect x="17" y="24" width="30" height="27" rx="7" fill="#b9bec8"/>
+        <path d="M14 33 q-6 4 -7 12" stroke="#e7e9ee" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M50 33 q7 -2 10 -9" stroke="#e7e9ee" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <circle cx="7" cy="46" r="3.6" fill="#c9ced8"/><circle cx="60" cy="23" r="3.6" fill="#c9ced8"/>
+        <rect x="19" y="28" width="26" height="26" rx="10" fill="#f1f2f5" stroke="#aab0bb" stroke-width="1"/>
+        <path d="M25 52 v10" stroke="#eceef2" stroke-width="8" stroke-linecap="round"/>
+        <path d="M39 52 l3 10" stroke="#eceef2" stroke-width="8" stroke-linecap="round"/>
+        <rect x="26" y="36" width="12" height="8" rx="2" fill="#d5d9e0"/>
+        <circle cx="29" cy="40" r="1.4" fill="#e0563b"/><circle cx="33" cy="40" r="1.4" fill="#4d8fe0"/><circle cx="36.5" cy="40" r="1.1" fill="#7fd1a0"/>
+        <circle cx="32" cy="18" r="13" fill="#f1f2f5" stroke="#aab0bb" stroke-width="1"/>
+        <ellipse cx="33" cy="18.5" rx="9" ry="7.5" fill="url(#visor)"/>
+        <ellipse cx="29.5" cy="15.5" rx="3" ry="1.8" fill="#ffffff" opacity="0.55"/>
+      </symbol>
+      <symbol id="rock-1" viewBox="0 0 40 40">
+        <path d="M8 12 L17 5 L29 7 L36 16 L34 28 L24 35 L12 33 L5 24 Z" fill="url(#rockShade)"/>
+        <circle cx="15" cy="15" r="3" fill="#00000030"/><circle cx="26" cy="24" r="4" fill="#00000028"/><circle cx="21" cy="11" r="1.6" fill="#00000030"/>
+        <path d="M8 12 L17 5 L29 7" stroke="#ffffff22" stroke-width="1.2" fill="none"/>
+      </symbol>
+      <symbol id="rock-2" viewBox="0 0 40 40">
+        <path d="M6 18 Q8 8 18 7 Q30 5 34 14 Q38 24 30 31 Q20 37 11 31 Q4 26 6 18 Z" fill="url(#rockShade)"/>
+        <circle cx="16" cy="18" r="4" fill="#00000028"/><circle cx="27" cy="15" r="2.2" fill="#00000030"/><circle cx="23" cy="27" r="2.6" fill="#00000026"/>
+      </symbol>
+      <symbol id="rock-3" viewBox="0 0 40 40">
+        <path d="M10 9 L24 6 L33 13 L31 21 L35 30 L22 34 L9 30 L6 19 Z" fill="url(#rockShade)"/>
+        <circle cx="19" cy="17" r="3.4" fill="#00000030"/><circle cx="25" cy="27" r="2" fill="#00000028"/>
+      </symbol>
+      <symbol id="satellite" viewBox="0 0 80 40">
+        <rect x="2" y="12" width="24" height="16" rx="1.5" fill="#2f5d9c"/>
+        <path d="M10 12 v16 M18 12 v16 M2 20 h24" stroke="#8fb4e8" stroke-width="0.8"/>
+        <rect x="54" y="12" width="24" height="16" rx="1.5" fill="#2f5d9c"/>
+        <path d="M62 12 v16 M70 12 v16 M54 20 h24" stroke="#8fb4e8" stroke-width="0.8"/>
+        <path d="M26 20 h28" stroke="#9aa1ad" stroke-width="2"/>
+        <rect x="32" y="9" width="16" height="22" rx="3" fill="#d4a94f"/>
+        <path d="M34 13 h12 M34 18 h12 M34 23 h12" stroke="#b58a35" stroke-width="1"/>
+        <path d="M40 9 v-5" stroke="#c9ced8" stroke-width="1.5"/><circle cx="40" cy="3.5" r="2" fill="#e8ebf0"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="space" aria-hidden="true">
+    <div class="stars far"></div>
+    <div class="stars"></div>
+    <div class="stars twinkle"></div>
+    <span class="float bob astro" style="width:58px;height:66px;right:4%;top:20%;--t:24s;--dx:-22px;--dy:46px;--r0:-12deg;--r1:16deg"><svg><use href="#astronaut"/></svg></span>
+    <span class="float bob astro hide-phone" style="width:40px;height:46px;left:44%;bottom:6%;--t:29s;--dx:30px;--dy:-34px;--r0:160deg;--r1:196deg"><svg><use href="#astronaut"/></svg></span>
+    <span class="float bob hide-phone" style="width:70px;height:35px;right:16%;top:6%;opacity:.75;--t:34s;--dx:-40px;--dy:20px;--r0:-18deg;--r1:-4deg"><svg><use href="#satellite"/></svg></span>
+    <span class="float cross rock" style="width:26px;height:26px;top:31%;--t:140s;--delay:-20s;--dy:40px;--spin:36s"><svg><use href="#rock-1"/></svg></span>
+    <span class="float cross rock" style="width:16px;height:16px;top:58%;--t:110s;--delay:-75s;--dy:-30px;--spin:24s"><svg><use href="#rock-2"/></svg></span>
+    <span class="float cross rock hide-phone" style="width:34px;height:34px;top:82%;--t:170s;--delay:-120s;--dy:-50px;--spin:50s"><svg><use href="#rock-3"/></svg></span>
+    <span class="float cross rock" style="width:12px;height:12px;top:12%;--t:95s;--delay:-40s;--dy:25px;--spin:18s"><svg><use href="#rock-2"/></svg></span>
+  </div>
 
   <header class="topbar" id="topbar">
     <button class="brand world-only" id="homeBtn" type="button">Mission Reborn</button>
@@ -21,6 +81,7 @@
         <button type="button" data-go="moon">Moon</button>
         <button type="button" data-go="mars">Mars</button>
       </nav>
+      <button class="help-btn" type="button" data-help aria-label="How to use this site" title="How to use">?</button>
       <button class="calm-toggle" type="button" data-calm aria-pressed="false" title="Turns off the big animations">Calm<span class="calm-long"> mode</span></button>
     </div>
   </header>
@@ -59,6 +120,7 @@
         <p>Final Mission: 10 machines, 2 worlds. Are you ready?</p>
         <button class="btn primary" type="button" data-final>Start Final Mission</button>
       </div>
+      <p class="made-by">Made by a team of six students, ages 15 and 16, for NASA Space Apps 2026.</p>
     </section>
 
     <!-- Planet page (filled from data/moon.js or data/mars.js) -->
@@ -97,6 +159,24 @@
   </main>
 
   <p class="toast" id="toast" role="status" hidden></p>
+  <div class="term-pop" id="termPop" aria-live="polite" hidden></div>
+
+  <!-- How to use: opens on the first visit, and from the ? button -->
+  <dialog class="quiz help" id="help" aria-labelledby="helpTitle">
+    <div class="quiz-inner">
+      <div class="quiz-top">
+        <h3 id="helpTitle">How to use Mission Reborn</h3>
+        <button class="close" type="button" data-help-close aria-label="Close">✕</button>
+      </div>
+      <ol class="help-steps">
+        <li><strong>Pick a world.</strong> Choose the Moon or Mars. Each has five machines.</li>
+        <li><strong>Scroll down.</strong> A small planet slides along the line to show how far you've read. Tap a <span class="term-sample">dotted word</span> to see what it means.</li>
+        <li><strong>Take the quizzes.</strong> Each machine has a short quiz. Finish both worlds to unlock the Final Mission.</li>
+      </ol>
+      <p class="help-note">Too much movement? Turn on Calm mode in the top corner.</p>
+      <div class="quiz-actions"><button class="btn primary" type="button" data-help-close autofocus>Let's go</button></div>
+    </div>
+  </dialog>
 
   <!-- One quiz box, reused for all 13 quizzes -->
   <dialog class="quiz" id="quiz" aria-labelledby="quizTitle">

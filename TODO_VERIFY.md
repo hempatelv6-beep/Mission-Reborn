@@ -1,34 +1,40 @@
-# To verify
+# Still to check
 
-Things a teammate still needs to check. When one is done, tick it and write your name.
+Use this list for work that is not finished. When an item is done, mark it complete and add the reviewer's name.
 
-## Plan differences (team decision needed)
-- [ ] **M5.** The research plan's table has **Apollo 17 Lunar Roving Vehicle (1972)**. The Website Text has **LCROSS (2009)**. The site uses LCROSS. Confirm this was a deliberate swap.
-- [ ] **Mars R3/R4.** The research table has Spirit (R3) and Opportunity (R4) as separate machines. The Website Text joins them as "Spirit & Opportunity" (R3) and adds **InSight** (R4). The site follows the Website Text. Confirm.
-- [ ] **Timeline years.** The site's dots show **launch** years (Moon 1967, 1969, 1969, 1971, 2009; Mars 1975, 1996, 2003, 2018, 2020) because the Website Text gives launch dates. The research table used landing/event years (e.g. Viking 1976, Spirit 2004, Ingenuity 2021). Pick one.
-- [ ] **Quiz options.** The tech-stack example shows 3 options; the research prompt says 4. The site uses **4**.
-- [ ] **Title wording.** The site says "Abandoned, not forgotten"; the feature plan says "Abandoned but Not Forgotten". Pick one.
-- [ ] **Two machines in 1969** (Eagle and ALSEP) share a year on the timeline. Fine, but check it reads clearly.
+## Decisions from the older plans
 
-## AI drafts to read
-- [ ] All 30 machine quiz questions in `data/moon.js` and `data/mars.js`: each answer is in the text, but read every question and wrong option.
-- [ ] All 10 Final Mission questions in `data/final.js`.
-- [ ] The 10 `talkingLine`s. They're our own story lines, not quotes. Check none adds a fact that isn't in the card.
-- [ ] Mars hook line: "They went quiet one by one. This is where they are." (drafted; the Moon hook is from the feature plan).
+The current site follows the “Website Text” and the data files. Some older planning documents list different machines or dates. Confirm these choices with the team and update the older notes if needed.
 
-## Facts to double-check on the NASA page
-- [ ] Spirit & Opportunity: the image shows **only Opportunity**. Okay as is, or find a photo with both?
-- [ ] Apollo 12 ALSEP: the image is a **stand-in** (the Apollo 12 lander). Look for a real ALSEP photo on the NSSDCA page.
-- [ ] InSight: the image was taken **on Earth** before launch. Look for a photo on Mars.
-- [ ] Viking 1: the image is a **drawing**. Look for a real lander photo on the NASA page.
-- [ ] Exact credit line for each image, copied from its NASA image page (IMAGE_CREDITS.md uses the usual NASA / NASA/JPL / NASA/JPL-Caltech pattern).
-- [ ] InSight "vital signs: its pulse, temperature and reflexes" is used in a Final Mission question. Confirm the wording on the InSight page.
-- [ ] LCROSS "NASA later said the impact data showed water": confirm against the 13 Nov 2009 NSSDCA text.
+- [x] The older research table lists Apollo 17's Lunar Roving Vehicle for M5; the site uses LCROSS. Settled in `Plan - Revised.pdf`: the older list was an earlier idea, and the site keeps LCROSS.
+- [x] The older research table lists Spirit and Opportunity as separate entries. The site groups them together and includes InSight as the fifth Mars entry. Settled in `Plan - Revised.pdf`: the site keeps one Spirit & Opportunity entry.
+- [ ] The site timeline uses launch years. Some older notes use landing or event years.
+- [ ] The site quizzes use four answer choices. One older tech-stack example has three.
+- [ ] The site uses “Abandoned, not forgotten”; the feature plan uses “Abandoned but Not Forgotten.”
+- [ ] Check that the two 1969 Moon entries are easy to tell apart on the timeline.
 
-## Before submitting
-- [ ] Rename the repo to `Mission-Reborn`, turn on GitHub Pages, paste the live link into the repo's About box.
-- [ ] Add team names to README.md.
-- [ ] Add a LICENSE file (MIT or Apache 2.0), as the research plan says.
-- [ ] Open every NASA link on the live site.
-- [ ] Test on a real phone, and have someone outside the team try it.
-- [ ] Watch the letter-to-planet and Read it again animations on a real laptop (tested in code; not watched on a slow school laptop).
+## Questions and story lines
+
+- [ ] Read all 30 machine quiz questions in `data/moon.js` and `data/mars.js`, including the wrong choices.
+- [ ] Read all 10 questions in `data/final.js`.
+- [ ] Check the 10 `talkingLine` entries. They are fictional story lines, not quotations, and should not add facts beyond the machine cards.
+- [ ] Review the Mars hook: “They went quiet one by one. This is where they are.”
+
+## Sources and images
+
+- [ ] Check that the Spirit and Opportunity image is clearly described as a photo of Opportunity only. The caption note now says "Shows Opportunity only. Spirit looked the same." A team member still needs to review it.
+- [ ] Find out whether a photo of the Apollo 12 ALSEP itself is available; the current image shows the lander.
+- [ ] Look for a Mars image of InSight; the current image was taken on Earth before launch.
+- [ ] Look for a photo of Viking 1; the current image is a drawing.
+- [ ] Copy the exact credit line for each image from its NASA page and update [IMAGE_CREDITS.md](IMAGE_CREDITS.md).
+- [ ] Confirm the InSight “pulse, temperature and reflexes” wording against its NASA page. The Final Mission question r4 in `data/final.js` already uses it.
+- [ ] Recheck the LCROSS statement about water against the linked NSSDCA release. The Final Mission question m5 in `data/final.js` already uses it.
+
+## Before submission
+
+- [ ] Rename the GitHub repository to `Mission-Reborn`, enable GitHub Pages, and add the working link to the repository About box.
+- [ ] Add team members' names to [README.md](README.md).
+- [ ] Add a license if the team decides to use one.
+- [ ] Open every NASA link from the live site.
+- [ ] Try the site on a real phone and ask someone outside the team to use it.
+- [ ] Watch both animations on a school laptop, including one with a slower connection.

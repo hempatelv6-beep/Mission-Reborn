@@ -1,0 +1,935 @@
+%PDF-1.3
+%‚„œ”
+1 0 obj
+<<
+/PageMode /UseNone
+/Pages 2 0 R
+/Type /Catalog
+>>
+endobj
+2 0 obj
+<<
+/Count 2
+/Kids [ 3 0 R 9 0 R ]
+/Type /Pages
+>>
+endobj
+3 0 obj
+<<
+/Contents 4 0 R
+/MediaBox [ 0 0 612 792 ]
+/Parent 2 0 R
+/Resources <<
+/Font 5 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+>>
+endobj
+4 0 obj
+<<
+/Length 7484
+>>
+stream
+1 0 0 1 0 0 cm
+BT
+/F1 12 Tf
+14.4 TL
+ET
+q
+0.85098 0.882353 0.901961 RG
+0.5 w
+n
+48.96 41.76 m
+563.04 41.76 l
+S
+BT
+/F1 8 Tf
+9.6 TL
+ET
+0.352941 0.407843 0.458824 rg
+BT
+1 0 0 1 48.96 27.36 Tm
+<4d495353494f4e205245424f524e20202d202050524f4a454354204e4f544553> Tj
+T*
+ET
+BT
+1 0 0 1 558.592 27.36 Tm
+(1) Tj
+T*
+ET
+Q
+q
+1 0 0 1 57.84 703.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 5 Tm
+/F2 26 Tf
+31 TL
+(Mission Reborn\072 Tech Stack) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 675.16 cm
+q
+0.352941 0.407843 0.458824 rg
+BT
+1 0 0 1 0 5 Tm
+/F1 11 Tf
+16 TL
+(The current setup\054 where the files live\054 and how to preview the site\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 655.16 cm
+q
+2 w
+1 J
+0.156863 0.470588 0.721569 RG
+n
+0 0 m
+496.32 0 l
+S
+Q
+Q
+q
+1 0 0 1 57.84 615.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 18.5 Tm
+/F1 9.5 Tf
+14 TL
+(The site uses HTML\054 CSS\054 and JavaScript\056 It has no build step or server code\056 GSAP and ScrollTrigger load from) Tj
+T*
+(jsDelivr for animation\056 The project can be previewed by opening index\056html directly or with Live Server\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 584.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 4 Tm
+/F2 17 Tf
+21 TL
+(Parts of the site) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 335.16 cm
+q
+0.933333 0.956863 0.968627 rg
+n
+0 241 493.2 -23 re
+f*
+0.078431 0.156863 0.247059 rg
+BT
+/F2 10 Tf
+12 TL
+ET
+q
+1 0 0 1 7 224 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Part) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 224 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(File or tool) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 224 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Purpose) Tj
+T*
+ET
+Q
+Q
+0 0 0 rg
+BT
+/F1 10 Tf
+12 TL
+ET
+q
+1 0 0 1 7 201 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Page) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 201 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(index\056html) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 201 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Start screen\054 shared planet view\054 navigation\054 quiz dialog) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 178 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Style) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 178 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(styles\056css) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 178 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Layout\054 colors\054 type\054 planet art\054 timeline\054 phone sizing) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 155 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Behavior) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 155 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(app\056js) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 155 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Builds cards\054 handles navigation and quizzes\054 saves progress) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 132 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Machine data) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 132 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(data\057moon\056js\054 data\057mars\056js) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 132 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Five machines and their quizzes for each world) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 109 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Final quiz) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 109 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(data\057final\056js) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 109 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Ten questions\054 one for each machine) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 86 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Animation) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 86 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(GSAP \053 ScrollTrigger) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 86 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Letter animation\054 scrolling timeline\054 and rewind effect) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 63 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Read aloud) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 63 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Browser speechSynthesis) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 63 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Reads machine descriptions out loud) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 7 40 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Progress) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 40 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(localStorage) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 40 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+-0.102889 Tw
+(Stores completed worlds\054 Calm mode\054 and badge on this browser) Tj
+T*
+0 Tw
+ET
+Q
+Q
+q
+1 0 0 1 7 17 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(Images) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 89.8 17 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 2.5 Tm
+/F1 8.5 Tf
+11 TL
+(images\057) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 241 6 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 13.5 Tm
+/F1 8.5 Tf
+11 TL
+(Images saved in the project instead of loaded from NASA at) Tj
+T*
+(runtime) Tj
+T*
+ET
+Q
+Q
+q
+1 J
+1 j
+0.839216 0.870588 0.894118 RG
+0.35 w
+n
+0 241 m
+493.2 241 l
+S
+n
+0 0 m
+493.2 0 l
+S
+n
+0 0 m
+0 241 l
+S
+n
+493.2 0 m
+493.2 241 l
+S
+n
+0 218 m
+493.2 218 l
+S
+n
+0 195 m
+493.2 195 l
+S
+n
+0 172 m
+493.2 172 l
+S
+n
+0 149 m
+493.2 149 l
+S
+n
+0 126 m
+493.2 126 l
+S
+n
+0 103 m
+493.2 103 l
+S
+n
+0 80 m
+493.2 80 l
+S
+n
+0 57 m
+493.2 57 l
+S
+n
+0 34 m
+493.2 34 l
+S
+n
+82.8 0 m
+82.8 241 l
+S
+n
+234 0 m
+234 241 l
+S
+Q
+Q
+Q
+q
+1 0 0 1 57.84 304.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 4 Tm
+/F2 17 Tf
+21 TL
+(How the files connect) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 268.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 18.5 Tm
+/F1 9.5 Tf
+14 TL
+(index\056html loads the CSS\054 then the three data files\054 then GSAP and ScrollTrigger\054 and finally app\056js\056 The data files) Tj
+T*
+(define the Moon\054 Mars\054 and Final Mission objects\056 app\056js uses those objects to build the pages and quizzes\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 237.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 4 Tm
+/F2 17 Tf
+21 TL
+(Project layout) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 159.16 cm
+q
+BT
+1 0 0 1 0 60.5 Tm
+14 TL
+/F3 9.5 Tf
+0.078431 0.156863 0.247059 rg
+(index\056html styles\056css app\056js) Tj
+T*
+(data\057moon\056js data\057mars\056js data\057final\056js) Tj
+T*
+(images\057moon\057 images\057mars\057) Tj
+T*
+(README\056md PRD\056md ARCHITECTURE\056md DATA\137GUIDE\056md) Tj
+T*
+(SOURCES\056md IMAGE\137CREDITS\056md AI\055USE\056md TODO\137VERIFY\056md) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 128.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 4 Tm
+/F2 17 Tf
+21 TL
+(Adding or correcting machine text) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 106.16 cm
+q
+BT
+1 0 0 1 0 4.5 Tm
+14 TL
+/F1 9.5 Tf
+0.078431 0.156863 0.247059 rg
+<2d> Tj
+( ) Tj
+( ) Tj
+(Edit the relevant data file\073 machine text does not belong in app\056js\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 86.16 cm
+q
+BT
+1 0 0 1 0 4.5 Tm
+14 TL
+/F1 9.5 Tf
+0.078431 0.156863 0.247059 rg
+<2d> Tj
+( ) Tj
+( ) Tj
+(Use NASA sources and record the date they were checked\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 66.16 cm
+q
+BT
+1 0 0 1 0 4.5 Tm
+14 TL
+/F1 9.5 Tf
+0.078431 0.156863 0.247059 rg
+<2d> Tj
+( ) Tj
+( ) Tj
+(Keep quiz answers in the related machine text\056) Tj
+T*
+ET
+Q
+Q
+
+endstream
+endobj
+5 0 obj
+<<
+/F1 6 0 R
+/F2 7 0 R
+/F3 8 0 R
+>>
+endobj
+6 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+7 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+8 0 obj
+<<
+/BaseFont /Courier
+/Encoding /WinAnsiEncoding
+/Name /F3
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+9 0 obj
+<<
+/Contents 10 0 R
+/MediaBox [ 0 0 612 792 ]
+/Parent 2 0 R
+/Resources <<
+/Font 5 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+>>
+endobj
+10 0 obj
+<<
+/Length 1453
+>>
+stream
+1 0 0 1 0 0 cm
+BT
+/F1 12 Tf
+14.4 TL
+ET
+q
+0.85098 0.882353 0.901961 RG
+0.5 w
+n
+48.96 41.76 m
+563.04 41.76 l
+S
+BT
+/F1 8 Tf
+9.6 TL
+ET
+0.352941 0.407843 0.458824 rg
+BT
+1 0 0 1 48.96 27.36 Tm
+<4d495353494f4e205245424f524e20202d202050524f4a454354204e4f544553> Tj
+T*
+ET
+BT
+1 0 0 1 558.592 27.36 Tm
+(2) Tj
+T*
+ET
+Q
+q
+1 0 0 1 57.84 720.16 cm
+q
+BT
+1 0 0 1 0 4.5 Tm
+14 TL
+/F1 9.5 Tf
+0.078431 0.156863 0.247059 rg
+<2d> Tj
+( ) Tj
+( ) Tj
+(Use relative image paths and list images in IMAGE\137CREDITS\056md\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 689.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 4 Tm
+/F2 17 Tf
+21 TL
+(Preview) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 653.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 18.5 Tm
+/F1 9.5 Tf
+14 TL
+(Open index\056html in a browser\054 or use VS Code with Live Server\056 The larger animations need an internet connection to) Tj
+T*
+(load GSAP\056 If GSAP does not load\054 the content still works and the timeline uses a normal scroll listener\056) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 622.16 cm
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 4 Tm
+/F2 17 Tf
+21 TL
+(Publishing) Tj
+T*
+ET
+Q
+Q
+q
+1 0 0 1 57.84 586.16 cm
+q
+0.933333 0.956863 0.968627 rg
+n
+-8 -8 512.32 44 re
+f*
+Q
+q
+0.078431 0.156863 0.247059 rg
+BT
+1 0 0 1 0 18.5 Tm
+/F2 9.5 Tf
+14 TL
+(The project is intended for GitHub Pages\056 The repository rename and Pages setup still need to be completed\073) Tj
+T*
+(see TODO\137VERIFY\056md before sharing the planned link\056) Tj
+T*
+ET
+Q
+Q
+
+endstream
+endobj
+11 0 obj
+<<
+/Author (Mission Reborn team)
+/CreationDate (D\07220261114182250\05505\04700\047)
+/Creator (\050unspecified\051)
+/Keywords ()
+/ModDate (D\07220261114182250\05505\04700\047)
+/Producer (ReportLab PDF Library \055 \050opensource\051)
+/Subject (\050unspecified\051)
+/Title (Mission Reborn Tech Stack \055 Revised)
+/Trapped /False
+>>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000015 00000 n 
+0000000083 00000 n 
+0000000148 00000 n 
+0000000337 00000 n 
+0000007873 00000 n 
+0000007924 00000 n 
+0000008031 00000 n 
+0000008143 00000 n 
+0000008248 00000 n 
+0000008438 00000 n 
+0000009944 00000 n 
+trailer
+<<
+/Size 12
+/Root 1 0 R
+/Info 11 0 R
+/ID [ (z\175\174A\003R\266\041\366\135JB5\1001\303) (z\175\174A\003R\266\041\366\135JB5\1001\303) ]
+>>
+startxref
+10292
+%%EOF

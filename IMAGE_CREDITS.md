@@ -1,8 +1,8 @@
 # Image credits
 
-All images were downloaded from NASA pages on 2026-11-14 and saved in this repo, shrunk to at most 1600 px wide (about 110-310 KB each). NASA images are generally free to use with credit. NASA doesn't endorse this project.
+These images were downloaded from NASA pages on 14 November 2026 and saved in the project. They were resized to 1600 pixels wide or less. NASA does not endorse this project.
 
-Labels on the site: **NASA photo** = a real photo of that machine. **NASA photo (on Earth)** = real photo, taken before launch. **Stand-in photo** = real photo of something nearby, not the machine itself. **Drawing** = a NASA drawing, not a photo. We use no AI art.
+The label under each image says what it actually shows: **NASA photo** is a photo of the machine; **NASA photo (on Earth)** was taken before launch; **Stand-in photo** shows something else; and **Drawing** is an illustration. We did not use AI-generated art.
 
 | File | Machine | Label | Credit | Original | Alt text |
 |---|---|---|---|---|---|
@@ -17,8 +17,9 @@ Labels on the site: **NASA photo** = a real photo of that machine. **NASA photo 
 | `images/mars/insight.jpg` | InSight | **NASA photo (on Earth)**: clean-room test before launch | NASA/JPL-Caltech | [PIA19664](https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/downloadable_items/3/8/38686_Mars-InSight-Solar-Panels-Open-pia196641.jpg) | The InSight lander with its solar arrays spread open, tested in a clean room on Earth before launch. |
 | `images/mars/ingenuity.jpg` | Ingenuity | NASA photo | NASA/JPL-Caltech | [PIA24581](https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/downloadable_items/4/5/45954_PIA24581.jpg) | A small helicopter with long rotor blades sits on a flat, dusty plain on Mars. |
 
-The exact credit line for each file still needs to be copied from its NASA page (see [TODO_VERIFY.md](TODO_VERIFY.md)). The credits above follow NASA's usual pattern for each source.
+The final credit line for each image still needs to be checked against its NASA page. See [TODO_VERIFY.md](TODO_VERIFY.md). The table uses the credit shown in the project notes for now.
 
 ## Not photos
-- The Moon and Mars circles on the site are drawn in CSS. They are not NASA images.
+- The spinning Moon and Mars are drawings made with code in `app.js`, not NASA images. Their dark seas, Valles Marineris, Olympus Mons, Hellas and the ice caps are placed by real longitude and latitude, but the shapes are simplified.
+- The floating astronauts, asteroids and satellite in the background are simple drawings in `index.html`. They don't show any real spacecraft.
 - `images/screenshots/` holds screenshots of our own site.

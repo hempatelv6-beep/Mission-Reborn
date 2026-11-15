@@ -1,0 +1,14 @@
+# Never commit keys or passwords. The site doesn't need any.
+.env
+.env.*
+*.key
+*.pem
+secrets*
+.claude/settings.local.json
+
+# Tools and scratch files
+node_modules/
+tmp/
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,69 +1,83 @@
-# Data guide: changing machines and quizzes
+# Editing machine and quiz data
 
-You never need to open `app.js`. Everything you read on the site is in:
-- `data/moon.js`: the 5 Moon machines and their quizzes
-- `data/mars.js`: the 5 Mars machines and their quizzes
-- `data/final.js`: the 10 Final Mission questions
+All text shown in the machine cards and quizzes lives in three files:
 
-One person owns each file at a time. Two people editing `moon.js` at once makes a merge conflict.
+- `data/moon.js`: five Moon machines and their questions
+- `data/mars.js`: five Mars machines and their questions
+- `data/final.js`: the Final Mission quiz
 
-## How our research was done
-1. One machine per AI chat, with only that machine's NASA links pasted in (prompt in the `nasa-machine-card` skill).
-2. The AI had to quote the exact NASA sentence and URL for every fact, and write UNVERIFIED for anything missing.
-3. A different teammate checked each card (years, names, quotes) against the NASA page.
-4. The checked text became our "Website Text" doc. The data files copy that doc word for word.
-5. `sourceChecked` is the date a human opened the links (2026-11-14 for all ten).
+You can add or fix site text without editing `app.js`. Have one person edit a data file at a time to avoid overwriting each other's work.
 
-## One machine
+## Before changing a fact
+
+Use the NASA links already listed for that machine. Check names, dates, and details against the page. Put anything you have not confirmed in `TODO_VERIFY.md`; do not add it to the site as a fact. The team records the date it checked a source in `sourceChecked`.
+
+## Machine entry
+
 ```js
 {
-  id: "m1",                       // m1-m5 Moon, r1-r5 Mars
+  id: "m1", // m1-m5 for the Moon; r1-r5 for Mars
   name: "Surveyor 3",
-  launched: "17 April 1967",      // shown under the year
-  year: 1967,                     // the dot on the timeline
-  talkingLine: "...",             // our story line in the machine's voice. Not a fact, never in a quiz
+  launched: "17 April 1967",
+  year: 1967, // year shown on the timeline
+  talkingLine: "...", // story writing, not a quote or a fact
   image: {
-    src: "images/moon/surveyor-3.jpg",   // no leading slash
-    width: 1280, height: 1280,           // real pixel size of the saved file
-    alt: "What the picture shows, for people who can't see it.",
-    type: "NASA photo",           // or "NASA photo (on Earth)", "Stand-in photo", "Drawing", "AI art"
-    note: "",                     // optional, e.g. what a stand-in really shows
+    src: "images/moon/surveyor-3.jpg",
+    width: 1280,
+    height: 1280,
+    alt: "Describe what is visible in the image.",
+    type: "NASA photo", // use the accurate label for the image
+    note: "", // optional note, such as what a stand-in photo shows
     credit: "NASA",
-    from: "https://..."           // where we downloaded it
+    from: "https://..."
   },
-  whatItWas: "1-2 sentences.",
-  carried: ["2-3 items"],         // optional carriedLabel: "What it carried (each rover)"
-  whatHappened: "1-2 sentences, with the year.",
-  whereItIsNow: "1 sentence.",
-  sources: [{ label: "Surveyor 3, NASA Science", url: "https://science.nasa.gov/mission/surveyor-3/" }],
-  sourceChecked: "2026-11-14",    // empty "" shows "Not fact-checked yet" on the site
-  quiz: [ /* 3 questions */ ]
+  whatItWas: "One or two sentences.",
+  carried: ["An instrument"],
+  whatHappened: "One or two sentences, with dates where useful.",
+  whereItIsNow: "One sentence.",
+  sources: [{ label: "Surveyor 3, NASA Science", url: "https://..." }],
+  sourceChecked: "2026-11-14",
+  quiz: [/* three questions */]
 }
 ```
-Limit: 150 words across whatItWas, carried, whatHappened and whereItIsNow.
 
-## One quiz question
+Keep the four description fields (`whatItWas`, `carried`, `whatHappened`, and `whereItIsNow`) to about 150 words total per machine. Use `carriedLabel` if the usual “What it carried” heading does not fit, such as "What it carried (each rover)" for Spirit and Opportunity.
+
+## Tap-to-explain words
+
+Each machine can have a `words` list. The first time a word appears in that machine's text, it becomes underlined, and tapping it shows the meaning.
+
+```js
+words: [
+  { term: "seismometer", meaning: "An instrument that feels moonquakes." }
+],
+```
+
+- The `term` must be spelled exactly as it appears in the machine's text (capital letters don't matter).
+- The `meaning` must come from that machine's own text. Don't add new facts here.
+- If a word isn't found in the text, nothing breaks; it just isn't underlined.
+
+## Quiz question
+
 ```js
 {
   question: "How many flights did Ingenuity make?",
-  options: ["5", "30", "72", "550"],   // always 4
-  answer: 2,                           // counts from 0, so 2 = "72"
-  whenRight: "Correct! It was planned for five, and it made 72.",
-  whenWrong: "Not quite. It made 72 flights, far more than the five planned."
+  options: ["5", "30", "72", "550"],
+  answer: 2, // answers are counted from zero, so 2 means the third option
+  whenRight: "Correct! It was planned for five flights and made 72.",
+  whenWrong: "Not quite. It made 72 flights."
 }
 ```
-- The answer must already be in that machine's text. No surprise facts.
-- The **first** question of each machine also goes in the planet quiz, so make it the most important fact.
-- Final Mission questions have `machine: "r5"` so we can check which text they come from.
 
-## Common mistakes
-- A missing comma between blocks breaks the whole page. Open the page after every edit; if it's blank, press F12 and read the red error.
-- Use straight quotes `"` around text. If the text itself has a `"`, write `\"`.
-- `answer` is a number, not text.
+Each machine quiz has three questions. The first question for each machine is also used in the planet quiz, so make it a good summary question. The Final Mission questions name their source machine with the `machine` field. Every answer must be stated in the related machine's on-page text.
 
 ## Images
-- NASA pages only. Save the file in `images/moon/` or `images/mars/`. Never link straight to NASA's server.
-- Name it lowercase-with-dashes: `apollo-15-rover.jpg`, never `Apollo 15 Rover.JPG`.
-- `.jpg` for photos, `.png` for flat graphics. Max 1600 px wide, under about 300 KB (squoosh.app works).
-- Put the real width and height in the data so the page doesn't jump while it loads.
-- Label it honestly and add it to [IMAGE_CREDITS.md](IMAGE_CREDITS.md).
+
+Save images in `images/moon/` or `images/mars/`; do not link directly to NASA's server. Use lowercase filenames with dashes, such as `apollo-15-rover.jpg`. Record the correct width and height so the page can reserve space while the image loads. Add each image and its source to [IMAGE_CREDITS.md](IMAGE_CREDITS.md).
+
+## Small JavaScript details
+
+- Keep commas between object fields and entries. A missing comma can stop the whole page from loading.
+- Wrap text in straight double quotes. Escape a double quote inside the text as `\"`.
+- `answer` is a number, not the answer text.
+- After editing, open the page. If it is blank, check the browser console for the first error.

@@ -30,9 +30,11 @@ body {
   overflow-x: clip;
 }
 
-/* Fixed, quiet starfield */
+/* ---------- Space background: stars, drifting asteroids, floating astronauts ---------- */
+/* Fixed behind everything. The colour of the page doesn't change; only these float on top of it. */
+.space { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .stars {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  position: absolute; inset: 0;
   background-image:
     radial-gradient(1px 1px at 12% 18%, #fff8 50%, transparent 51%),
     radial-gradient(1px 1px at 68% 9%, #fff6 50%, transparent 51%),
@@ -44,34 +46,84 @@ body {
     radial-gradient(1px 1px at 44% 31%, #fff4 50%, transparent 51%);
   background-size: 420px 420px;
 }
+.stars.far {
+  background-image:
+    radial-gradient(0.8px 0.8px at 22% 40%, #fff5 50%, transparent 51%),
+    radial-gradient(0.8px 0.8px at 77% 23%, #fff4 50%, transparent 51%),
+    radial-gradient(1px 1px at 58% 61%, #fff5 50%, transparent 51%),
+    radial-gradient(0.8px 0.8px at 9% 7%, #fff4 50%, transparent 51%),
+    radial-gradient(0.8px 0.8px at 39% 92%, #fff4 50%, transparent 51%),
+    radial-gradient(1px 1px at 91% 55%, #fff5 50%, transparent 51%);
+  background-size: 260px 260px;
+}
+.stars.twinkle {
+  background-image:
+    radial-gradient(1.6px 1.6px at 18% 52%, #fff 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 73% 71%, #dfe9ff 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 47% 14%, #fff 50%, transparent 51%);
+  background-size: 640px 640px;
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: 0.25; } to { opacity: 1; } }
+
+/* Floating things. Slow on purpose: it should feel like low gravity. */
+.float { position: absolute; display: block; }
+.float svg { display: block; width: 100%; height: 100%; }
+.float.bob { animation: bob var(--t, 22s) ease-in-out infinite alternate; }
+@keyframes bob {
+  from { transform: translate(0, 0) rotate(var(--r0, -8deg)); }
+  to   { transform: translate(var(--dx, 18px), var(--dy, -40px)) rotate(var(--r1, 14deg)); }
+}
+.float.cross { left: 0; animation: cross var(--t, 120s) linear infinite; animation-delay: var(--delay, 0s); }
+@keyframes cross {
+  from { transform: translate(105vw, 0); }
+  to   { transform: translate(-15vw, var(--dy, 60px)); }
+}
+.float.cross svg { animation: tumble var(--spin, 40s) linear infinite; }
+@keyframes tumble { to { transform: rotate(360deg); } }
+.float.astro { opacity: 0.9; }
+.float.rock { opacity: 0.6; }
+
+/* ---------- Planets ---------- */
+/* app.js paints each planet's map once on a canvas, then slides it sideways
+   inside the circle so the planet spins. The ::after layer adds the round shading. */
+.disc {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-block; flex: none;
+  width: 56px; aspect-ratio: 1; border-radius: 50%;
+  background: #9a978f;
+}
+.disc.mars { background: #b8613a; }
+.planet-map {
+  position: absolute; top: 0; left: 0; height: 100%; width: 400%;
+  background-repeat: repeat-x; background-size: 50% 100%;
+  will-change: transform;
+}
+.disc.moon .planet-map { background-image: var(--moon-map, none); }
+.disc.mars .planet-map { background-image: var(--mars-map, none); }
+/* Mars' ice caps stay at the poles while the planet turns */
+.planet-caps { position: absolute; inset: 0; }
+.disc.mars .planet-caps {
+  background:
+    radial-gradient(ellipse 26% 9% at 50% 3%, #fbf6ef 0 55%, #fbf6ef00 100%),
+    radial-gradient(ellipse 16% 6% at 52% 98%, #f3ece3 0 50%, #f3ece300 100%);
+}
+.disc::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background:
+    radial-gradient(circle at 33% 30%, #ffffff30, #ffffff00 42%),
+    radial-gradient(circle at 46% 44%, #00000000 50%, #0000002e 66%, #00000080 84%, #000000c0 100%);
+  box-shadow: inset -6px -8px 14px #00000040, inset 2px 2px 3px #ffffff22;
+}
+.disc.moon { box-shadow: 0 0 22px #cfd6e626; }
+.disc.mars { box-shadow: 0 0 22px #e0703a2e; }
 
 button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--read); outline-offset: 3px; border-radius: 4px; }
 a { color: var(--read); }
 
-/* ---------- Planet discs (drawn placeholders until real NASA photos are in images/) ---------- */
-.disc {
-  display: inline-block; flex: none;
-  width: 56px; aspect-ratio: 1; border-radius: 50%;
-  box-shadow: inset -10px -8px 18px #0007;
-}
-.disc.moon {
-  background:
-    radial-gradient(circle at 30% 35%, #8f8b84 0 9%, transparent 10%),
-    radial-gradient(circle at 62% 58%, #9a968e 0 13%, transparent 14%),
-    radial-gradient(circle at 45% 78%, #8c8880 0 6%, transparent 7%),
-    radial-gradient(circle at 72% 28%, #a29e96 0 7%, transparent 8%),
-    radial-gradient(circle at 35% 30%, #e4e1da, #b7b3aa 60%, #8d8981);
-}
-.disc.mars {
-  background:
-    radial-gradient(ellipse 40% 12% at 50% 6%, #f1e6dc 0 60%, transparent 62%),
-    radial-gradient(ellipse 30% 18% at 38% 52%, #8e3a1f 0 50%, transparent 52%),
-    radial-gradient(ellipse 22% 10% at 66% 70%, #93401f 0 50%, transparent 52%),
-    radial-gradient(circle at 35% 30%, #e88a5c, var(--rust) 55%, #7e2f17);
-}
 .disc.big { width: clamp(120px, 22vw, 168px); }
-.disc.small { width: 40px; box-shadow: inset -5px -4px 9px #0007, 0 0 0 4px var(--sky); }
+.disc.small { width: 40px; box-shadow: 0 0 0 4px var(--sky); }
 
 /* ---------- Top bar ---------- */
 .topbar {
@@ -151,6 +203,7 @@ a { color: var(--read); }
 .done-mark { position: absolute; top: 10px; right: 12px; font-size: 0.8125rem; color: var(--ok); }
 
 .final-cta { margin-top: 28px; }
+.made-by { margin: 40px 0 0; color: var(--dim); font-size: 0.875rem; }
 .final-cta p { margin: 0 0 10px; }
 
 /* ---------- Buttons ---------- */
@@ -315,6 +368,64 @@ a { color: var(--read); }
 /* Planet flying from the letter (made by app.js) */
 .flyer { position: fixed; z-index: 50; pointer-events: none; }
 
+/* ---------- How to use ---------- */
+.help-btn {
+  width: 32px; height: 32px; flex: none; border-radius: 50%;
+  background: none; border: 1px solid var(--unread); color: var(--dim);
+  font: 700 0.9375rem var(--display);
+}
+.help-btn:hover { border-color: var(--read); color: var(--ink); }
+.help-steps { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: step; }
+.help-steps li {
+  counter-increment: step; position: relative;
+  padding: 0 0 16px 44px; min-height: 32px;
+}
+.help-steps li::before {
+  content: counter(step); position: absolute; left: 0; top: -2px;
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--read); color: #08162b; font: 800 1rem var(--display);
+}
+.help-steps strong { display: block; font-family: var(--display); }
+.term-sample { text-decoration: underline dotted var(--read) 2px; text-underline-offset: 4px; }
+.help-note { margin: 4px 0 0; color: var(--dim); font-size: 0.9375rem; }
+
+/* ---------- Tap-to-explain words ---------- */
+.term {
+  display: inline; padding: 0; margin: 0; border: 0; background: none;
+  font: inherit; color: inherit; text-align: inherit;
+  text-decoration: underline dotted var(--read) 2px; text-underline-offset: 4px;
+}
+.term:hover, .term[aria-expanded="true"] { color: var(--read); }
+.term-pop {
+  position: absolute; z-index: 30;
+  margin: 0; padding: 12px 14px; border-radius: 10px;
+  background: var(--ink); color: var(--sky); font-size: 0.9375rem; line-height: 1.45;
+  box-shadow: 0 10px 30px #0008;
+}
+.term-pop strong { display: block; font-family: var(--display); }
+
+/* ---------- Wide screens: facts on the left, photo on the right ---------- */
+/* The photo sticks while you read, so the picture and the words stay side by side */
+@media (min-width: 1000px) {
+  .planet { max-width: 1280px; }
+  .machine {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: clamp(32px, 4vw, 64px);
+    align-content: start;
+  }
+  .machine > * { grid-column: 1; max-width: 60ch; }
+  .machine > .photo {
+    grid-column: 2; grid-row: 1 / span 7;
+    align-self: start; position: sticky; top: 84px;
+    margin: 6px 0 0;
+  }
+  .photo-frame, .photo-frame img { max-height: min(72vh, 620px); }
+  .photo-frame { margin-left: auto; }
+  .photo figcaption { justify-content: flex-end; text-align: right; }
+}
+
 /* ---------- Calm mode and reduced motion: nothing slides or fades ---------- */
 body.calm *, body.calm *::before, body.calm *::after { transition: none !important; animation: none !important; }
 @media (prefers-reduced-motion: reduce) {
@@ -328,8 +439,10 @@ body.calm *, body.calm *::before, body.calm *::after { transition: none !importa
   .machine { padding-bottom: 88px; }
   .rail-dots button span { font-size: 0.6875rem; }
   .disc.small { width: 30px; }
+  .float.hide-phone { display: none; }
+  .float.astro { opacity: 0.7; }
   .topbar { padding: 10px 12px; }
-  .brand { font-size: 0.9375rem; }
+  .brand { font-size: 0.9375rem; white-space: nowrap; }
   .switch button { padding: 5px 10px; }
   .calm-toggle { padding: 5px 9px 5px 7px; font-size: 0.8125rem; }
   .rail-count { font-size: 0.75rem; padding: 2px 6px; }
@@ -337,4 +450,11 @@ body.calm *, body.calm *::before, body.calm *::after { transition: none !importa
 @media (max-width: 400px) {
   .calm-long { display: none; }
   .topbar-right { gap: 6px; }
+}
+@media (max-width: 374px) {
+  .topbar { padding: 10px 8px; gap: 6px; }
+  .topbar-right { gap: 4px; }
+  .brand { font-size: 0.8125rem; }
+  .switch button { padding: 5px 8px; }
+  .help-btn { width: 30px; height: 30px; }
 }

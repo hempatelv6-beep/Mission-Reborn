@@ -1,5 +1,6 @@
 // Mars machines. Writers edit this file, not app.js. Rules: see DATA_GUIDE.md.
 // Facts come word for word from our "Website Text" doc (checked against NASA pages on 2026-11-14).
+// words: tap-to-explain meanings. Each meaning must come from this machine's own text.
 // talkingLine is a story line we wrote. It is not a fact and must not appear in a quiz.
 const MARS = {
   id: "mars",
@@ -29,6 +30,9 @@ const MARS = {
       ],
       whatHappened: "The lander touched down on 20 July 1976. On 28 July its arm scooped up the first soil samples. Some tests looked a little like signs of life, but the main test for organic compounds found none. It kept working until 11 November 1982, when a faulty command from Earth cut off contact.",
       whereItIsNow: "It is still on the western slopes of Chryse Planitia, the \"Golden Plain\". In 1982 it was renamed the Thomas Mutch Memorial Station.",
+      words: [
+        { term: "Chryse Planitia", meaning: "A plain on Mars. Its name means the \"Golden Plain\"." }
+      ],
       sources: [
         { label: "Viking 1, NASA Science", url: "https://science.nasa.gov/mission/viking-1/" }
       ],
@@ -78,6 +82,10 @@ const MARS = {
       ],
       whatHappened: "Pathfinder landed on 4 July 1997, bouncing on giant airbags about 15 times before stopping. The next night, Sojourner rolled down a ramp onto Mars. The mission's final data came on 27 September 1997.",
       whereItIsNow: "It is parked for good at Ares Vallis, an ancient flood plain in the northern half of Mars.",
+      words: [
+        { term: "Alpha Proton X-ray Spectrometer", meaning: "An instrument that found out what elements rocks and soil were made of." },
+        { term: "Ares Vallis", meaning: "An ancient flood plain in the northern half of Mars." }
+      ],
       sources: [
         { label: "Mars Pathfinder, NASA Science", url: "https://science.nasa.gov/mission/mars-pathfinder/" }
       ],
@@ -117,6 +125,7 @@ const MARS = {
         width: 1238, height: 968,
         alt: "Opportunity's flat solar panels seen from above, mostly clean of dust, on the rover's deck on Mars.",
         type: "NASA photo",
+        note: "Shows Opportunity only. Spirit looked the same.",
         credit: "NASA/JPL-Caltech",
         from: "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3447/solar_panels_on_rover_seen_from_above.jpeg"
       },
@@ -129,6 +138,11 @@ const MARS = {
       ],
       whatHappened: "Spirit landed at Gusev Crater on 3 January 2004. In May 2009 it got stuck in soft soil, and its last contact was on 22 March 2010. Opportunity landed at Meridiani Planum in January 2004 and drove 45.16 km. It fell silent on 10 June 2018, when a dust storm covered the whole planet.",
       whereItIsNow: "Spirit is still in Gusev Crater. Opportunity rests in Perseverance Valley.",
+      words: [
+        { term: "Pancam", meaning: "Panoramic cameras on a mast about 1.5 m high." },
+        { term: "rock abrasion tool", meaning: "A tool that grinds into rocks." },
+        { term: "Spectrometers", meaning: "Instruments that find out what rocks are made of." }
+      ],
       sources: [
         { label: "Mars Exploration Rovers: Spirit and Opportunity, NASA Science", url: "https://science.nasa.gov/mission/mars-exploration-rovers-spirit-and-opportunity/" },
         { label: "Spirit, NASA Science", url: "https://science.nasa.gov/mission/mer-spirit/" },
@@ -183,6 +197,10 @@ const MARS = {
       ],
       whatHappened: "InSight landed on 26 November 2018. It also recorded the low rumble of Martian wind. Its mission ended on 15 December 2022, after it lost power.",
       whereItIsNow: "It sits on Elysium Planitia, a flat, smooth plain near Mars' equator. NASA picked the spot because it was safe, not for its rocks.",
+      words: [
+        { term: "seismometer", meaning: "An instrument that measures marsquakes." },
+        { term: "Elysium Planitia", meaning: "A flat, smooth plain near Mars' equator." }
+      ],
       sources: [
         { label: "InSight Lander, NASA Science", url: "https://science.nasa.gov/mission/insight/" }
       ],
@@ -233,6 +251,9 @@ const MARS = {
       ],
       whatHappened: "It landed with Perseverance on 18 February 2021 and first flew on 19 April 2021. It was planned for no more than five flights in 30 days, but it made 72 flights in nearly three years. Its last flight was on 18 January 2024, and the mission ended on 25 January 2024 after rotor damage.",
       whereItIsNow: "It stands still in Jezero Crater, Mars, where it can no longer fly.",
+      words: [
+        { term: "technology test", meaning: "Ingenuity's job: to try the first powered, controlled flight on another planet." }
+      ],
       sources: [
         { label: "Ingenuity Mars Helicopter, NASA Science", url: "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/" }
       ],

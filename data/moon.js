@@ -1,5 +1,6 @@
 // Moon machines. Writers edit this file, not app.js. Rules: see DATA_GUIDE.md.
 // Facts come word for word from our "Website Text" doc (checked against NASA pages on 2026-11-14).
+// words: tap-to-explain meanings. Each meaning must come from this machine's own text.
 // talkingLine is a story line we wrote. It is not a fact and must not appear in a quiz.
 const MOON = {
   id: "moon",
@@ -28,6 +29,10 @@ const MOON = {
       ],
       whatHappened: "On 20 April 1967 its engines kept firing as it landed, so it touched down three times. It sent back 6,326 pictures, and its digging showed the soil was strong enough to hold an Apollo lunar module. Its last contact was on 4 May 1967.",
       whereItIsNow: "It still sits in Oceanus Procellarum. In 1969, Apollo 12 landed about 180 m away, and the astronauts took parts of it, including its camera, back to Earth.",
+      words: [
+        { term: "soft landing", meaning: "Landing gently instead of crashing." },
+        { term: "surface sampler", meaning: "A small scoop on an arm that could dig trenches up to 18 cm deep." }
+      ],
       sources: [
         { label: "Surveyor 3, NASA Science", url: "https://science.nasa.gov/mission/surveyor-3/" },
         { label: "Surveyor 3, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1967-035A" }
@@ -79,6 +84,11 @@ const MOON = {
       ],
       whatHappened: "Eagle landed on 20 July 1969. When the astronauts left the next day, the descent stage worked as their launch pad and was left behind. The EASEP stopped taking commands on 27 August 1969.",
       whereItIsNow: "The descent stage is still at the landing site in the Sea of Tranquility (Mare Tranquilitatis).",
+      words: [
+        { term: "descent stage", meaning: "The bottom half of the lunar module. It held the landing rocket and four landing legs." },
+        { term: "EASEP", meaning: "A small science kit with a seismometer and a dust detector." },
+        { term: "seismometer", meaning: "An instrument that feels moonquakes." }
+      ],
       sources: [
         { label: "Apollo 11 Lunar Module / EASEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-059C" }
       ],
@@ -130,6 +140,12 @@ const MOON = {
       ],
       whatHappened: "It was switched on 19 November 1969. When the crew left, their lander's top half was crashed into the Moon on purpose, about 60 km away, and caused the first recorded artificial moonquake. The station was shut down on 30 September 1977.",
       whereItIsNow: "It is still at the Apollo 12 site in Oceanus Procellarum, the same area where Surveyor 3 landed.",
+      words: [
+        { term: "ALSEP", meaning: "Apollo Lunar Surface Experiments Package: a set of science instruments the astronauts set up and left on the Moon." },
+        { term: "RTG", meaning: "A power generator that turned heat from plutonium-238 into electricity." },
+        { term: "seismometer", meaning: "An instrument that measures moonquakes." },
+        { term: "magnetometer", meaning: "An instrument that measures the Moon's magnetic field." }
+      ],
       sources: [
         { label: "Apollo 12 Lunar Module / ALSEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-099C" }
       ],
@@ -180,6 +196,9 @@ const MOON = {
       ],
       whatHappened: "The rover folded up to ride inside the lunar module. From 31 July to 2 August 1971, the astronauts drove it on three trips, one a day, for a total of 27.8 km.",
       whereItIsNow: "It is parked for good on the Moon, at the Apollo 15 site in the Mare Imbrium region, at the foot of the Apennine mountains.",
+      words: [
+        { term: "Lunar Roving Vehicle", meaning: "An electric car built to drive in the Moon's low gravity and vacuum." }
+      ],
       sources: [
         { label: "The Apollo Lunar Roving Vehicle, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html" },
         { label: "Apollo 15 Lunar Module / ALSEP, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C" }
@@ -231,6 +250,11 @@ const MOON = {
       ],
       whatHappened: "On 9 October 2009, the Centaur hit Cabeus crater near the Moon's south pole. The shepherding spacecraft flew through the cloud of debris for about four minutes, collecting data, then crashed too. NASA later said the impact data showed water.",
       whereItIsNow: "Both pieces are in Cabeus crater, near the Moon's south pole.",
+      words: [
+        { term: "Centaur", meaning: "The 2,000 kg used rocket stage that LCROSS crashed into the Moon." },
+        { term: "shepherding spacecraft", meaning: "The part of LCROSS that steered the Centaur, then flew through the debris cloud." },
+        { term: "spectrometers", meaning: "Instruments that study light to find out what materials are made of." }
+      ],
       sources: [
         { label: "LCROSS, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2009-031B" },
         { label: "LCROSS Impact Data Indicates Water on Moon (13 Nov 2009), NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/text/lcross_pr_20091113.txt" }

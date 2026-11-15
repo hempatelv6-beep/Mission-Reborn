@@ -26,6 +26,7 @@ One machine per chat. Mixing machines is how Spirit ends up with Opportunity's d
 ## Writing for ages 11-14
 - Short sentences. Explain any science word in the same sentence ("a seismometer, to measure moonquakes").
 - No hype words (incredible, epic, groundbreaking), no "Did you know?".
+- `words` (tap-to-explain) meanings may only reword what this card already says about that word.
 - The `talkingLine` is a story line in the machine's voice. It may only restate facts already in the card. It is never quoted as real and never used in a quiz.
 
 ## Quiz rules

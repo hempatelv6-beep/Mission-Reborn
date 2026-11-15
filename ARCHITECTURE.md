@@ -1,49 +1,31 @@
-# Architecture
+# How the site is put together
 
-One page, three code files, three data files. No server code, no build step.
+Mission Reborn is a single-page site. It uses HTML, CSS, and JavaScript, with no build step or server code. GSAP and ScrollTrigger load from jsDelivr for the animations.
 
+```text
+index.html
+  ├─ styles.css
+  ├─ data/moon.js, data/mars.js, data/final.js
+  ├─ GSAP + ScrollTrigger (CDN)
+  └─ app.js
+       ├─ builds the planet pages and quizzes from the data
+       ├─ saves progress and Calm mode in localStorage
+       └─ loads photos from images/moon/ and images/mars/
 ```
-index.html ──loads──> styles.css
-           ──loads──> data/moon.js   (const MOON)
-                      data/mars.js   (const MARS)
-                      data/final.js  (const FINAL)
-                      gsap + ScrollTrigger (jsDelivr CDN)
-                      app.js         (reads MOON, MARS, FINAL and builds everything)
-app.js ──reads/writes──> localStorage (done-moon, done-mars, badge, calm)
-app.js ──points <img> at──> images/moon/*.jpg, images/mars/*.jpg
-```
 
-## index.html
-The skeleton: top bar (home, Moon/Mars switch, Calm mode), start screen, one empty planet view, a toast, and one `<dialog>` for every quiz. Script order matters: data files first, then GSAP, then `app.js`.
+## Main files
 
-## styles.css
-Design tokens in `:root` (colors, fonts, rail width). Planets are drawn with CSS gradients (`.disc.moon`, `.disc.mars`). The rail line is a gray bar with a blue `.rail-fill` inside whose height JavaScript sets. `body.calm` and `prefers-reduced-motion` turn off CSS animation.
+- **`index.html`** holds the start screen, planet view, navigation, toast, and quiz dialog. Its script order matters: data first, then GSAP, then `app.js`.
+- **`styles.css`** controls layout, colors, type, the timeline, and the planet illustrations. The Moon and Mars circles are CSS drawings.
+- **`app.js`** renders machine cards, runs quizzes, controls navigation and animation, reads text aloud, and saves progress.
+- **`data/`** contains the machine text, image details, sources, and quiz questions. See [DATA_GUIDE.md](DATA_GUIDE.md).
 
-## app.js, top to bottom
-| Function | Job |
-|---|---|
-| `store` | Safe `localStorage` get/set (private windows can throw) |
-| `setCalm`, `calm()` | Calm mode switch; defaults to the system's reduced-motion setting |
-| `showStart`, `showPlanet` | Swap views, clean up the old world |
-| `openWorld` | GSAP: the "o" or "A" flies up and becomes the planet |
-| `renderPlanet`, `machineHtml`, `photoHtml` | Turn one world's data into HTML; swap failed images for a labelled box |
-| `setupTimeline` | ScrollTrigger: rail fill, planet position, "3 of 5", dot states, header planet shrinking toward the rail, planet-complete check |
-| `readAgain` | GSAP: scrolls to the top (which rewinds the line) while the rail planet swings out and back; input is blocked while `busy` |
-| `openQuiz` | One quiz box for all 13 quizzes; Final Mission saves the badge |
-| `readAloud`, `stopReading` | `speechSynthesis` |
-| click handler | One listener for every button, using `data-*` attributes |
+## How the timeline works
 
-## Data shape
-See [DATA_GUIDE.md](DATA_GUIDE.md). Each world: `id`, `planet`, `title`, `hook`, `machines[]`. Each machine: facts, `image{}`, `sources[]`, `sourceChecked`, `quiz[]`. The planet quiz uses each machine's first question.
+`setupTimeline()` places a year marker beside each machine section. With GSAP available, ScrollTrigger updates the blue progress line, planet position, counter, and completed markers as the page scrolls. Without GSAP, a regular scroll listener updates the timeline; the world still opens, but the large animations are skipped.
 
-## localStorage keys
-| Key | Value | Set when |
-|---|---|---|
-| `done-moon`, `done-mars` | `"1"` | You scroll to the end of that world |
-| `badge` | `"1"` | You finish the Final Mission |
-| `calm` | `"1"` / `"0"` | You press Calm mode |
+## Saved in the browser
 
-Saved only in that browser. On a judge's laptop the site starts fresh, which is correct.
+`app.js` uses `localStorage` for `done-moon`, `done-mars`, `badge`, and `calm`. These values stay in that browser and are not shared between devices. If browser storage is unavailable, the site continues without saving progress.
 
-## Without GSAP
-If the CDN fails, `hasGsap` is false: worlds open with no animation and the timeline runs on a plain scroll listener.
+Calm mode follows the computer's reduced-motion setting unless the visitor has already chosen a setting in the site. It also changes how the larger animations work.

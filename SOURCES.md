@@ -1,6 +1,6 @@
 # Sources
 
-Every fact on the site comes from one of these NASA pages. The team opened each one on **2026-11-14**.
+These are the NASA pages used for the facts on the site. The team recorded that it checked them on **14 November 2026**. Some image and wording checks are still listed in [TODO_VERIFY.md](TODO_VERIFY.md).
 
 ## General
 | Page | Used for |
@@ -28,5 +28,6 @@ Every fact on the site comes from one of these NASA pages. The team opened each 
 | R4 InSight lander | [NASA Science: InSight](https://science.nasa.gov/mission/insight/) |
 | R5 Ingenuity | [NASA Science: Ingenuity Mars Helicopter](https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/) |
 
-## Not used
-No Wikipedia, blogs, fan sites or AI memory. The well-known Opportunity line "my battery is low and it's getting dark" was written by a fan, not NASA, so it isn't on the site.
+## Other material
+
+The site does not use Wikipedia, blogs, or fan sites as fact sources. The line “my battery is low and it's getting dark” is often attributed to Opportunity, but it was written by a fan and is not a NASA quote, so it is not used here.
