@@ -396,6 +396,9 @@ a { color: var(--read); }
 }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 12px); } }
 
+/* "Mission Reborn" gliding home (made by app.js) */
+.fly-title { position: fixed; z-index: 60; margin: 0; white-space: nowrap; pointer-events: none; }
+
 /* The portal and ripple used when a world opens (made by app.js) */
 .portal { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
 .ripple {

@@ -333,6 +333,51 @@ function setupMachineReveals() {
   triggers = triggers.filter(Boolean);
 }
 
+// Going home from a planet: the small "Mission Reborn" in the corner grows and glides
+// to the middle of the screen, then settles into the big title on the home page.
+function goHome() {
+  const brand = $("#homeBtn .brand-long");
+  const from = (brand && brand.offsetParent ? brand : $("#homeBtn")).getBoundingClientRect();
+  if (!hasGsap || calm() || $("#planet").hidden) { showStart(); return; }
+  busy = true;
+  stopReading();
+  stopRecordings();
+
+  const big = document.createElement("div");
+  big.className = "title fly-title";
+  big.textContent = "Mission Reborn";
+  document.body.appendChild(big);
+  const bigBox = big.getBoundingClientRect();
+  const startScale = from.height / bigBox.height;
+  gsap.set(big, { left: from.left + from.width / 2, top: from.top + from.height / 2, xPercent: -50, yPercent: -50, scale: startScale });
+
+  const homeTitle = $("#title");
+  gsap.timeline({
+    onComplete() {
+      big.remove();
+      homeTitle.style.removeProperty("visibility");
+      $("#start").style.removeProperty("opacity");
+      busy = false;
+    }
+  })
+    // the planet page fades while the title grows into the middle
+    .to("#planet", { opacity: 0, duration: 0.4, ease: "power1.in" }, 0)
+    .to(big, { left: innerWidth / 2, top: innerHeight / 2, scale: 1.08, duration: 0.7, ease: "power3.inOut" }, 0)
+    .add(() => {
+      showStart();
+      $("#planet").style.removeProperty("opacity"); // plain reset: never animate the hidden page
+      homeTitle.style.visibility = "hidden";
+      $("#start").style.opacity = "0";
+      gsap.to("#start", { opacity: 1, duration: 0.5, ease: "power1.out" });
+    }, 0.72)
+    // then it settles into its place on the home page
+    .add(() => {
+      const to = homeTitle.getBoundingClientRect();
+      gsap.to(big, { left: to.left + to.width / 2, top: to.top + to.height / 2, scale: 1, duration: 0.55, ease: "power2.out" });
+    }, 0.75)
+    .to({}, { duration: 0.6 }, 0.75);
+}
+
 // ---------- Building a world from its data ----------
 function photoHtml(m) {
   const img = m.image;
@@ -685,11 +730,14 @@ function renderHome() {
 // We pick the best English voice this device has.
 let voice = null;
 function pickVoice() {
+  // We want a friendly, upbeat American man's voice: natural voices first,
+  // then male US voices, and never the old novelty voices.
   const score = (v) =>
     (/natural|neural|online|premium|enhanced/i.test(v.name) ? 100 : 0) +
-    (/aria|jenny|ava|emma|andrew|brian|guy|sonia|libby|ryan|samantha|daniel|karen|google us english|google uk english/i.test(v.name) ? 30 : 0) +
-    (/^en[-_](us|gb)/i.test(v.lang) ? 10 : 0) +
-    (/zira|david|mark|hazel|espeak|fred|albert/i.test(v.name) ? -40 : 0);
+    (/andrew|brian|guy|christopher|eric|roger|steffan|davis|tony|jason|aaron|alex|evan|nathan|tom|david|mark/i.test(v.name) ? 60 : 0) +
+    (/^en[-_]us/i.test(v.lang) ? 20 : /^en/i.test(v.lang) ? 5 : 0) +
+    (/aria|jenny|ava|emma|michelle|ana|zira|samantha|karen|moira|susan|hazel|libby|sonia|female/i.test(v.name) ? -20 : 0) +
+    (/espeak|fred|albert|zarvox|whisper|bad news|bells|boing|bubbles|cellos|trinoids|organ/i.test(v.name) ? -100 : 0);
   const english = speechSynthesis.getVoices().filter((v) => /^en/i.test(v.lang));
   voice = english.sort((a, b) => score(b) - score(a))[0] || null;
 }
@@ -703,7 +751,7 @@ function speechLines(m) {
   const tidy = (t) => t.replace(/[“”"]/g, "").replace(/\s*\(([^)]*)\)/g, ", $1,").replace(/,([.,])/g, "$1");
   const sentences = (t) => tidy(t).split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
   return [
-    `${tidy(m.name)}.`,
+    `Let's meet ${tidy(m.name)}!`,
     `Launched ${m.launched}.`,
     ...sentences(m.whatItWas),
     m.carriedLabel ? "Here's what each one carried." : "Here's what it carried.",
@@ -754,8 +802,8 @@ function readAloud(btn, m) {
     const say = new SpeechSynthesisUtterance(line);
     if (voice) say.voice = voice;
     say.lang = voice ? voice.lang : "en-US";
-    say.rate = 0.92;
-    say.pitch = 1.03;
+    say.rate = 1.0;   // a lively, natural pace
+    say.pitch = 1.05; // a touch brighter, so it sounds interested
     if (n === lines.length - 1) say.onend = () => { if (readingBtn === btn) stopReading(); };
     speechSynthesis.speak(say);
   });
@@ -816,7 +864,7 @@ document.addEventListener("click", (e) => {
     if (t.id === "otherBtn" || t.closest(".switch")) switchWorld(t.dataset.go);
     else openWorld(t.dataset.go);
   }
-  else if (t.id === "homeBtn") showStart();
+  else if (t.id === "homeBtn") goHome();
   else if (t.dataset.jump) {
     const target = $("#m-" + t.dataset.jump);
     target.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "start" });
