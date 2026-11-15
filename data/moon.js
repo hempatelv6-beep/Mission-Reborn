@@ -7,6 +7,29 @@ const MOON = {
   planet: "Moon",
   title: "5 machines on the Moon",
   hook: "They stayed behind. Here's why.",
+  // Fun facts for the home page. Each one quotes the NASA page it comes from.
+  funFacts: [
+    {
+      text: "NASA built the Moon rover in only 17 months, and it did every job on the Moon with no major problems.",
+      source: { label: "The Apollo Lunar Roving Vehicle, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html" },
+      quote: "The LRV was developed in only 17 months and yet performed all its functions on the Moon with no major anomalies."
+    },
+    {
+      text: "Fully loaded, the Apollo rover sat 36 cm off the ground.",
+      source: { label: "The Apollo Lunar Roving Vehicle, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html" },
+      quote: "Fully loaded the LRV had a ground clearance of 36 cm."
+    },
+    {
+      text: "Seven Apollo missions launched to land people on the Moon, from Apollo 11 in July 1969 to Apollo 17 in December 1972. Apollo 13's landing was called off, so six made it.",
+      source: { label: "Lunar Exploration Timeline, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunartimeline.html" },
+      quote: "Apollo 13 - Apr 11, 1970 - Crewed Landing (aborted)"
+    },
+    {
+      text: "LCROSS scientists could only make their light readings match once they added water to the mix.",
+      source: { label: "LCROSS Impact Data Indicates Water on Moon, NSSDCA", url: "https://nssdc.gsfc.nasa.gov/planetary/text/lcross_pr_20091113.txt" },
+      quote: "We were only able to match the spectra from LCROSS data when we inserted the spectra for water."
+    }
+  ],
   machines: [
     {
       id: "m1",

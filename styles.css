@@ -9,8 +9,10 @@
   --ok: #7fd1a0;
   --miss: #f0a35e;
 
-  --display: "Bricolage Grotesque", system-ui, sans-serif;
-  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  /* Fraunces for headings (a warm, bookish serif), Nunito Sans for reading.
+     Both have plain, round zeros, nothing that looks like code. */
+  --display: "Fraunces", Georgia, serif;
+  --body: "Nunito Sans", system-ui, sans-serif;
 
   --rail: 88px;
   --measure: 62ch;
@@ -26,6 +28,7 @@ body {
   background: var(--sky);
   color: var(--ink);
   font: 1.0625rem/1.6 var(--body);
+  font-variant-numeric: lining-nums;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -161,50 +164,78 @@ a { color: var(--read); }
 .switch button[aria-current="true"] { background: var(--sky-2); color: var(--ink); }
 
 /* ---------- Start screen ---------- */
-.start {
-  min-height: 100svh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 72px 16px 48px;
-  max-width: 1120px; margin: 0 auto;
+.start { padding: 72px 16px 40px; max-width: 1120px; margin: 0 auto; }
+.hero {
+  min-height: calc(100svh - 112px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
 }
 .title {
   margin: 0;
-  font-family: var(--display);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  font: 800 clamp(3.2rem, 11vw, 8.5rem)/0.95 var(--display);
+  letter-spacing: -0.02em;
 }
-.title .t1 { display: block; font-size: clamp(3.4rem, 10.5vw, 9rem); }
-.nowrap { white-space: nowrap; }
-.title .t2 {
-  display: block; margin-top: 0.4em;
-  font-size: clamp(1.6rem, 5vw, 3.6rem); font-weight: 400; letter-spacing: -0.02em;
-  color: var(--dim);
+.subtitle {
+  margin: 0.5rem 0 0;
+  font: 600 clamp(1.25rem, 3.6vw, 2.4rem)/1.2 var(--display);
+  color: var(--dim); letter-spacing: -0.01em;
 }
-/* The two letters that become worlds */
-.letter { display: inline-block; }
-.t1 .letter { color: #cfcbc2; }
-.t2 .letter { color: var(--rust); font-weight: 800; }
+.ask { margin: 2rem auto 1.4rem; max-width: 36ch; font-size: 1.1875rem; }
 
-.ask { margin: 2.2rem 0 1.2rem; max-width: 34ch; font-size: 1.25rem; }
-
-.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 760px; }
+.choices {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px;
+  width: 100%; max-width: 640px; margin: 0 auto;
+}
 .choice {
   position: relative;
-  display: flex; align-items: center; gap: 18px;
-  padding: 20px; text-align: left;
-  background: var(--sky-2); border: 1px solid var(--unread); border-radius: 14px;
-  transition: border-color 0.15s;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 26px 18px 22px; text-align: center;
+  background: var(--sky-2); border: 1px solid var(--unread); border-radius: 18px;
+  transition: border-color 0.15s, transform 0.15s;
 }
-.choice:hover { border-color: var(--read); }
-.choice-text { display: flex; flex-direction: column; }
-.choice-text strong { font: 700 1.25rem/1.2 var(--display); }
-.choice-text span { color: var(--dim); font-size: 0.9375rem; }
+.choice:hover { border-color: var(--read); transform: translateY(-2px); }
+.choice .disc { width: 96px; margin-bottom: 6px; }
+.choice strong { font: 700 1.25rem/1.25 var(--display); }
+.choice-sub { color: var(--dim); font-size: 0.9375rem; }
 .done-mark { position: absolute; top: 10px; right: 12px; font-size: 0.8125rem; color: var(--ok); }
+/* The "o" in Moon and the "a" in Mars turn into the planet when you click */
+.letter { display: inline-block; }
+.nowrap { white-space: nowrap; }
+.choice[data-go="moon"] .letter { color: #dcd8cf; }
+.choice[data-go="mars"] .letter { color: #ec8a5a; }
 
 .final-cta { margin-top: 28px; }
-.made-by { margin: 40px 0 0; color: var(--dim); font-size: 0.875rem; }
 .final-cta p { margin: 0 0 10px; }
+
+/* Shown on the home page after the Final Mission */
+.explorer-banner {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin: 0 0 22px; padding: 8px 18px 8px 10px; border-radius: 999px;
+  border: 1px solid var(--read); background: #5aa9ff14; text-align: left;
+}
+.explorer-banner .badge-ring { margin: 0; }
+.explorer-banner .disc { width: 30px; }
+.explorer-banner strong { font-family: var(--display); color: var(--read); margin-right: 4px; }
+
+/* Fun facts and resources */
+.home-block { margin: 72px auto 0; max-width: 980px; }
+.home-block h2 { margin: 0; font: 800 clamp(1.8rem, 4.5vw, 2.6rem)/1.1 var(--display); text-align: center; }
+.home-lead { margin: 8px auto 28px; color: var(--dim); text-align: center; max-width: 48ch; }
+.fact-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.fact-col { display: grid; gap: 14px; align-content: start; }
+.fact-col-head { display: flex; align-items: center; gap: 12px; margin: 0 0 2px; font: 700 1.25rem var(--display); }
+.fact-col-head .disc { width: 44px; }
+.fact-card {
+  margin: 0; padding: 16px 18px; border-radius: 14px;
+  background: var(--sky-2); border: 1px solid var(--unread);
+}
+.fact-card p { margin: 0; }
+.fact-card a { display: inline-block; margin-top: 8px; font-size: 0.875rem; color: var(--dim); }
+.res-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.res-cols h3 { margin: 0 0 8px; font: 700 1.125rem var(--display); }
+.res-list { margin: 0; padding: 0; list-style: none; font-size: 0.9375rem; }
+.res-list li { padding: 6px 0; border-top: 1px solid var(--unread); }
+.made-by { margin: 64px 0 0; color: var(--dim); font-size: 0.875rem; text-align: center; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -349,12 +380,9 @@ a { color: var(--read); }
   border: 2px solid var(--read);
 }
 .badge strong { display: block; font: 800 1.25rem var(--display); }
-.badge-ring { display: flex; justify-content: center; margin-bottom: 8px; }
+.badge-ring { display: flex; justify-content: center; align-items: center; margin-bottom: 8px; }
 .badge-ring .disc { width: 40px; }
 .badge-ring .disc + .disc { margin-left: -10px; }
-.small-badge { max-width: 320px; margin: 24px 0 0; text-align: left; display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; }
-.small-badge .badge-ring { grid-row: span 2; margin: 0; }
-.small-badge strong { font-size: 1rem; }
 
 /* "Moon complete ✓" */
 .toast {
@@ -367,6 +395,27 @@ a { color: var(--read); }
 
 /* Planet flying from the letter (made by app.js) */
 .flyer { position: fixed; z-index: 50; pointer-events: none; }
+
+/* ---------- Victory screen ---------- */
+.victory {
+  width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 24px 16px;
+  border: 0; color: var(--ink); text-align: center; overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, #22386a, var(--sky) 68%);
+}
+.victory[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.victory::backdrop { background: var(--sky); }
+.victory-burst { position: absolute; left: 50%; top: 40%; width: 0; height: 0; }
+.spark { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; }
+.spark.star {
+  left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 0;
+  clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%);
+}
+.victory-planets { display: flex; justify-content: center; align-items: flex-start; margin-bottom: 18px; }
+.victory-planets .disc { width: clamp(80px, 18vw, 120px); }
+.victory-planets .disc + .disc { margin-left: -22px; margin-top: 30px; }
+.victory-kicker { margin: 0; color: var(--ok); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.875rem; }
+.victory h2 { margin: 6px 0 10px; font: 800 clamp(2.2rem, 7vw, 4.4rem)/1.05 var(--display); }
+.victory-rest p { margin: 0 auto 22px; max-width: 34ch; color: var(--dim); font-size: 1.125rem; }
 
 /* ---------- How to use ---------- */
 .help-btn {
@@ -435,7 +484,12 @@ body.calm *, body.calm *::before, body.calm *::after { transition: none !importa
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
   :root { --rail: 56px; }
-  .choices { grid-template-columns: 1fr; }
+  .choices { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .choice { padding: 18px 10px 16px; }
+  .choice .disc { width: 72px; }
+  .choice strong { font-size: 1.0625rem; }
+  .fact-cols, .res-cols { grid-template-columns: 1fr; }
+  .home-block { margin-top: 56px; }
   .machine { padding-bottom: 88px; }
   .rail-dots button span { font-size: 0.6875rem; }
   .disc.small { width: 30px; }

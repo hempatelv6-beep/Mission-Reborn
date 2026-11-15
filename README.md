@@ -1,5 +1,7 @@
 # Mission Reborn
 
+**Abandoned But Not Forgotten**
+
 Ten machines were left on the Moon and Mars. Mission Reborn tells what each one did, what it carried, and where it is now.
 
 Made for [NASA Space Apps 2026: Abandoned but not Forgotten](https://www.spaceappschallenge.org/2026/challenges/nasas-discarded-equipment-storytelling/). The site is written for readers aged 11–14.
@@ -8,9 +10,12 @@ Made for [NASA Space Apps 2026: Abandoned but not Forgotten](https://www.spaceap
 
 ## What you can do
 
-- Choose the Moon or Mars and scroll through five machines in launch order.
+- Choose the Moon or Mars. The "o" in **Moon** or the "a" in **Mars** on the button turns into a spinning planet, which carries you into that world.
+- Scroll through five machines in launch order. The small planet on the timeline rolls left as you scroll down and right as you scroll up.
 - Follow the timeline, jump to a year, and take a quiz after each machine.
-- Take a five-question quiz at the end of each planet. After finishing both worlds, take the Final Mission quiz and earn a badge.
+- Take a five-question quiz at the end of each planet. "Read it again" and the button for the other planet both glide back to the top first.
+- After finishing both worlds, take the Final Mission. A victory screen names you a **Mission Reborn Explorer**, and the badge then sits at the top of the home page.
+- Read the fun facts on the home page, and open the NASA pages we used from its Resources list.
 - Tap a dotted word, such as seismometer, to see what it means. The `?` button in the top bar shows a short how-to guide, which also opens once on your first visit.
 - Use the read-aloud button or turn on Calm mode. Calm mode reduces the large animations and is on by default when the device asks for reduced motion.
 
@@ -72,4 +77,4 @@ Add the team members' names before submitting. Researchers should have someone e
 
 - Facts: NASA Science and the NASA Space Science Data Coordinated Archive. See [SOURCES.md](SOURCES.md).
 - Images: NASA, NASA/JPL, and NASA/JPL-Caltech. See [IMAGE_CREDITS.md](IMAGE_CREDITS.md). NASA does not endorse this project.
-- Animation: [GSAP](https://gsap.com/). Fonts: Bricolage Grotesque and Atkinson Hyperlegible, served by Google Fonts.
+- Animation: [GSAP](https://gsap.com/). Fonts: Fraunces and Nunito Sans, served by Google Fonts. The planets, astronauts and asteroids are drawn with code (see [IMAGE_CREDITS.md](IMAGE_CREDITS.md)).

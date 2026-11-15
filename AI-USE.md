@@ -9,6 +9,7 @@ We chose the challenge, the 10 machines, the story, the NASA pages, and the feat
 ## What AI helped with
 
 - Claude helped draft research cards from NASA links the team provided. The prompt asked it to quote the source for each fact and mark missing information as unverified.
+- Claude Code read the NASA pages already on our source list to find sentences for the home page fun facts, and stored each quote with its fact for the team to check.
 - Claude helped shorten some sentences and explain science terms for readers aged 11–14.
 - Claude Code helped write and fix `index.html`, `styles.css`, and `app.js`, and drafted several project documents.
 - AI drafted quiz questions and the short story lines written in each machine's voice. These still need the review listed in [TODO_VERIFY.md](TODO_VERIFY.md).

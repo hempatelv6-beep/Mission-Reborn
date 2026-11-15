@@ -28,6 +28,10 @@ These are the NASA pages used for the facts on the site. The team recorded that 
 | R4 InSight lander | [NASA Science: InSight](https://science.nasa.gov/mission/insight/) |
 | R5 Ingenuity | [NASA Science: Ingenuity Mars Helicopter](https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/) |
 
+## Home page fun facts
+
+The eight fun facts on the home page come from pages already listed above: the NSSDCA Apollo Lunar Roving Vehicle page, the NSSDCA Lunar Exploration Timeline, the NSSDCA LCROSS release, and the NASA Science pages for Ingenuity, Opportunity and InSight. Each fact stores its quoted sentence in `data/moon.js` or `data/mars.js`. Claude read these pages on 14 November 2026 to find the sentences; a teammate still needs to check them (see [TODO_VERIFY.md](TODO_VERIFY.md)).
+
 ## Other material
 
 The site does not use Wikipedia, blogs, or fan sites as fact sources. The line “my battery is low and it's getting dark” is often attributed to Opportunity, but it was written by a fan and is not a NASA quote, so it is not used here.

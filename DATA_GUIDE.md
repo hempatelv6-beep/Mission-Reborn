@@ -43,6 +43,24 @@ Use the NASA links already listed for that machine. Check names, dates, and deta
 
 Keep the four description fields (`whatItWas`, `carried`, `whatHappened`, and `whereItIsNow`) to about 150 words total per machine. Use `carriedLabel` if the usual “What it carried” heading does not fit, such as "What it carried (each rover)" for Spirit and Opportunity.
 
+## Fun facts on the home page
+
+`MOON.funFacts` and `MARS.funFacts` hold the home page facts. Each one keeps the exact NASA sentence it comes from, so a teammate can check it.
+
+```js
+funFacts: [
+  {
+    text: "Opportunity lasted 60 times longer than planned.",
+    source: { label: "Opportunity, NASA Science", url: "https://science.nasa.gov/mission/mer-opportunity/" },
+    quote: "Opportunity exceeded its life expectancy by 60 times"
+  }
+],
+```
+
+- Only use pages already in [SOURCES.md](SOURCES.md).
+- `quote` must be copied word for word from that page. Hovering over the source link shows it.
+- Keep the `text` short, and don't add anything the quote doesn't say.
+
 ## Tap-to-explain words
 
 Each machine can have a `words` list. The first time a word appears in that machine's text, it becomes underlined, and tapping it shows the meaning.

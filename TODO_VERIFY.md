@@ -10,7 +10,7 @@ The current site follows the “Website Text” and the data files. Some older p
 - [x] The older research table lists Spirit and Opportunity as separate entries. The site groups them together and includes InSight as the fifth Mars entry. Settled in `Plan - Revised.pdf`: the site keeps one Spirit & Opportunity entry.
 - [ ] The site timeline uses launch years. Some older notes use landing or event years.
 - [ ] The site quizzes use four answer choices. One older tech-stack example has three.
-- [ ] The site uses “Abandoned, not forgotten”; the feature plan uses “Abandoned but Not Forgotten.”
+- [x] Title: the site now says “Mission Reborn” and “Abandoned But Not Forgotten,” matching the challenge name.
 - [ ] Check that the two 1969 Moon entries are easy to tell apart on the timeline.
 
 ## Questions and story lines
@@ -19,6 +19,12 @@ The current site follows the “Website Text” and the data files. Some older p
 - [ ] Read all 10 questions in `data/final.js`.
 - [ ] Check the 10 `talkingLine` entries. They are fictional story lines, not quotations, and should not add facts beyond the machine cards.
 - [ ] Review the Mars hook: “They went quiet one by one. This is where they are.”
+
+## Home page fun facts
+
+- [ ] Open each fun fact's source page and find its `quote` word for word (8 facts in `data/moon.js` and `data/mars.js`).
+- [ ] The Apollo landings fact counts the seven “Crewed Landing” entries on the NSSDCA timeline, with Apollo 13 marked “aborted.” Check that the wording reads fairly.
+- [ ] The InSight page doesn't give a marsquake count, and the LCROSS release doesn't say how much water was found, so neither number is used. Don't add one without a NASA page.
 
 ## Sources and images
 

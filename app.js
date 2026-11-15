@@ -465,30 +465,48 @@ window.addEventListener("wheel", blockScroll, { passive: false });
 window.addEventListener("touchmove", blockScroll, { passive: false });
 window.addEventListener("keydown", blockKeys);
 
-function readAgain() {
+// Scroll smoothly back to the top. The blue line drains as the page rises, and the
+// timeline planet swings out to the right and lands back on the line.
+function rewindToTop(then) {
   stopReading();
-  if (!hasGsap || calm()) {
-    window.scrollTo(0, 0);
-    $("#planetTitle").focus({ preventScroll: true });
-    return;
-  }
+  closeTerm();
+  if (!hasGsap || calm()) { window.scrollTo(0, 0); then(); return; }
   busy = true;
   const disc = $("#railDisc");
   const scroller = { y: window.scrollY };
+  const time = Math.min(1.5, Math.max(0.5, window.scrollY / 3000));
 
   gsap.timeline({
     onComplete() {
-      busy = false;
       gsap.set(disc, { clearProps: "transform" });
-      $("#planetTitle").focus({ preventScroll: true });
+      then();
     }
   })
-    // the page (and so the planet and the blue line) runs back to the top
-    .to(scroller, { y: 0, duration: 1.5, ease: "power2.inOut", onUpdate: () => window.scrollTo(0, scroller.y) }, 0)
-    // swing out to the right, bigger and stretched like it's moving fast
-    .to(disc, { x: 120, scaleX: 1.5, scaleY: 1.15, duration: 0.6, ease: "power2.out" }, 0)
-    // swing back in, shrink, land on the line
-    .to(disc, { x: 0, scaleX: 1, scaleY: 1, duration: 0.8, ease: "back.out(1.4)" }, 0.65);
+    .to(scroller, { y: 0, duration: time, ease: "power2.inOut", onUpdate: () => window.scrollTo(0, scroller.y) }, 0)
+    .to(disc, { x: 120, scaleX: 1.5, scaleY: 1.15, duration: time * 0.4, ease: "power2.out" }, 0)
+    .to(disc, { x: 0, scaleX: 1, scaleY: 1, duration: time * 0.55, ease: "back.out(1.4)" }, time * 0.43);
+}
+
+function readAgain() {
+  rewindToTop(() => {
+    busy = false;
+    $("#planetTitle").focus({ preventScroll: true });
+  });
+}
+
+// Going to the other world: rise to the top first, then fade across to it
+function switchWorld(id) {
+  if (current && current.id === id) return;
+  rewindToTop(() => {
+    if (!hasGsap || calm()) { busy = false; showPlanet(id); return; }
+    gsap.to("#planet", {
+      opacity: 0, duration: 0.25, ease: "power1.in",
+      onComplete() {
+        showPlanet(id);
+        gsap.fromTo("#planet", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out", onComplete() { busy = false; } });
+      }
+    });
+  });
 }
 
 // ---------- One quiz box, reused for all 13 quizzes ----------
@@ -532,16 +550,20 @@ function openQuiz(title, questions, { final = false } = {}) {
     const msg = all ? "You got every one. You were really paying attention."
       : score >= questions.length / 2 ? "Nice! Try again and see if you can get them all."
       : "These are tricky. Have another look at the machines, then try again.";
-    if (final) { store.set("badge", "1"); refreshStartMarks(); }
+    if (final) {
+      store.set("badge", "1");
+      body.innerHTML = "";
+      dialog.close();
+      celebrate(score, questions.length);
+      return;
+    }
     body.innerHTML = `
       <p class="score">${score} of ${questions.length}</p>
       <p>${msg}</p>
-      ${final ? `<div class="badge"><span class="badge-ring" aria-hidden="true"><span class="disc moon"></span><span class="disc mars"></span></span><strong>${esc(FINAL.badge)}</strong>You visited 10 machines on 2 worlds.</div>` : ""}
       <div class="quiz-actions">
         <button class="btn primary" type="button" id="qAgain">Try again</button>
         <button class="btn" type="button" id="qDone">Close</button>
       </div>`;
-    fillPlanets(body);
     $("#qAgain").addEventListener("click", () => { i = 0; score = 0; ask(); });
     $("#qDone").addEventListener("click", () => dialog.close());
     $("#qAgain").focus();
@@ -549,6 +571,57 @@ function openQuiz(title, questions, { final = false } = {}) {
 
   ask();
   dialog.showModal();
+}
+
+// ---------- Victory: finishing the Final Mission ----------
+function celebrate(score, total) {
+  const v = $("#victory");
+  $("#victoryScore").textContent = `You scored ${score} of ${total} and visited 10 machines on 2 worlds.`;
+  v.showModal();
+  if (!hasGsap || calm()) return;
+  // a burst of little stars and sparks from the badge
+  const burst = $("#victoryBurst");
+  burst.innerHTML = "";
+  const colors = ["#5aa9ff", "#ec8a5a", "#e6e2d8", "#7fd1a0", "#f0c35e"];
+  for (let k = 0; k < 46; k++) {
+    const p = document.createElement("span");
+    p.className = k % 3 ? "spark" : "spark star";
+    p.style.background = colors[k % colors.length];
+    burst.appendChild(p);
+    const a = (k / 46) * Math.PI * 2 + Math.random() * 0.3;
+    const d = 140 + Math.random() * 260;
+    gsap.fromTo(p, { x: 0, y: 0, scale: 0, opacity: 1, rotation: 0 }, {
+      x: Math.cos(a) * d, y: Math.sin(a) * d + 60, scale: 0.6 + Math.random(), rotation: Math.random() * 360,
+      opacity: 0, duration: 1.4 + Math.random() * 0.8, ease: "power3.out", delay: 0.15 + Math.random() * 0.2
+    });
+  }
+  gsap.timeline()
+    .fromTo(".victory-planets", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.8, ease: "back.out(1.7)" })
+    .fromTo(".victory h2", { y: 30, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.35)
+    .fromTo(".victory-rest", { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 0.7);
+}
+$("#victory").addEventListener("close", () => {
+  // back to the home page, where the Explorer badge now sits above the title
+  showStart();
+  if (hasGsap && !calm()) gsap.fromTo("#startBadge", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2)", delay: 0.1 });
+});
+
+// ---------- Home page: fun facts and the list of NASA pages ----------
+function renderHome() {
+  [MOON, MARS].forEach((w) => {
+    $(`#${w.id}Facts`).innerHTML = `
+      <p class="fact-col-head"><span class="disc ${w.id}" aria-hidden="true"></span>${esc(w.planet)}</p>
+      ${w.funFacts.map((f) => `
+        <figure class="fact-card">
+          <p>${esc(f.text)}</p>
+          <a href="${esc(f.source.url)}" target="_blank" rel="noopener" title="${esc(f.quote)}">Source: ${esc(f.source.label)}</a>
+        </figure>`).join("")}`;
+    const seen = new Set();
+    $(`#${w.id}Res`).innerHTML = w.machines.flatMap((m) => m.sources)
+      .filter((s) => !seen.has(s.url) && seen.add(s.url))
+      .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join("");
+  });
+  fillPlanets($("#start"));
 }
 
 // ---------- Read aloud (the browser's built-in voice) ----------
@@ -657,8 +730,7 @@ document.addEventListener("click", (e) => {
   else if (t.hasAttribute("data-calm")) setCalm(!calm());
   else if (t.dataset.go) {
     // From the end of a planet, go via the start screen so the next letter can turn into its world
-    if (t.id === "otherBtn") { showStart(); openWorld(t.dataset.go); }
-    else if (t.closest(".switch")) showPlanet(t.dataset.go);
+    if (t.id === "otherBtn" || t.closest(".switch")) switchWorld(t.dataset.go);
     else openWorld(t.dataset.go);
   }
   else if (t.id === "homeBtn") showStart();
@@ -690,5 +762,6 @@ function openHelp() {
 // Closing it any way (button, ✕, Escape) counts as seen
 $("#help").addEventListener("close", () => store.set("help-seen", "1"));
 
+renderHome();
 refreshStartMarks();
 if (store.get("help-seen") !== "1") openHelp();

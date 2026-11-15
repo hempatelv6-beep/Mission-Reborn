@@ -7,6 +7,29 @@ const MARS = {
   planet: "Mars",
   title: "5 machines on Mars",
   hook: "They went quiet one by one. This is where they are.",
+  // Fun facts for the home page. Each one quotes the NASA page it comes from.
+  funFacts: [
+    {
+      text: "Mars' air is less than 1 percent as thick as Earth's. That's the air Ingenuity had to fly in.",
+      source: { label: "Ingenuity Mars Helicopter, NASA Science", url: "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/" },
+      quote: "Thin atmosphere, less than 1 percent as dense as Earth's"
+    },
+    {
+      text: "Over all its flights, Ingenuity spent 128.8 minutes in the air and covered 17 kilometers.",
+      source: { label: "Ingenuity Mars Helicopter, NASA Science", url: "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/" },
+      quote: "Completed 128.8 flying minutes, covering 10.5 miles (17.0 kilometers)"
+    },
+    {
+      text: "Opportunity lasted 60 times longer than planned. It was also the first to travel farther than a marathon on another world.",
+      source: { label: "Opportunity, NASA Science", url: "https://science.nasa.gov/mission/mer-opportunity/" },
+      quote: "Opportunity exceeded its life expectancy by 60 times ... the first human enterprise to exceed marathon distance of travel on another world."
+    },
+    {
+      text: "InSight found that rocky material that crashed into Mars long ago now sits in giant lumps deep inside the planet, in its mantle.",
+      source: { label: "InSight Lander, NASA Science", url: "https://science.nasa.gov/mission/insight/" },
+      quote: "Rocky material that impacted Mars lies scattered in giant lumps throughout the planet's mantle"
+    }
+  ],
   machines: [
     {
       id: "r1",

@@ -10,12 +10,12 @@ Readers may be on a phone or a school laptop, may read at different speeds, or m
 
 ## The visit
 
-1. Choose the Moon or Mars.
+1. On the home page, choose the Moon or Mars. The home page also has fun facts about each world and a list of the NASA pages we used.
 2. Scroll through five machines in launch order. Each section includes the machine's story, an image with a clear label, NASA sources, and a short quiz.
 3. Take the five-question planet quiz, or switch worlds.
-4. After both worlds are complete, take the 10-question Final Mission quiz and earn the badge.
+4. After both worlds are complete, take the 10-question Final Mission quiz. A victory screen names you a Mission Reborn Explorer and returns you to the home page, which then shows the badge above the title.
 
-The planet letter animation, moving planet timeline, and “Read it again” animation give the page its visual style. The content still works if GSAP is unavailable.
+The "o" in Moon and the "a" in Mars on the home buttons turn into the planets. The planets spin, the timeline planet rolls with the scroll, and astronauts, asteroids and stars float in the background. "Read it again" and switching worlds both glide back to the top first. The content still works if GSAP is unavailable.
 
 ## What is in the site
 
@@ -24,6 +24,8 @@ The planet letter animation, moving planet timeline, and “Read it again” ani
 - Three questions per machine, a five-question quiz for each planet, and a 10-question Final Mission
 - NASA source links and image credits
 - Read-aloud controls, Calm mode, timeline jump points, saved progress, and the badge
+- Home page: centered title, the two world buttons, eight fun facts (four per world, each linked to its NASA page) and a Resources list
+- Tap-to-explain words, a how-to guide on the first visit, and the Final Mission victory screen
 
 ## What we chose not to build
 
@@ -39,4 +41,6 @@ The site does not have 3D models, a walk-around game, zoomable maps, multiple la
 - Read it again returns to the top. Calm mode and reduced-motion settings skip the large movement.
 - A failed image shows a text label instead of a broken-image icon.
 - At a 390-pixel viewport, the page has no sideways scrolling; at 1440 pixels, the layout remains readable.
+- The home page fun facts each link to a NASA page that contains the quoted sentence stored with the fact.
+- Finishing the Final Mission shows the victory screen; closing it shows the home page with the Explorer badge at the top.
 - Check for browser console errors, working NASA links, and image credits before submitting.
