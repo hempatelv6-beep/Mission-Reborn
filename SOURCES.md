@@ -30,7 +30,7 @@ These are the NASA pages used for the facts on the site. The team recorded that 
 
 ## Home page fun facts
 
-The eight fun facts on the home page come from pages already listed above: the NSSDCA Apollo Lunar Roving Vehicle page, the NSSDCA Lunar Exploration Timeline, the NSSDCA LCROSS release, and the NASA Science pages for Ingenuity, Opportunity and InSight. Each fact stores its quoted sentence in `data/moon.js` or `data/mars.js`. Claude read these pages on 14 November 2026 to find the sentences; a teammate still needs to check them (see [TODO_VERIFY.md](TODO_VERIFY.md)).
+The eight home-page facts come from the pages listed above: the NSSDCA Apollo Lunar Roving Vehicle page, the NSSDCA Lunar Exploration Timeline, the NSSDCA LCROSS release, and the NASA Science pages for Ingenuity, Opportunity, and InSight. Each fact stores its supporting quote in `data/moon.js` or `data/mars.js`. Some quotes still need a teammate's review; see [TODO_VERIFY.md](TODO_VERIFY.md).
 
 ## Other material
 

@@ -2,7 +2,7 @@
 
 ## What the site is for
 
-Mission Reborn tells the stories of 10 machines left on the Moon and Mars. It is for readers aged 11–14. The facts come from NASA pages, and the writing should be clear enough for a student to follow without already knowing space history.
+Mission Reborn tells the stories of 10 machines sent to the Moon and Mars. The site is made by the Mission Reborn team for NASA Space Apps 2026. Its writing should be clear to readers who are new to space history, and its facts should link to NASA sources.
 
 ## Who will use it
 
