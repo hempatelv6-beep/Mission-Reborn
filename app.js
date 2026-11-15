@@ -4,7 +4,10 @@ const WORLDS = { moon: MOON, mars: MARS };
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const hasGsap = typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined";
-if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+if (hasGsap) {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+}
 
 let current = null;   // the world on screen: MOON or MARS
 let triggers = [];    // ScrollTriggers for this world, killed when we leave it
@@ -59,6 +62,20 @@ function turnPlanets(now) {
   requestAnimationFrame(turnPlanets);
 }
 requestAnimationFrame(turnPlanets);
+
+// ---------- Shooting stars ----------
+// Every so often a star streaks across the sky. Skipped when the device asks for less motion.
+function shootingStar() {
+  setTimeout(shootingStar, 7000 + Math.random() * 9000);
+  if (calm() || document.hidden) return;
+  const star = document.createElement("span");
+  star.className = "shooting-star";
+  star.style.top = 5 + Math.random() * 45 + "%";
+  star.style.left = 30 + Math.random() * 65 + "%";
+  star.addEventListener("animationend", () => star.remove());
+  $(".space").appendChild(star);
+}
+setTimeout(shootingStar, 3000);
 
 // ---------- Checkpoints: one per machine, saved in this browser ----------
 const isChecked = (id) => store.get("check-" + id) === "1";
@@ -211,7 +228,13 @@ function showPlanet(id) {
 
 // Opening a world. The "o" in Moon (or the "a" in Mars) glows, melts into a little
 // planet, a ring ripples out, and the new world opens up in a widening circle.
+// Ask the browser for a world's photos straight away, so they're ready by the time you scroll to them
+function preloadPhotos(id) {
+  WORLDS[id].machines.forEach((m) => { const i = new Image(); i.decoding = "async"; i.src = m.image.src; });
+}
+
 function openWorld(id) {
+  preloadPhotos(id);
   const letter = $(`#start:not([hidden]) .letter[data-planet="${id}"]`);
   if (!letter || !hasGsap || calm()) { showPlanet(id); return; }
 
@@ -291,10 +314,11 @@ function reveal(targets, from, { trigger, stagger = 0, to = {} } = {}) {
   if (!hasGsap || calm()) return null;
   const list = gsap.utils.toArray(targets);
   if (!list.length) return null;
+  const end = { opacity: 1, x: 0, y: 0, scale: 1, rotation: 0, duration: 0.8, ease: "power3.out", stagger, ...to };
+  if ("filter" in from) end.filter = "blur(0px)";
   const tween = gsap.fromTo(list, from, {
-    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0, filter: "blur(0px)",
-    duration: 0.8, ease: "power3.out", stagger, ...to,
-    scrollTrigger: { trigger: trigger || list[0], start: "top 88%", once: true }
+    ...end,
+    scrollTrigger: { trigger: trigger || list[0], start: "top 90%", once: true }
   });
   return tween.scrollTrigger;
 }
@@ -318,10 +342,8 @@ function setupHomeReveals() {
 
 function setupMachineReveals() {
   $$(".machine").forEach((m) => {
-    // name and story line slide in from the left
-    triggers.push(reveal($$(".machine-year, h3, .talking", m), { opacity: 0, x: -40 }, { trigger: m, stagger: 0.08 }));
-    // the photo wipes up into view like a window opening
-    triggers.push(reveal($(".photo", m), { clipPath: "inset(100% 0% 0% 0%)", scale: 1.06 }, { to: { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "power2.inOut" } }));
+    // name, story line and photo fade up together, a beat apart
+    triggers.push(reveal($$(".machine-year, h3, .talking, .photo", m), { opacity: 0, y: 28 }, { trigger: m, stagger: 0.07, to: { duration: 0.7 } }));
     // the facts settle in one by one
     triggers.push(reveal($$(".facts dt, .facts dd", m), { opacity: 0, y: 16 }, { trigger: $(".facts", m), stagger: 0.05, to: { duration: 0.6 } }));
     // recording, sources and buttons float up last
@@ -382,8 +404,8 @@ function photoHtml(m) {
   const tagClass = img.type === "NASA photo" ? "real" : "other";
   return `
       <figure class="photo">
-        <div class="photo-frame" style="aspect-ratio:${img.width} / ${img.height}">
-          <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async">
+        <div class="photo-frame" style="--ar:${(img.width / img.height).toFixed(4)}">
+          <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" decoding="async">
         </div>
         <figcaption>
           <span class="tag ${tagClass}">${esc(img.type)}</span>

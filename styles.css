@@ -81,6 +81,19 @@ body {
 }
 @keyframes twinkle { from { opacity: 0.25; } to { opacity: 1; } }
 
+/* A shooting star now and then (made by app.js) */
+.shooting-star {
+  position: absolute; width: 130px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #ffffffee, #ffffff00);
+  transform: rotate(-24deg); opacity: 0;
+  animation: shoot 1.2s ease-out forwards;
+}
+@keyframes shoot {
+  0% { opacity: 0; translate: 0 0; }
+  10% { opacity: 1; }
+  100% { opacity: 0; translate: -420px 190px; }
+}
+
 /* Floating things. Slow on purpose: it should feel like low gravity. */
 .float { position: absolute; display: block; }
 .float svg { display: block; width: 100%; height: 100%; }
@@ -304,10 +317,12 @@ a { color: var(--read); }
 .photo { margin: 0 0 24px; }
 /* Photos keep their own shape, capped so a tall one doesn't fill the whole screen */
 .photo-frame {
-  max-height: min(70vh, 560px); width: fit-content; max-width: 100%;
+  --cap: min(70vh, 560px);
+  position: relative; width: min(100%, calc(var(--cap) * var(--ar, 1.5))); aspect-ratio: var(--ar, 1.5);
   border-radius: 10px; overflow: hidden; background: #000;
 }
-.photo-frame img { display: block; width: auto; height: 100%; max-width: 100%; max-height: min(70vh, 560px); object-fit: contain; }
+/* The photo fills the box exactly. Absolute sizing works the same in Safari and Chrome. */
+.photo-frame img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .photo-missing {
   min-height: 200px; display: grid; place-items: center; padding: 20px; text-align: center;
   background: var(--sky-2); border: 1px dashed var(--unread); border-radius: 10px;
@@ -553,7 +568,7 @@ a { color: var(--read); }
     align-self: start; position: sticky; top: 84px;
     margin: 6px 0 0;
   }
-  .photo-frame, .photo-frame img { max-height: min(72vh, 620px); }
+  .photo-frame { --cap: min(72vh, 620px); }
   .photo-frame { margin-left: auto; }
   .photo figcaption { justify-content: flex-end; text-align: right; }
 }
@@ -603,3 +618,6 @@ body.calm *, body.calm *::before, body.calm *::after { transition: none !importa
   .switch button { padding: 5px 8px; }
   .help-btn { width: 30px; height: 30px; }
 }
+
+/* If a photo fails, its labelled box fills the same space */
+.photo-frame .photo-missing { position: absolute; inset: 0; min-height: 0; border-radius: 0; }
