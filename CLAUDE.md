@@ -17,7 +17,7 @@ Mission Reborn is a 2D website for NASA Space Apps 2026's “Abandoned but not F
 - Keep words and facts in `data/*.js`, not in `app.js`.
 - Use relative image paths, such as `images/moon/lcross.jpg`. Use lowercase names with dashes.
 - Label images honestly. Record each one in `IMAGE_CREDITS.md`.
-- Animations need a Calm mode or reduced-motion path.
+- Animations need a reduced-motion path (`calm()` in `app.js`).
 
 ## Before changing the site
 

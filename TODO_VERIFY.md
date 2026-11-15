@@ -38,7 +38,8 @@ The current site follows the “Website Text” and the data files. Some older p
 
 ## Before submission
 
-- [ ] Rename the GitHub repository to `Mission-Reborn`, enable GitHub Pages, and add the working link to the repository About box.
+- [x] Repository renamed to `Mission-Reborn` and deployed on Vercel: https://mission-reborn.vercel.app
+- [ ] Add the live link to the repository's About box on GitHub.
 - [ ] Add team members' names to [README.md](README.md).
 - [ ] Add a license if the team decides to use one.
 - [ ] Open every NASA link from the live site.

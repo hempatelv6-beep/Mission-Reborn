@@ -17,7 +17,7 @@ Made for [NASA Space Apps 2026: Abandoned but not Forgotten](https://www.spaceap
 - After finishing both worlds, take the Final Mission. A victory screen names you a **Mission Reborn Explorer**, and the badge then sits at the top of the home page.
 - Read the fun facts on the home page, and open the NASA pages we used from its Resources list.
 - Tap a dotted word, such as seismometer, to see what it means. The `?` button in the top bar shows a short how-to guide, which also opens once on your first visit.
-- Use the read-aloud button or turn on Calm mode. Calm mode reduces the large animations and is on by default when the device asks for reduced motion.
+- Use the read-aloud button. If your device is set to reduce motion, the big animations turn off on their own.
 
 ![Mission Reborn Mars timeline on a phone](images/screenshots/mars-phone-390.jpg)
 
@@ -43,7 +43,9 @@ You can also open `index.html` directly. The site still works if the GSAP CDN is
 
 ## Website
 
-The planned GitHub Pages address is <https://hempatelv6-beep.github.io/Mission-Reborn/>. It will work after the repository is renamed to `Mission-Reborn` and GitHub Pages is enabled. Check [TODO_VERIFY.md](TODO_VERIFY.md) for the remaining setup.
+**Live site: <https://mission-reborn.vercel.app>**
+
+It is hosted on Vercel and linked to this repository, so every push to `main` updates the live site in about a minute.
 
 ## Project files
 
@@ -88,4 +90,4 @@ Add the team members' names before submitting. Researchers should have someone e
 
 ## Settings
 
-Press **Settings** in the top right to pick a male or female read-aloud voice, a light or dark theme, and a colour, and to turn victory sounds or Calm mode on or off.
+Press **Settings** in the top right to pick a male or female read-aloud voice, a light or dark theme, and a colour, and to turn victory sounds on or off.

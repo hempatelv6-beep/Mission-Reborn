@@ -6,7 +6,7 @@ Mission Reborn tells the stories of 10 machines left on the Moon and Mars. It is
 
 ## Who will use it
 
-Readers may be on a phone or a school laptop, may read at different speeds, or may prefer less movement. The site has a read-aloud button and Calm mode. It also respects the browser's reduced-motion setting.
+Readers may be on a phone or a school laptop, may read at different speeds, or may prefer less movement. The site has a read-aloud button, and the big animations turn off when the device is set to reduce motion. It also respects the browser's reduced-motion setting.
 
 ## The visit
 
@@ -23,7 +23,7 @@ The "o" in Moon and the "a" in Mars on the home buttons turn into the planets. T
 - Five machine entries for the Moon and five for Mars, stored in data files
 - Three questions per machine, a five-question quiz for each planet, and a 10-question Final Mission
 - NASA source links and image credits
-- Read-aloud controls, Calm mode, timeline jump points, saved progress, and the badge
+- Read-aloud controls, timeline jump points, saved progress, and the badge
 - Home page: centered title, the two world buttons, eight fun facts (four per world, each linked to its NASA page) and a Resources list
 - Tap-to-explain words, a how-to guide on the first visit, and the Final Mission victory screen
 
@@ -38,7 +38,7 @@ The site does not have 3D models, a walk-around game, zoomable maps, multiple la
 - Timeline dots jump to the right section; the counter and progress line update while scrolling.
 - Quiz lengths are three questions per machine, five per planet, and 10 for the Final Mission. Each answer has feedback, and the score screen offers another try.
 - The Final Mission appears after both planets are marked complete, and completion saves the badge.
-- Read it again returns to the top. Calm mode and reduced-motion settings skip the large movement.
+- Read it again returns to the top. A device set to reduce motion skips the large movement.
 - A failed image shows a text label instead of a broken-image icon.
 - At a 390-pixel viewport, the page has no sideways scrolling; at 1440 pixels, the layout remains readable.
 - The home page fun facts each link to a NASA page that contains the quoted sentence stored with the fact.
@@ -60,9 +60,9 @@ Checks:
 
 - Fun facts and Resources buttons glide down to their sections.
 - Opening a world: the letter glows, a ring ripples out, and the world opens in a widening circle.
-- Each section glides in with its own animation. Calm mode turns them all off.
+- Each section glides in with its own animation. A device set to reduce motion turns them all off.
 
 ## Settings
 
-- A Settings page with: read-aloud voice (male or female, with a "Try it" button), light or dark theme, a colour (five presets or pick your own), victory sounds and Calm mode. Choices are remembered in the browser.
+- A Settings page with: read-aloud voice (male or female, with a "Try it" button), light or dark theme, a colour (five presets or pick your own), and victory sounds. Choices are remembered in the browser.
 - Read aloud uses recorded ElevenLabs narration (male voice "Todd", female voice "Frankie") when the files are in `audio/voice/`, and the browser's voice otherwise.

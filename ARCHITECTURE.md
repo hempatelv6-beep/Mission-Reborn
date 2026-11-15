@@ -9,7 +9,7 @@ index.html
   ├─ GSAP + ScrollTrigger (CDN)
   └─ app.js
        ├─ builds the planet pages and quizzes from the data
-       ├─ saves progress and Calm mode in localStorage
+       ├─ saves progress and settings in localStorage
        └─ loads photos from images/moon/ and images/mars/
 ```
 
@@ -40,7 +40,7 @@ The Moon and Mars are two pictures, `images/planets/moon.png` and `images/planet
 
 `app.js` uses `localStorage` for `done-moon`, `done-mars`, `badge`, `calm`, and `help-seen`. These values stay in that browser and are not shared between devices. If browser storage is unavailable, the site continues without saving progress.
 
-Calm mode follows the computer's reduced-motion setting unless the visitor has already chosen a setting in the site. It also changes how the larger animations work.
+The big animations turn off on their own when the device is set to reduce motion (`calm()` checks this). There is no switch for it in the site.
 
 ## Checkpoints, sounds and recordings
 
@@ -54,7 +54,7 @@ Calm mode follows the computer's reduced-motion setting unless the visitor has a
 - `glideTo()` glides the page down to Fun facts or Resources when you press those buttons, the same eased motion as `rewindToTop()`.
 - `openWorld()` opens a world: the "o" or "a" glows and melts into a small planet, a ring ripples out, and a circle (the `.portal`) widens from the letter to reveal the new world.
 - `reveal()` makes each part glide in as it scrolls into view, with a different move per part: blurred headings drift up, Moon facts slide in from the left and Mars facts from the right, resource columns rise, machine photos wipe up, facts settle one by one, quiz answers slide in.
-- The home page's glide-ins are paused (`homeTriggers`) while a planet page is open, so GSAP never animates hidden elements. Calm mode skips all of these.
+- The home page's glide-ins are paused (`homeTriggers`) while a planet page is open, so GSAP never animates hidden elements. A device set to reduce motion skips all of these.
 
 ## Settings and read-aloud voices
 

@@ -10,7 +10,7 @@ let current = null;   // the world on screen: MOON or MARS
 let triggers = [];    // ScrollTriggers for this world, killed when we leave it
 let busy = false;     // true while "Read it again" is flying, so clicks and scrolls wait
 
-// ---------- Saved progress (✓ marks, Calm mode, badge) ----------
+// ---------- Saved progress (✓ marks, badge, settings) ----------
 // localStorage can throw in private windows. Then progress just isn't saved.
 const store = {
   get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -18,18 +18,14 @@ const store = {
 };
 const isDone = (id) => store.get("done-" + id) === "1";
 
-// ---------- Calm mode: our own switch, on by default if the computer asks for less motion ----------
+// ---------- Reduced motion ----------
+// If the device is set to reduce motion, the big animations are skipped.
+// calm() is checked before every animation.
 const systemCalm = window.matchMedia("(prefers-reduced-motion: reduce)");
-const calm = () => document.body.classList.contains("calm");
-
-function setCalm(on, save = true) {
-  document.body.classList.toggle("calm", on);
-  const box = document.getElementById("setCalm");
-  if (box) box.checked = on;
-  if (save) store.set("calm", on ? "1" : "0");
-}
-const savedCalm = store.get("calm");
-setCalm(savedCalm === null ? systemCalm.matches : savedCalm === "1", false);
+const calm = () => systemCalm.matches;
+document.body.classList.toggle("calm", systemCalm.matches);
+systemCalm.addEventListener?.("change", (e) => document.body.classList.toggle("calm", e.matches));
+store.set("calm", ""); // forget the old Calm mode switch
 
 // ---------- Planets: the Moon and Mars pictures, turning slowly ----------
 const planetFaces = document.getElementsByClassName("planet-face"); // live list
@@ -99,7 +95,7 @@ function playWin(big = false) {
   } catch { /* no Web Audio: stay quiet */ }
 }
 
-// Little stars that burst out of a point (skipped in Calm mode)
+// Little stars that burst out of a point (skipped when the device asks for less motion)
 function burst(host, count = 24, spread = 160) {
   host.innerHTML = "";
   if (!hasGsap || calm()) return;
@@ -290,7 +286,7 @@ function glideTo(target) {
 }
 
 // ---------- Things gliding in as they come into view ----------
-// Each part of the site has its own move. Skipped in Calm mode.
+// Each part of the site has its own move. Skipped when the device asks for less motion.
 function reveal(targets, from, { trigger, stagger = 0, to = {} } = {}) {
   if (!hasGsap || calm()) return null;
   const list = gsap.utils.toArray(targets);
@@ -851,7 +847,6 @@ function syncSettings() {
   $$('input[name="voice"]').forEach((r) => { r.checked = r.value === voicePref; });
   $$('input[name="theme"]').forEach((r) => { r.checked = r.value === (document.documentElement.dataset.theme || "dark"); });
   $("#setSound").checked = soundOn;
-  $("#setCalm").checked = calm();
 }
 applyTheme(store.get("theme") === "light" ? "light" : "dark");
 applyAccent(store.get("accent") || DEFAULT_ACCENT);
@@ -862,7 +857,6 @@ $("#settings").addEventListener("change", (e) => {
   else if (el.name === "theme") applyTheme(el.value);
   else if (el.name === "accent") applyAccent(el.value);
   else if (el.id === "setSound") setSound(el.checked);
-  else if (el.id === "setCalm") setCalm(el.checked);
 });
 $("#accentCustom").addEventListener("input", (e) => applyAccent(e.target.value));
 
@@ -919,7 +913,7 @@ document.addEventListener("click", (e) => {
   else if (t.id === "voicePreview") previewVoice(t);
   else if (t.id === "setReset") {
     voicePref = "male"; store.set("voice", "male");
-    applyTheme("dark"); applyAccent(DEFAULT_ACCENT); setSound(true); setCalm(systemCalm.matches);
+    applyTheme("dark"); applyAccent(DEFAULT_ACCENT); setSound(true);
     syncSettings();
   }
   else if (t.dataset.audio) toggleRecording(t);
