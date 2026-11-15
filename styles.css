@@ -334,7 +334,7 @@ a:hover { text-underline-offset: 5px; color: color-mix(in srgb, var(--read) 70%,
 /* Photos keep their own shape, capped so a tall one doesn't fill the whole screen */
 .photo-frame {
   --cap: min(70vh, 560px);
-  position: relative; width: min(100%, calc(var(--cap) * var(--ar, 1.5))); aspect-ratio: var(--ar, 1.5);
+  display: block; position: relative; width: min(100%, calc(var(--cap) * var(--ar, 1.5))); aspect-ratio: var(--ar, 1.5);
   border-radius: 10px; overflow: hidden; background: #000;
 }
 /* The photo fills the box exactly. Absolute sizing works the same in Safari and Chrome. */

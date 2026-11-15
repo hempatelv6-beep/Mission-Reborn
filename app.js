@@ -438,15 +438,15 @@ function goHome() {
 }
 
 // ---------- Building a world from its data ----------
-function photoHtml(m) {
+function photoHtml(m, i) {
   const img = m.image;
   const tagClass = img.type === "NASA photo" ? "real" : "other";
   return `
       <figure class="photo">
         <button class="photo-zoom" type="button" data-image="${i}" aria-label="View larger image of ${esc(m.name)}">
-        <div class="photo-frame" style="--ar:${(img.width / img.height).toFixed(4)}">
-          <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" decoding="async">
-        </div>
+          <span class="photo-frame" style="--ar:${(img.width / img.height).toFixed(4)}">
+            <img src="${esc(img.src)}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" decoding="async">
+          </span>
         </button>
         <figcaption>
           <span class="tag ${tagClass}">${esc(img.type)}</span>
@@ -484,7 +484,7 @@ function machineHtml(m, i) {
       <p class="machine-year"><span class="machine-no">${i + 1} of 5</span><span class="year-num">${m.year}</span> Launched ${esc(m.launched)}</p>
       <h3 id="m-${i}-name">${esc(m.name)}</h3>
       <p class="talking"><span class="sr">Story line, in the machine's voice: </span>“${esc(m.talkingLine)}”</p>
-      ${photoHtml(m)}
+      ${photoHtml(m, i)}
       <dl class="facts">
         <dt>What it was</dt><dd>${t(m.whatItWas)}</dd>
         <dt>${esc(m.carriedLabel || "What it carried")}</dt>
@@ -525,7 +525,7 @@ function renderPlanet(world) {
   // If a photo is missing or fails to load, show a plain labelled box instead of a broken icon
   $$("#machines .photo img").forEach((img) => {
     const fail = () => {
-      const box = document.createElement("div");
+      const box = document.createElement("span"); // it sits inside the zoom button, so a span
       box.className = "photo-missing";
       box.setAttribute("role", "img");
       box.setAttribute("aria-label", img.alt);
@@ -759,11 +759,15 @@ function celebrate(score, total) {
     .fromTo(".victory h2", { y: 30, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.35)
     .fromTo(".victory-rest", { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 0.7);
 }
-$("#victory").addEventListener("close", () => {
-  // back to the home page, where the Explorer badge now sits above the title
+// Back to the home page, where the Explorer badge now sits above the title.
+// Runs from the button, and from Escape (the dialog's close event).
+function leaveVictory() {
+  if ($("#victory").open) $("#victory").close();
+  if (!$("#start").hidden) return; // already home
   showStart();
   if (hasGsap && !calm()) gsap.fromTo("#startBadge", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2)", delay: 0.1 });
-});
+}
+$("#victory").addEventListener("close", leaveVictory);
 
 // ---------- Home page: fun facts and the list of NASA pages ----------
 function renderHome() {
@@ -846,6 +850,9 @@ function toggleRecording(btn) {
 // Recorded narration (ElevenLabs), one file per machine and voice. If a file is
 // missing or can't play, the browser's own voice reads it instead.
 const narrationFile = (id) => `audio/voice/${voicePref}/${id}.mp3`;
+// Turn this on once the ElevenLabs files are in audio/voice/. Until then we skip
+// asking for them, so there's no "file not found" every time someone presses Read aloud.
+const HAS_NARRATION = false;
 let narrator = null;
 
 function stopReading() {
@@ -864,6 +871,7 @@ function readAloud(btn, m) {
   readingBtn = btn;
   btn.textContent = "Stop reading";
   btn.setAttribute("aria-pressed", "true");
+  if (!HAS_NARRATION) { speakWithBrowser(btn, m); return; }
   const player = new Audio(narrationFile(m.id));
   narrator = player;
   player.onended = () => { if (readingBtn === btn) stopReading(); };
@@ -971,6 +979,7 @@ document.addEventListener("click", (e) => {
 
   if (t.hasAttribute("data-settings")) openSettings();
   else if (t.id === "imageViewerClose") $("#imageViewer").close();
+  else if (t.id === "victoryHome") leaveVictory();
   else if (t.dataset.image !== undefined) {
     const m = current.machines[Number(t.dataset.image)];
     $("#imageViewerTitle").textContent = m.name;
