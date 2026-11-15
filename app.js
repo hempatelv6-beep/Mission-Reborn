@@ -34,7 +34,7 @@ store.set("calm", ""); // forget the old Calm mode switch
 const planetFaces = document.getElementsByClassName("planet-face"); // live list
 function fillPlanets(root = document) {
   $$(".disc", root).forEach((d) => {
-    if (!d.firstElementChild) d.innerHTML = '<span class="planet-face"></span>';
+    if (!d.firstElementChild) d.innerHTML = '<span class="planet-face"></span><span class="planet-shade"></span>';
   });
 }
 fillPlanets();
@@ -62,6 +62,45 @@ function turnPlanets(now) {
   requestAnimationFrame(turnPlanets);
 }
 requestAnimationFrame(turnPlanets);
+
+// ---------- Opening: the home page settles into place ----------
+function introHome() {
+  if (!hasGsap || calm()) return;
+  gsap.timeline({ defaults: { ease: "power3.out" } })
+    .from(".pill-nav a", { y: -16, opacity: 0, duration: 0.5, stagger: 0.08 }, 0.1)
+    .from(".title", { y: 30, opacity: 0, scale: 0.94, duration: 0.8 }, 0.15)
+    .from(".subtitle, .ask", { y: 16, opacity: 0, duration: 0.6, stagger: 0.1 }, 0.4)
+    .from(".choice", { y: 40, opacity: 0, duration: 0.7, stagger: 0.12 }, 0.55)
+    .from(".choice .disc", { scale: 0.6, rotation: -40, duration: 0.9, ease: "back.out(1.6)", stagger: 0.12 }, 0.6);
+}
+
+// The far stars drift slower than the near ones as you scroll, so the sky has depth
+const starLayers = $$(".space .stars");
+function parallax() {
+  if (calm()) return;
+  const y = window.scrollY;
+  starLayers.forEach((layer, k) => { layer.style.transform = `translateY(${(-y * (0.04 + k * 0.03)).toFixed(1)}px)`; });
+}
+window.addEventListener("scroll", parallax, { passive: true });
+
+// The world cards lean toward the mouse a little, like a loose photo on a desk
+$$(".choice").forEach((card) => {
+  card.addEventListener("pointermove", (e) => {
+    if (calm() || e.pointerType === "touch") return;
+    const r = card.getBoundingClientRect();
+    const dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `translateY(-3px) rotateX(${(-dy * 6).toFixed(2)}deg) rotateY(${(dx * 8).toFixed(2)}deg)`;
+  });
+  card.addEventListener("pointerleave", () => card.style.removeProperty("transform"));
+});
+
+// On a planet page, the left and right arrow keys switch worlds
+document.addEventListener("keydown", (e) => {
+  if (busy || $("#planet").hidden || document.querySelector("dialog[open]")) return;
+  if (e.target.closest && e.target.closest("input, textarea")) return;
+  if (e.key === "ArrowRight" && current.id === "moon") switchWorld("mars");
+  if (e.key === "ArrowLeft" && current.id === "mars") switchWorld("moon");
+});
 
 // ---------- Shooting stars ----------
 // Every so often a star streaks across the sky. Skipped when the device asks for less motion.
@@ -440,7 +479,7 @@ function machineHtml(m, i) {
   const t = termifier(m, i);
   return `
     <article class="machine" id="m-${i}" aria-labelledby="m-${i}-name">
-      <p class="machine-year"><span class="year-num">${m.year}</span> Launched ${esc(m.launched)}</p>
+      <p class="machine-year"><span class="machine-no">${i + 1} of 5</span><span class="year-num">${m.year}</span> Launched ${esc(m.launched)}</p>
       <h3 id="m-${i}-name">${esc(m.name)}</h3>
       <p class="talking"><span class="sr">Story line, in the machine's voice: </span>“${esc(m.talkingLine)}”</p>
       ${photoHtml(m)}
@@ -986,5 +1025,6 @@ $("#help").addEventListener("close", () => store.set("help-seen", "1"));
 
 renderHome();
 setupHomeReveals();
+introHome();
 refreshStartMarks();
 if (store.get("help-seen") !== "1") openHelp();

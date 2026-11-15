@@ -51,6 +51,8 @@ The big animations turn off on their own when the device is set to reduce motion
 
 ## Motion
 
+- Home page opening: `introHome()` drops the title and cards into place on the first load. The star layers move at different speeds as you scroll (`parallax()`), the world cards tilt toward the mouse, each planet has a `.planet-shade` layer for depth, and on a planet page the left/right arrow keys switch worlds.
+
 - `glideTo()` glides the page down to Fun facts or Resources when you press those buttons, the same eased motion as `rewindToTop()`.
 - `openWorld()` opens a world: the "o" or "a" glows and melts into a small planet, a ring ripples out, and a circle (the `.portal`) widens from the letter to reveal the new world.
 - `reveal()` makes each part glide in as it scrolls into view, with a different move per part: blurred headings drift up, Moon facts slide in from the left and Mars facts from the right, resource columns rise, machine photos wipe up, facts settle one by one, quiz answers slide in.
