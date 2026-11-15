@@ -469,8 +469,9 @@ function renderPlanet(world) {
       box.textContent = "Photo didn't load. " + img.alt;
       img.replaceWith(box);
     };
+    // Only trust the error event. Safari reports lazy photos that haven't started
+    // loading as "complete" with zero width, so checking that hid good photos.
     img.addEventListener("error", fail, { once: true });
-    if (img.complete && img.naturalWidth === 0) fail();
   });
 
   $("#railDots").innerHTML = world.machines.map((m, i) => `
