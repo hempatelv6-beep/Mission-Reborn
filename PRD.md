@@ -55,3 +55,9 @@ Checks:
 - Finishing any machine quiz shows the checkpoint card, plays the chime (unless Sound is off), and ticks that year on the timeline.
 - "Moon" and "Mars" still read correctly on the home cards after opening and closing each world several times.
 - Each recording plays, stops when another starts, and stops when you leave the planet.
+
+## Motion added
+
+- Fun facts and Resources buttons glide down to their sections.
+- Opening a world: the letter glows, a ring ripples out, and the world opens in a widening circle.
+- Each section glides in with its own animation. Calm mode turns them all off.

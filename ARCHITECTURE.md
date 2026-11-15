@@ -48,3 +48,10 @@ Calm mode follows the computer's reduced-motion setting unless the visitor has a
 - `playWin()` makes its notes with the Web Audio API, so there are no sound files. The Sound switch saves `sound` in `localStorage`.
 - A machine with an `audio` field in its data gets a "Hear the real recording" player. `toggleRecording()` plays one recording at a time. Files are in `audio/`, listed in [AUDIO_CREDITS.md](AUDIO_CREDITS.md).
 - `setupTimeline()` measures again after `document.fonts.ready`, so the timeline lines up once the web fonts have loaded.
+
+## Motion
+
+- `glideTo()` glides the page down to Fun facts or Resources when you press those buttons, the same eased motion as `rewindToTop()`.
+- `openWorld()` opens a world: the "o" or "a" glows and melts into a small planet, a ring ripples out, and a circle (the `.portal`) widens from the letter to reveal the new world.
+- `reveal()` makes each part glide in as it scrolls into view, with a different move per part: blurred headings drift up, Moon facts slide in from the left and Mars facts from the right, resource columns rise, machine photos wipe up, facts settle one by one, quiz answers slide in.
+- The home page's glide-ins are paused (`homeTriggers`) while a planet page is open, so GSAP never animates hidden elements. Calm mode skips all of these.

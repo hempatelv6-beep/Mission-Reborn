@@ -190,10 +190,15 @@ function showStart() {
   $("#start").hidden = false;
   refreshStartMarks();
   window.scrollTo(0, 0);
+  homeTriggers.forEach((t) => t.enable());
+  if (hasGsap) ScrollTrigger.refresh(); // the home page was hidden, so measure it again
 }
 
 function showPlanet(id) {
   leaveWorld();
+  // Pause the home page's glide-ins while it is hidden. GSAP must never animate
+  // hidden elements (that is what shuffled the letters before).
+  homeTriggers.forEach((t) => t.disable(false));
   current = WORLDS[id];
   $("#start").hidden = true;
   $("#topbar").classList.add("in-world");
@@ -202,57 +207,130 @@ function showPlanet(id) {
   renderPlanet(current);
   window.scrollTo(0, 0);
   setupTimeline();
+  setupMachineReveals();
   $("#planetTitle").focus({ preventScroll: true });
 }
 
-// Opening a world. From the start screen, its letter ("o" or "A") grows into the planet.
+// Opening a world. The "o" in Moon (or the "a" in Mars) glows, melts into a little
+// planet, a ring ripples out, and the new world opens up in a widening circle.
 function openWorld(id) {
   const letter = $(`#start:not([hidden]) .letter[data-planet="${id}"]`);
   if (!letter || !hasGsap || calm()) { showPlanet(id); return; }
 
   const r = letter.getBoundingClientRect();
-  const startSize = r.height * 0.6;
+  const cx = r.left + r.width / 2, cy = r.top + r.height * 0.55;
+  const startSize = r.height * 0.75;
   const endSize = Math.min(Math.max(120, window.innerWidth * 0.22), 168);
+  const glow = id === "moon" ? "#dfe6f5" : "#ff8a4c";
 
   const flyer = document.createElement("span");
   flyer.className = `disc ${id} flyer`;
-  Object.assign(flyer.style, {
-    width: startSize + "px",
-    left: r.left + r.width / 2 - startSize / 2 + "px",
-    top: r.top + r.height * 0.56 - startSize / 2 + "px"
-  });
-  document.body.appendChild(flyer);
+  Object.assign(flyer.style, { width: startSize + "px", left: cx - startSize / 2 + "px", top: cy - startSize / 2 + "px" });
+  const ring = document.createElement("span");
+  ring.className = "ripple";
+  Object.assign(ring.style, { left: cx + "px", top: cy + "px", borderColor: glow });
+  // The portal: a circle of the new world's sky that grows from the letter
+  const portal = document.createElement("div");
+  portal.className = "portal";
+  portal.style.background = `radial-gradient(circle at ${cx}px ${cy}px, ${glow}55, #070b18 38%)`;
+  portal.style.clipPath = `circle(0px at ${cx}px ${cy}px)`;
+  document.body.append(portal, ring, flyer);
   fillPlanets(document.body);
-  gsap.set(flyer, { opacity: 0 });
+  gsap.set(flyer, { opacity: 0, scale: 0.4 });
 
   const others = $$("#start > *");
+  const cover = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy)) + 40;
   busy = true;
 
   gsap.timeline({
     defaults: { ease: "power3.inOut" },
     onComplete() {
       showPlanet(id);
-      // the real header planet takes over from the flying one
-      gsap.fromTo("#headDisc", { opacity: 0 }, { opacity: 1, duration: 0.2, onComplete: () => flyer.remove() });
+      // the real header planet takes over, and the portal melts away
+      gsap.fromTo("#headDisc", { opacity: 0 }, { opacity: 1, duration: 0.25, onComplete: () => flyer.remove() });
+      gsap.to(portal, { opacity: 0, duration: 0.5, ease: "power1.out", onComplete: () => portal.remove() });
+      ring.remove();
       // Reset with plain style changes. Asking GSAP to clear a transform on a hidden
       // element makes it move the letter to the end of the word ("Moon" became "Mono").
       letter.style.removeProperty("transform");
       letter.style.removeProperty("opacity");
+      letter.style.removeProperty("filter");
       others.forEach((el) => el.style.removeProperty("opacity"));
       busy = false;
     }
   })
-    // the letter swells and melts into a small planet in the same spot
-    .to(letter, { scale: 1.3, opacity: 0, duration: 0.3, ease: "power2.in" }, 0)
-    .to(flyer, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.05)
-    .to(others, { opacity: 0, duration: 0.35 }, 0.2)
-    // then it grows and floats up to the top of the page
-    .to(flyer, {
-      width: endSize,
-      left: window.innerWidth / 2 - endSize / 2,
-      top: 92,
-      duration: 0.9
-    }, 0.3);
+    // the letter lights up and swells
+    .to(letter, { scale: 1.35, filter: `drop-shadow(0 0 10px ${glow}) brightness(1.3)`, duration: 0.28, ease: "power2.out" }, 0)
+    // it melts into a small planet in the same spot
+    .to(letter, { opacity: 0, scale: 1.7, duration: 0.25, ease: "power2.in" }, 0.24)
+    .to(flyer, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.2)" }, 0.26)
+    // a ring ripples out from it
+    .fromTo(ring, { scale: 0, opacity: 0.9 }, { scale: 9, opacity: 0, duration: 0.9, ease: "power2.out" }, 0.3)
+    // the new world opens up in a widening circle, and the home page fades behind it
+    .to(portal, { clipPath: `circle(${cover}px at ${cx}px ${cy}px)`, duration: 0.95, ease: "power2.inOut" }, 0.45)
+    .to(others, { opacity: 0, duration: 0.4 }, 0.5)
+    // the planet floats up to the top of the page
+    .to(flyer, { width: endSize, left: innerWidth / 2 - endSize / 2, top: 92, duration: 1 }, 0.55);
+}
+
+// Gliding down to a part of the home page (Fun facts, Resources), the same easy
+// motion as "Read it again", only downwards. Scrolling is held still while it moves.
+function glideTo(target) {
+  closeTerm();
+  stopReading();
+  const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 84);
+  const done = () => { target.setAttribute("tabindex", "-1"); target.focus({ preventScroll: true }); };
+  if (!hasGsap || calm()) { window.scrollTo(0, y); done(); return; }
+  busy = true;
+  const s = { y: window.scrollY };
+  const time = Math.min(1.6, Math.max(0.7, Math.abs(y - s.y) / 1400));
+  gsap.to(s, { y, duration: time, ease: "power3.inOut", onUpdate: () => window.scrollTo(0, s.y), onComplete() { busy = false; done(); } });
+}
+
+// ---------- Things gliding in as they come into view ----------
+// Each part of the site has its own move. Skipped in Calm mode.
+function reveal(targets, from, { trigger, stagger = 0, to = {} } = {}) {
+  if (!hasGsap || calm()) return null;
+  const list = gsap.utils.toArray(targets);
+  if (!list.length) return null;
+  const tween = gsap.fromTo(list, from, {
+    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0, filter: "blur(0px)",
+    duration: 0.8, ease: "power3.out", stagger, ...to,
+    scrollTrigger: { trigger: trigger || list[0], start: "top 88%", once: true }
+  });
+  return tween.scrollTrigger;
+}
+
+let homeTriggers = [];
+function setupHomeReveals() {
+  const before = ScrollTrigger.getAll ? ScrollTrigger.getAll().length : 0;
+  // headings drift up out of a soft blur
+  $$(".home-block").forEach((block) => reveal($$("h2, .home-lead", block), { opacity: 0, y: 26, filter: "blur(8px)" }, { trigger: block, stagger: 0.12 }));
+  // the little planets spin in
+  reveal(".fact-col-head .disc", { opacity: 0, scale: 0, rotation: -200 }, { trigger: ".fact-cols", stagger: 0.15, to: { ease: "back.out(1.8)", duration: 1 } });
+  // Moon facts slide in from the left, Mars facts from the right
+  reveal("#moonFacts .fact-card", { opacity: 0, x: -70, rotation: -3 }, { trigger: "#moonFacts", stagger: 0.12 });
+  reveal("#marsFacts .fact-card", { opacity: 0, x: 70, rotation: 3 }, { trigger: "#marsFacts", stagger: 0.12 });
+  // resource columns rise one after another, then their links ripple in
+  reveal(".res-cols > div", { opacity: 0, y: 60 }, { trigger: ".res-cols", stagger: 0.15 });
+  $$(".res-list").forEach((list) => reveal($$("li", list), { opacity: 0, x: -18 }, { trigger: list, stagger: 0.04, to: { duration: 0.5 } }));
+  reveal(".made-by", { opacity: 0, y: 12 }, { to: { duration: 1.2 } });
+  if (hasGsap) homeTriggers = ScrollTrigger.getAll().slice(before);
+}
+
+function setupMachineReveals() {
+  $$(".machine").forEach((m) => {
+    // name and story line slide in from the left
+    triggers.push(reveal($$(".machine-year, h3, .talking", m), { opacity: 0, x: -40 }, { trigger: m, stagger: 0.08 }));
+    // the photo wipes up into view like a window opening
+    triggers.push(reveal($(".photo", m), { clipPath: "inset(100% 0% 0% 0%)", scale: 1.06 }, { to: { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "power2.inOut" } }));
+    // the facts settle in one by one
+    triggers.push(reveal($$(".facts dt, .facts dd", m), { opacity: 0, y: 16 }, { trigger: $(".facts", m), stagger: 0.05, to: { duration: 0.6 } }));
+    // recording, sources and buttons float up last
+    triggers.push(reveal($$(".nasa-audio, .sources, .machine-foot", m), { opacity: 0, y: 24 }, { trigger: $(".sources", m), stagger: 0.1 }));
+  });
+  triggers.push(reveal("#planetEnd", { opacity: 0, scale: 0.94 }, { to: { ease: "back.out(1.4)" } }));
+  triggers = triggers.filter(Boolean);
 }
 
 // ---------- Building a world from its data ----------
@@ -510,6 +588,7 @@ function openQuiz(title, questions, { final = false, machine = null } = {}) {
       <p class="q-text" id="qText">${esc(q.question)}</p>
       <div class="options" role="group" aria-labelledby="qText">${q.options.map((o, n) => `<button type="button" data-n="${n}"><span class="opt-key" aria-hidden="true">${"ABCD"[n]}</span>${esc(o)}</button>`).join("")}</div>`;
     $$(".options button", body).forEach((btn) => btn.addEventListener("click", () => answer(Number(btn.dataset.n))));
+    if (hasGsap && !calm()) gsap.from($$(".options button", body), { opacity: 0, x: 30, duration: 0.35, stagger: 0.06, ease: "power2.out" });
     $(".options button", body).focus();
   }
 
@@ -718,6 +797,7 @@ document.addEventListener("click", (e) => {
   if (termBtn && !e.target.closest(".term, #termPop")) closeTerm();
   const t = e.target.closest("button, a");
   if (!t || busy) return;
+  if (t.matches(".pill-nav a")) { e.preventDefault(); glideTo($(t.getAttribute("href"))); return; }
 
   if (t.hasAttribute("data-sound")) setSound(!soundOn);
   else if (t.dataset.audio) toggleRecording(t);
@@ -766,5 +846,6 @@ function openHelp() {
 $("#help").addEventListener("close", () => store.set("help-seen", "1"));
 
 renderHome();
+setupHomeReveals();
 refreshStartMarks();
 if (store.get("help-seen") !== "1") openHelp();
