@@ -85,3 +85,7 @@ Add the team members' names before submitting. Researchers should have someone e
 - A brighter home page: big outlined title, "Fun facts" and "Resources" buttons, and two wide cards for the Moon and Mars.
 - A checkpoint after every machine: finish its quiz to get a short victory card and chime, and a tick on the timeline. Turn sounds off with the Sound switch.
 - Real NASA recordings for Apollo 11, InSight and Ingenuity. See [AUDIO_CREDITS.md](AUDIO_CREDITS.md).
+
+## Settings
+
+Press **Settings** in the top right to pick a male or female read-aloud voice, a light or dark theme, and a colour, and to turn victory sounds or Calm mode on or off.

@@ -50,3 +50,9 @@ The current site follows the “Website Text” and the data files. Some older p
 - [ ] Find the original artist and licence of the two planet pictures (`images/planets/moon.png`, `images/planets/mars.png`). If we can't, replace them with our own drawings before submitting, because the repo is public.
 - [ ] Listen to the three recordings and check each caption against its NASA page (see AUDIO_CREDITS.md).
 - [ ] Confirm the speaker on the Apollo 11 clip before naming them anywhere. The NSSDCA page gives the quote but not the speaker, so the site doesn't name one.
+
+## Narration
+
+- [ ] Generate the ElevenLabs narration (10 machines x 2 voices) once ElevenLabs is free again, and save the files to `audio/voice/male/` and `audio/voice/female/`.
+- [ ] Check ElevenLabs' terms for our plan: some plans need an "ElevenLabs" credit or don't allow public use.
+- [ ] Listen to each file and check it matches the machine text.

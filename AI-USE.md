@@ -20,3 +20,7 @@ The browser's built-in read-aloud voice reads the site's text. It is not an AI-g
 ## How we checked the work
 
 The team chose the sources; AI did not choose them. A fact should not appear on the site without support from a NASA page. Anything not checked yet belongs in [TODO_VERIFY.md](TODO_VERIFY.md). Quiz answers should already appear in the related machine text. The talking lines are story writing, not real quotes, and the site labels them that way for screen readers.
+
+## AI voices
+
+The read-aloud narration uses AI-generated voices from ElevenLabs (see [AUDIO_CREDITS.md](AUDIO_CREDITS.md)). They read our own checked machine text word for word, with units spelled out. They are not real people and not NASA recordings.

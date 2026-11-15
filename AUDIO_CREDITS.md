@@ -12,4 +12,8 @@ Most of our machines were robots with no microphone (Surveyor 3, the Apollo 12 s
 
 ## Victory sounds
 
-The checkpoint chime and the Final Mission fanfare are not recordings. `app.js` plays them as a few musical notes using the browser's Web Audio API, so there is no sound file and nothing to license. Visitors can turn them off with the Sound switch in the top bar.
+The checkpoint chime and the Final Mission fanfare are not recordings. `app.js` plays them as a few musical notes using the browser's Web Audio API, so there is no sound file and nothing to license. Visitors can turn them off under Settings → Victory sounds.
+
+## Read-aloud narration
+
+Read aloud can play recorded narration made with ElevenLabs text-to-speech: the male voice "Todd - Clear, Engaging and Educational" and the female voice "Frankie - Friendly Instructor", both from the ElevenLabs voice library. These are AI-generated voices reading our own machine text. Files go in `audio/voice/male/` and `audio/voice/female/`, named by machine id (`m1.mp3` ... `r5.mp3`). Until a file is there, the site uses the browser's built-in voice instead.

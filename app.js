@@ -24,7 +24,8 @@ const calm = () => document.body.classList.contains("calm");
 
 function setCalm(on, save = true) {
   document.body.classList.toggle("calm", on);
-  $$("[data-calm]").forEach((b) => b.setAttribute("aria-pressed", String(on)));
+  const box = document.getElementById("setCalm");
+  if (box) box.checked = on;
   if (save) store.set("calm", on ? "1" : "0");
 }
 const savedCalm = store.get("calm");
@@ -73,7 +74,8 @@ let audioCtx = null;
 function setSound(on) {
   soundOn = on;
   store.set("sound", on ? "1" : "0");
-  $$("[data-sound]").forEach((b) => b.setAttribute("aria-pressed", String(on)));
+  const box = document.getElementById("setSound");
+  if (box) box.checked = on;
 }
 setSound(soundOn);
 // A short rising chime for a checkpoint, a longer fanfare for the Final Mission
@@ -729,14 +731,16 @@ function renderHome() {
 // newer Macs and Chromebooks) sound like a person; the oldest ones sound robotic.
 // We pick the best English voice this device has.
 let voice = null;
+const MALE_VOICES = /andrew|brian|guy|christopher|eric|roger|steffan|davis|tony|jason|aaron|alex|evan|nathan|tom|david|mark|\bmale/i;
+const FEMALE_VOICES = /aria|jenny|ava|emma|michelle|ana\b|zira|samantha|karen|moira|susan|hazel|libby|sonia|female/i;
 function pickVoice() {
   // We want a friendly, upbeat American man's voice: natural voices first,
   // then male US voices, and never the old novelty voices.
   const score = (v) =>
     (/natural|neural|online|premium|enhanced/i.test(v.name) ? 100 : 0) +
-    (/andrew|brian|guy|christopher|eric|roger|steffan|davis|tony|jason|aaron|alex|evan|nathan|tom|david|mark/i.test(v.name) ? 60 : 0) +
+    (MALE_VOICES.test(v.name) ? (voicePref === "male" ? 60 : -20) : 0) +
+    (FEMALE_VOICES.test(v.name) ? (voicePref === "female" ? 60 : -20) : 0) +
     (/^en[-_]us/i.test(v.lang) ? 20 : /^en/i.test(v.lang) ? 5 : 0) +
-    (/aria|jenny|ava|emma|michelle|ana|zira|samantha|karen|moira|susan|hazel|libby|sonia|female/i.test(v.name) ? -20 : 0) +
     (/espeak|fred|albert|zarvox|whisper|bad news|bells|boing|bubbles|cellos|trinoids|organ/i.test(v.name) ? -100 : 0);
   const english = speechSynthesis.getVoices().filter((v) => /^en/i.test(v.lang));
   voice = english.sort((a, b) => score(b) - score(a))[0] || null;
@@ -748,10 +752,10 @@ if ("speechSynthesis" in window) {
 
 // What gets said: written like a narrator talking, one sentence at a time
 function speechLines(m) {
-  const tidy = (t) => t.replace(/[“”"]/g, "").replace(/\s*\(([^)]*)\)/g, ", $1,").replace(/,([.,])/g, "$1");
+  const tidy = (t) => t.replace(/[“”"]/g, "").replace(/\s*\(([^)]*)\)/g, ", $1,").replace(/,([.,!])/g, "$1");
   const sentences = (t) => tidy(t).split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
   return [
-    `Let's meet ${tidy(m.name)}!`,
+    `Let's meet ${/^(Apollo|Viking|InSight|Ingenuity)/.test(m.name) ? "the " : ""}${tidy(m.name).replace(/, (Mars Pathfinder)$/, ", from $1")}!`,
     `Launched ${m.launched}.`,
     ...sentences(m.whatItWas),
     m.carriedLabel ? "Here's what each one carried." : "Here's what it carried.",
@@ -782,19 +786,40 @@ function toggleRecording(btn) {
   audio.onended = () => stopRecordings();
 }
 
+// Recorded narration (ElevenLabs), one file per machine and voice. If a file is
+// missing or can't play, the browser's own voice reads it instead.
+const narrationFile = (id) => `audio/voice/${voicePref}/${id}.mp3`;
+let narrator = null;
+
 function stopReading() {
   if ("speechSynthesis" in window) speechSynthesis.cancel();
+  if (narrator) { narrator.pause(); narrator = null; }
   if (readingBtn) {
-    readingBtn.textContent = "Read aloud";
+    readingBtn.textContent = readingBtn.id === "voicePreview" ? "▶ Try it" : "Read aloud";
     readingBtn.setAttribute("aria-pressed", "false");
     readingBtn = null;
   }
 }
 function readAloud(btn, m) {
-  if (!("speechSynthesis" in window)) { btn.textContent = "Not supported here"; btn.disabled = true; return; }
   if (readingBtn === btn) { stopReading(); return; }
   stopReading();
-  if (!voice) pickVoice();
+  stopRecordings();
+  readingBtn = btn;
+  btn.textContent = "Stop reading";
+  btn.setAttribute("aria-pressed", "true");
+  const player = new Audio(narrationFile(m.id));
+  narrator = player;
+  player.onended = () => { if (readingBtn === btn) stopReading(); };
+  player.play().catch(() => {
+    if (narrator !== player) return; // stopped already
+    narrator = null;
+    speakWithBrowser(btn, m);
+  });
+}
+
+function speakWithBrowser(btn, m) {
+  if (!("speechSynthesis" in window)) { stopReading(); btn.textContent = "Not supported here"; btn.disabled = true; return; }
+  pickVoice();
   const lines = speechLines(m);
   // One sentence per utterance: the browser pauses between them like a person
   // taking a breath, and long text doesn't get cut off in Chrome.
@@ -807,9 +832,51 @@ function readAloud(btn, m) {
     if (n === lines.length - 1) say.onend = () => { if (readingBtn === btn) stopReading(); };
     speechSynthesis.speak(say);
   });
-  readingBtn = btn;
-  btn.textContent = "Stop reading";
-  btn.setAttribute("aria-pressed", "true");
+}
+
+// ---------- Settings: voice, theme, colour, sound, calm ----------
+const DEFAULT_ACCENT = "#5aa9ff";
+var voicePref = store.get("voice") === "female" ? "female" : "male";
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  store.set("theme", theme);
+}
+function applyAccent(color) {
+  document.documentElement.style.setProperty("--read", color);
+  store.set("accent", color);
+  $("#accentCustom").value = color;
+  $$('input[name="accent"]').forEach((r) => { r.checked = r.value.toLowerCase() === color.toLowerCase(); });
+}
+function syncSettings() {
+  $$('input[name="voice"]').forEach((r) => { r.checked = r.value === voicePref; });
+  $$('input[name="theme"]').forEach((r) => { r.checked = r.value === (document.documentElement.dataset.theme || "dark"); });
+  $("#setSound").checked = soundOn;
+  $("#setCalm").checked = calm();
+}
+applyTheme(store.get("theme") === "light" ? "light" : "dark");
+applyAccent(store.get("accent") || DEFAULT_ACCENT);
+
+$("#settings").addEventListener("change", (e) => {
+  const el = e.target;
+  if (el.name === "voice") { voicePref = el.value; store.set("voice", el.value); stopReading(); }
+  else if (el.name === "theme") applyTheme(el.value);
+  else if (el.name === "accent") applyAccent(el.value);
+  else if (el.id === "setSound") setSound(el.checked);
+  else if (el.id === "setCalm") setCalm(el.checked);
+});
+$("#accentCustom").addEventListener("input", (e) => applyAccent(e.target.value));
+
+function openSettings() {
+  stopReading();
+  closeTerm();
+  syncSettings();
+  $("#settings").showModal();
+}
+// "Try it": the first machine in the chosen voice
+function previewVoice(btn) {
+  if (readingBtn === btn) { stopReading(); return; }
+  readAloud(btn, MOON.machines[0]);
+  btn.textContent = "■ Stop";
 }
 
 // ---------- Tap-to-explain popup ----------
@@ -847,7 +914,14 @@ document.addEventListener("click", (e) => {
   if (!t || busy) return;
   if (t.matches(".pill-nav a")) { e.preventDefault(); glideTo($(t.getAttribute("href"))); return; }
 
-  if (t.hasAttribute("data-sound")) setSound(!soundOn);
+  if (t.hasAttribute("data-settings")) openSettings();
+  else if (t.hasAttribute("data-settings-close")) { stopReading(); $("#settings").close(); }
+  else if (t.id === "voicePreview") previewVoice(t);
+  else if (t.id === "setReset") {
+    voicePref = "male"; store.set("voice", "male");
+    applyTheme("dark"); applyAccent(DEFAULT_ACCENT); setSound(true); setCalm(systemCalm.matches);
+    syncSettings();
+  }
   else if (t.dataset.audio) toggleRecording(t);
   else if (t.id === "cpStay") $("#checkpoint").close();
   else if (t.id === "cpNext") {
@@ -858,7 +932,7 @@ document.addEventListener("click", (e) => {
   else if (t.hasAttribute("data-help")) openHelp();
   else if (t.hasAttribute("data-help-close")) $("#help").close();
   else if (t.classList.contains("term")) openTerm(t);
-  else if (t.hasAttribute("data-calm")) setCalm(!calm());
+
   else if (t.dataset.go) {
     // From the end of a planet, go via the start screen so the next letter can turn into its world
     if (t.id === "otherBtn" || t.closest(".switch")) switchWorld(t.dataset.go);

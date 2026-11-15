@@ -55,3 +55,9 @@ Calm mode follows the computer's reduced-motion setting unless the visitor has a
 - `openWorld()` opens a world: the "o" or "a" glows and melts into a small planet, a ring ripples out, and a circle (the `.portal`) widens from the letter to reveal the new world.
 - `reveal()` makes each part glide in as it scrolls into view, with a different move per part: blurred headings drift up, Moon facts slide in from the left and Mars facts from the right, resource columns rise, machine photos wipe up, facts settle one by one, quiz answers slide in.
 - The home page's glide-ins are paused (`homeTriggers`) while a planet page is open, so GSAP never animates hidden elements. Calm mode skips all of these.
+
+## Settings and read-aloud voices
+
+- The Settings button (top right) opens `#settings`. It saves `voice` (male/female), `theme` (dark/light), `accent` (a colour), `sound` and `calm` in `localStorage`.
+- `applyTheme()` sets `data-theme` on `<html>`; the light theme swaps the colour tokens in `styles.css`. `applyAccent()` sets `--read`, and the title outline follows it.
+- Read aloud first plays `audio/voice/<male|female>/<machine id>.mp3` (ElevenLabs narration). If that file is missing, `speakWithBrowser()` uses the browser's voice, picking a male or female one to match the setting.

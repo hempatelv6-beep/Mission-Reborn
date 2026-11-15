@@ -13,7 +13,9 @@
      Fallback sizes are close, so text barely moves when the web fonts arrive. */
   --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
   --body: "Nunito", "Segoe UI", system-ui, sans-serif;
-  --outline: #2c3f9e;
+  --card: #0b1230;
+  /* the outline follows the chosen colour, a bit darker */
+  --outline: color-mix(in srgb, var(--read) 45%, #10194a);
 
   --rail: 88px;
   --measure: 62ch;
@@ -190,7 +192,7 @@ a { color: var(--read); }
   position: relative;
   display: flex; align-items: center; gap: 22px;
   padding: 22px 24px; text-align: left;
-  background: #0b1230; border: 3px solid var(--outline); border-radius: 28px;
+  background: var(--card); border: 3px solid var(--outline); border-radius: 28px;
   transition: border-color 0.15s, transform 0.15s;
 }
 .choice:hover, .choice:focus-visible { border-color: var(--read); transform: translateY(-3px); }
@@ -412,7 +414,7 @@ a { color: var(--read); }
 .victory {
   width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 24px 16px;
   border: 0; color: var(--ink); text-align: center; overflow: hidden;
-  background: radial-gradient(circle at 50% 42%, #22386a, var(--sky) 68%);
+  background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--read) 30%, var(--sky)), var(--sky) 68%);
 }
 .victory[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .victory::backdrop { background: var(--sky); }
@@ -432,7 +434,7 @@ a { color: var(--read); }
 /* ---------- Real NASA recordings ---------- */
 .nasa-audio {
   margin: 20px 0 0; padding: 14px 16px; border-radius: 16px;
-  border: 2px solid var(--outline); background: #0b1230;
+  border: 2px solid var(--outline); background: var(--card);
 }
 .nasa-audio figcaption { margin-top: 8px; font-size: 0.9375rem; }
 .audio-credit { display: block; margin-top: 4px; font-size: 0.8125rem; color: var(--dim); }
@@ -453,6 +455,50 @@ a { color: var(--read); }
   font-size: 0.75rem; color: var(--ok);
 }
 .rail-dots button { position: relative; }
+
+/* ---------- Light theme ---------- */
+:root[data-theme="light"] {
+  --sky: #eef2fb;
+  --sky-2: #ffffff;
+  --card: #ffffff;
+  --ink: #18213d;
+  --dim: #4b5878;
+  --unread: #c5cde6;
+  --ok: #138a52;
+  --miss: #b8571c;
+}
+:root[data-theme="light"] .stars:not(.sparkle) { display: none; }
+:root[data-theme="light"] .subtitle { color: color-mix(in srgb, var(--read) 70%, #18213d); }
+:root[data-theme="light"] .pill-nav a, :root[data-theme="light"] .pill { color: var(--ink); }
+:root[data-theme="light"] .photo-frame { background: #dfe5f3; }
+
+/* ---------- Settings ---------- */
+.settings-btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px 0 8px;
+  background: none; border: 1px solid var(--unread); border-radius: 999px; color: var(--dim); font-size: 0.875rem;
+}
+.settings-btn svg { width: 18px; height: 18px; }
+.settings-btn:hover { border-color: var(--read); color: var(--ink); }
+.set-group { margin: 16px 0 0; padding: 0; border: 0; }
+.set-group legend { margin-bottom: 8px; font: 600 1rem var(--display); }
+.seg { display: inline-flex; padding: 3px; border: 1px solid var(--unread); border-radius: 999px; }
+.seg label { padding: 7px 18px; border-radius: 999px; cursor: pointer; color: var(--dim); }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label:has(input:checked) { background: var(--read); color: #08162b; font-weight: 700; }
+.seg label:has(input:focus-visible) { outline: 2px solid var(--read); outline-offset: 2px; }
+.set-group .btn.small { margin-left: 10px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch {
+  position: relative; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+  background: var(--c); border: 3px solid transparent; box-shadow: 0 0 0 1px var(--unread);
+}
+.swatch input[type="radio"] { position: absolute; opacity: 0; }
+.swatch:has(input:checked) { border-color: var(--ink); }
+.swatch:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: 3px; }
+.swatch.custom { background: conic-gradient(#f87171, #fbbf24, #34d399, #60a5fa, #a78bfa, #f472b6, #f87171); }
+.swatch.custom input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.check { display: flex; align-items: center; gap: 10px; padding: 4px 0; cursor: pointer; }
+.check input { width: 18px; height: 18px; accent-color: var(--read); }
 
 /* ---------- How to use ---------- */
 .help-btn {

@@ -61,3 +61,8 @@ Checks:
 - Fun facts and Resources buttons glide down to their sections.
 - Opening a world: the letter glows, a ring ripples out, and the world opens in a widening circle.
 - Each section glides in with its own animation. Calm mode turns them all off.
+
+## Settings
+
+- A Settings page with: read-aloud voice (male or female, with a "Try it" button), light or dark theme, a colour (five presets or pick your own), victory sounds and Calm mode. Choices are remembered in the browser.
+- Read aloud uses recorded ElevenLabs narration (male voice "Todd", female voice "Frankie") when the files are in `audio/voice/`, and the browser's voice otherwise.
